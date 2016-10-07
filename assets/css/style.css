@@ -21,3 +21,51 @@ body, html{
 	font-size: 30px;
 	z-index: 999;
 }
+
+.next-carousel{
+	position: absolute;
+	right:0;
+	top:35%;
+	padding:1% 3%;
+	font-size: 4rem;
+}
+
+.next-carousel-black{
+	background-color:rgba(0,0,0,0.5);
+}
+
+.next-carousel-black>i{	
+	color: #fff;
+}
+
+.next-carousel-white{
+	background-color:rgba(225,225,225,0.5);
+}
+
+.next-carousel-white>i{	
+	color: rgba(0,0,0,0.5);
+}
+
+.prev-carousel{
+	position: absolute;
+	left:0;
+	top:35%;
+	padding:1% 3%;
+	font-size: 4rem;
+}
+
+.prev-carousel-black{	
+	background-color:rgba(0,0,0,0.5);
+}
+
+.prev-carousel-black>i{	
+	color: #fff;
+}
+
+.prev-carousel-white{
+	background-color:rgba(225,225,225,0.5);
+}
+
+.prev-carousel-white>i{	
+	color: rgba(0,0,0,0.5);
+}

@@ -27,5 +27,10 @@ class Controller
 
 		include "views/home.php";
 	}
+
+
+	public function pageProducts(){
+		include "views/products_list.php";
+	}
 }
 ?>
