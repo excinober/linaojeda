@@ -54,6 +54,22 @@
 	<div class="col-xs-12 col-md-9">
 		<div class="row">			
 			<div class="col-xs-12 col-md-6">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+
 				<div class="col-xs-4 p-x-0">
 					ORDENAR POR:
 				</div>
