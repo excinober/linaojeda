@@ -4,7 +4,7 @@
 			<div class="col-xs-12 col-md-4">
 				<h2 class="text-xs-center">newsletter</h2>
 				<input type="text" class="form-control" name="email" placeholder="SING UP NOW">
-				<h3 class="text-xs-center m-t-1" style="color:#9F972D;">
+				<h3 class="text-xs-center mt-1" style="color:#9F972D;">
 					<i class="fa fa-facebook-official" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>
 					<i class="fa fa-whatsapp" aria-hidden="true"></i>
@@ -35,9 +35,32 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Modal-->
+	<div class="modal fade" id="modal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content" style="background-color: rgba(0,0,0,0.7);color: #fff;">
+	      <div class="modal-header">
+	        <!--<h5 class="modal-title">Modal title</h5>-->
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        
+	      </div>
+	      <!--<div class="modal-footer">
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>-->
+	    </div>
+	  </div>
+	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/js.js"></script>
+    <script type="text/javascript" src="assets/js/cart.js"></script>
   </body>
 </html>

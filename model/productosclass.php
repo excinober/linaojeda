@@ -5,19 +5,18 @@
 */
 class Productos extends Database
 {
-	public function crearProducto($nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$tipo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$categoria,$compania,$relevancia){
-		$this->conectar();
+	public function crearProducto($nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$compania,$relevancia){
+		
 		$idproducto = $this->insertar("INSERT INTO `productos`(
 										`nombre`, 
-										`cantidad`, 
+										`cantidad`, 										 
 										`precio`, 
 										`iva`, 
 										`aplica_cupon`, 
 										`precio_oferta`, 
 										`presentacion`, 
 										`registro`, 
-										`codigo`, 
-										`tipo`, 
+										`codigo`, 										
 										`descripcion`, 
 										`img_principal`, 
 										`url`, 
@@ -25,19 +24,19 @@ class Productos extends Database
 										`uso`, 
 										`mas_info`, 
 										`metas`, 
+										`personalizable`,
 										`categorias_idcategoria`, 
 										`companias_idcompania`, 
 										`relevancias_idrelevancia`) VALUES (
 										'$nombre', 
-										'$cantidad', 
-										'$precio', 
-										'$iva', 
+										'$cantidad', 										
+										'$precio',
+										'$iva',
 										'$aplica_cupon', 
 										'$precio_oferta', 
 										'$presentacion', 
 										'$registro', 
-										'$codigo', 
-										'$tipo', 
+										'$codigo', 										
 										'$descripcion', 
 										'$img_principal', 
 										'$url', 
@@ -45,33 +44,15 @@ class Productos extends Database
 										'$uso', 
 										'$mas_info', 
 										'$metas', 
+										'$personalizable',
 										'$categoria', 
 										'$compania', 
 										'$relevancia')");
-		$this->disconnect();
+		
 		return $idproducto;
 	}
 
-	public function listarProductos($tipos=array(), $estados=array(1), $idcategoria=0){
-
-		if (count($tipos)>0) {
-
-			$tipos_select = "AND (";
-
-			$count = 0;
-
-			foreach ($tipos as $tipo) {
-				if ($count>0) {
-					$tipos_select .= " OR ";
-				}
-
-				$tipos_select .= "`tipo` = '$tipo'";
-				$count++;
-			}
-			$tipos_select .= ")";
-		}else{
-			$tipos_select = "";
-		}
+	public function listarProductos($estados=array(1), $idcategoria=0, $personalizable=0, $buscar="", $limit=""){
 
 		if (count($estados)>0) {
 
@@ -84,7 +65,7 @@ class Productos extends Database
 					$estados_select .= " OR ";
 				}
 
-				$estados_select .= "`estado` = '$estado'";
+				$estados_select .= "`productos`.`estado` = '$estado'";
 				$count++;
 			}
 			$estados_select .= ")";
@@ -93,22 +74,28 @@ class Productos extends Database
 		}
 
 		if (!empty($idcategoria)) {
-			$categoria_where = " AND `categorias_idcategoria`='$idcategoria'";
+			$categoria_where = " AND `productos`.`categorias_idcategoria`='$idcategoria'";
 		}else{
 			$categoria_where = "";
 		}
 
-		$this->conectar();
-		$query = $this->consulta("SELECT `idproducto`, `nombre`, `cantidad`, `precio`, `iva`, `aplica_cupon`, `precio_oferta`, `presentacion`, `registro`, `codigo`, `descripcion`, `img_principal`, `url`, `estado`, `uso`, `mas_info`, `metas`, `categorias_idcategoria`, `companias_idcompania`, `relevancias_idrelevancia` 
-								FROM `productos`
-								WHERE $estados_select $tipos_select $categoria_where");
-		$this->disconnect();
-		return $query;
+		if (!empty($buscar)) {
+			$buscar_where = " AND (`productos`.`nombre` LIKE '%$buscar%' OR `productos`.`descripcion` LIKE '%$buscar%')";
+		}else{
+			$buscar_where = "";
+		}
 
+		
+		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`, `productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`personalizable`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania', `categorias`.`nombre` AS 'categoria'
+								FROM `productos`
+								INNER JOIN `companias` ON (`productos`.`companias_idcompania`=`companias`.`idcompania`)
+								INNER JOIN `categorias` ON (`productos`.`categorias_idcategoria`=`categorias`.`idcategoria`)
+								WHERE $estados_select $tipos_select $categoria_where $buscar_where AND `productos`.`personalizable`='$personalizable' $limit");
+		return $query;
 	}
 
 	public function detalleProductos($idproducto=0,$url=""){
-		$this->conectar();
+		
 
 		if (!empty($url)) {
 			$where = "WHERE `idproducto`='$idproducto' OR `url`='$url'";
@@ -116,33 +103,55 @@ class Productos extends Database
 			$where = "WHERE `idproducto`='$idproducto'";
 		}
 
-		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`, `productos`.`tipo`, `productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania' 
+		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`,`productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`personalizable`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania' 
 								FROM `productos`
 								INNER JOIN `companias` ON (`productos`.`companias_idcompania`=`companias`.`idcompania`)
 								$where");
-		$this->disconnect();
+		
+		return $query[0];
+	}
+
+	public function imgsProducto($idproducto){
+		
+		$query = $this->consulta("SELECT `idimg`, `imagen`, `productos_idproducto` FROM `img_productos` WHERE `productos_idproducto`='$idproducto'");
 		return $query;
 	}
 
-	public function actualizarProducto($idproducto,$nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$tipo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$categoria,$compania,$relevancia){
-		$this->conectar();
+	public function piezasProducto($idproducto){
+		
+		$query = $this->consulta("SELECT `idpieza`, `nombre`, `productos_idproducto` FROM `piezas` WHERE `productos_idproducto`='$idproducto'");
+		return $query;
+	}
+
+	public function opcionesPieza($idpieza){
+
+		$query = $this->consulta("SELECT `opcion_pieza`.`idopcionpieza`, `opcion_pieza`.`nombre`, `opcion_pieza`.`imagen`, `opcion_pieza`.`tipo_convencion`, `opcion_pieza`.`color_convencion`, `opcion_pieza`.`imagen_convencion`, `opcion_pieza`.`estado` 
+									FROM `opcion_pieza` 
+									INNER JOIN `piezas_has_opcion_pieza` ON (`opcion_pieza`.`idopcionpieza`=`piezas_has_opcion_pieza`.`opcion_pieza_idopcionpieza`)
+									WHERE `piezas_has_opcion_pieza`.`piezas_idpieza`='$idpieza'");
+		return $query;
+		
+	}
+
+	public function actualizarProducto($idproducto,$nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$compania,$relevancia){
+		
 		$query = $this->actualizar("UPDATE `productos` SET 
 										`nombre`='$nombre',
-										`cantidad`='$cantidad',
+										`cantidad`='$cantidad',										
 										`precio`='$precio',
 										`iva`='$iva',
 										`aplica_cupon`='$aplica_cupon',
 										`precio_oferta`='$precio_oferta',
 										`presentacion`='$presentacion',
 										`registro`='$registro',
-										`codigo`='$codigo',
-										`tipo`='$tipo',
+										`codigo`='$codigo',										
 										`descripcion`='$descripcion',										
 										`url`='$url',
 										`estado`='$estado',
 										`uso`='$uso',
 										`mas_info`='$mas_info',
 										`metas`='$metas',
+										`personalizable`='$personalizable',
 										`categorias_idcategoria`='$categoria',
 										`companias_idcompania`='$compania',
 										`relevancias_idrelevancia`='$relevancia'
@@ -153,69 +162,7 @@ class Productos extends Database
 										WHERE `idproducto`='$idproducto'");	
 		}		
 
-		$this->disconnect();
-		return $query;
-	}
-
-
-	/****categorias***/
-
-	public function crearCategoria($nombre="",$url="",$imagen="",$estado=0){
-		$this->conectar();
-		$idcategoria = $this->insertar("INSERT INTO `categorias`(											
-											`nombre`,
-											`url`,
-											`imagen`, 
-											`estado`) VALUES (
-											'$nombre',
-											'$url',
-											'$imagen',
-											'$estado')");
-		$this->disconnect();
-		return $idcategoria;
-	}
-
-	public function listarCategorias($menu=1){
-		$this->conectar();
-
-		if (!empty($menu)) {
-			$where = "WHERE `menu`='$menu'";
-		}else{
-			$where = "";
-		}
-
-		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `url`, `imagen`, `estado` FROM `categorias` $where");
-
 		
-		$this->disconnect();
-		return $query;
-
-	}
-
-	public function detalleCategoria($idcategoria){
-		$this->conectar();
-		$query = $this->consulta("SELECT `nombre`, `url`, `imagen`, `estado` FROM `categorias` WHERE `idcategoria`='$idcategoria'");
-		$this->disconnect();
-		return $query;
-	}
-
-	public function detalleCategoriaUrl($url){
-		$this->conectar();
-		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `imagen`, `estado` FROM `categorias` WHERE `url`='$url'");
-		$this->disconnect();
-		return $query[0];
-	}
-
-	public function actualizarCategoria($idcategoria,$nombre="",$url="",$imagen="",$estado=0){
-		$this->conectar();
-		$query = $this->actualizar("UPDATE `categorias` SET 
-										`nombre`='$nombre',
-										`url`='$url',
-										`imagen`='$imagen',
-										`estado`='$estado'										
-										WHERE `idcategoria`='$idcategoria'");
-
-		$this->disconnect();
 		return $query;
 	}
 

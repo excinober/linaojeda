@@ -5,43 +5,48 @@
 class Paginas extends Database
 {
 	
-	public function listarPaginas($posicion="",$estado=1){
+	public function listarPaginas($posicion=""){
 		
-		$where = "WHERE `estado`='$estado'";
 
 		if (!empty($posicion)) {
-			$where .= " AND `posicion`='$posicion'";
+			$posicion_where = " WHERE `posicion`='$posicion'";
+		}else{
+			$posicion_where = "";
 		}
 
-		$query = $this->consulta("SELECT `idpagina`, `titulo`, `url`, `contenido`, `banner`, `posicion`, `estado` FROM `paginas` $where");
+		$query = $this->consulta("SELECT `idpagina`, `titulo`, `url`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` $posicion_where");
 		
 		return $query;
 	}
 
-	public function crearPagina($titulo="",$url="",$contenido="",$banner="",$menu=0,$estado=0){
-		$this->conectar();
+	public function crearPagina($titulo="",$url="",$contenido="",$posicion="",$banner="",$menu=0,$estado=0){
+		
 		$idpagina = $this->insertar("INSERT INTO `paginas`(									
 									`titulo`, 
 									`url`, 
 									`contenido`, 
 									`banner`, 
 									`menu`, 
+									`posicion`, 
 									`estado`) VALUES (									
 									'$titulo',
 									'$url',
 									'$contenido',
 									'$banner',
 									'$menu',
+									'$posicion',
 									'$estado')");
-		$this->disconnect();
+		
 		return $idpagina;
 	}
 
-	public function actualizarPagina($idpagina,$titulo,$contenido,$banner,$menu,$estado){
-		$this->conectar();
+	public function actualizarPagina($idpagina,$titulo,$url,$contenido,$posicion,$banner,$menu,$estado){
+		
 		$query = $this->actualizar("UPDATE `paginas` SET 									
-									`titulo`= '$titulo',									
-									`contenido`= '$contenido',									
+									`titulo`= '$titulo',
+									`url`= '$url',
+									`contenido`= '$contenido',
+									`posicion`= '$posicion',
 									`menu`= '$menu',
 									`estado`= '$estado' 
 									WHERE `idpagina`='$idpagina'");	
@@ -52,23 +57,23 @@ class Paginas extends Database
 									WHERE `idpagina`='$idpagina'");	
 		}
 
-		$this->disconnect();
+		
 		return $query;
 	}
 
 
 
 	public function detallePagina($idpagina){
-		$this->conectar();
-		$query = $this->consulta("SELECT `titulo`, `url`, `contenido`, `banner`, `menu`, `estado` FROM `paginas` WHERE `idpagina`='$idpagina'");
-		$this->disconnect();
+		
+		$query = $this->consulta("SELECT `titulo`, `url`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` WHERE `idpagina`='$idpagina'");
+		
 		return $query;
 	}
 
 	public function contenidoPagina($url){
-		$this->conectar();
-		$query = $this->consulta("SELECT `idpagina`, `titulo`, `contenido`, `banner`, `menu`, `estado` FROM `paginas` WHERE `url`='$url'");
-		$this->disconnect();
+		
+		$query = $this->consulta("SELECT `idpagina`, `titulo`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` WHERE `url`='$url'");
+		
 		return $query[0];
 	}
 }

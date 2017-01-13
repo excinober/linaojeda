@@ -28,19 +28,25 @@ class Carrito extends Productos
 		return $total_cantidad;
 	}
 
-	static function totalCarrito(){
+	public static function getProductsCart(){
+		$carrito2 = new Carrito();
+		$items = $carrito2->listarItems();
+		return $items;
+	}
+
+	/*static function totalCarrito(){
 		$carrito2 = new Carrito();
 		$total_carrito = $carrito2->getTotal();
 		return $total_carrito;
-	}
+	}*/
 
 	public function infoProducto($idpdt){
-		$this->conectar();
-		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`, `productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania' 
+		
+		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`,`productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`personalizable`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania' 
 								FROM `productos`
 								INNER JOIN `companias` ON (`productos`.`companias_idcompania`=`companias`.`idcompania`)
 								WHERE `idproducto`='$idpdt'");
-		$this->disconnect();
+		
 		return $query[0];
 	}
 
@@ -60,16 +66,17 @@ class Carrito extends Productos
 		if (!empty($porc_iva) && $porc_iva>0) {
 			$iva = $precio*($porc_iva/100);
 		}else{
-			$iva = 0;			
+			$iva = 0;
 		}
 
 		return $iva;
 	}
 
-	public function calcularSubtotal($precio,$iva,$cantidad){
+	public function calcularSubtotal($precio,$porc_iva,$cantidad){
 
-		if (!empty($iva) && $iva>0) {
-			$subtotal = (($precio - $iva) * $cantidad);
+		if (!empty($porc_iva) && $porc_iva>0) {
+			//$subtotal = (($precio - $iva) * $cantidad);
+			$subtotal = ($precio/("1.".$porc_iva) * $cantidad);
 		}else{
 			$subtotal = $precio * $cantidad;
 		}
@@ -86,17 +93,18 @@ class Carrito extends Productos
 
 				$producto = $this->infoProducto($idpdt);
 				$precio = $this->ajustarPrecio($producto["precio"],$producto["precio_oferta"]);
-				$iva = $this->calcularIva($precio,$producto["iva"]);
-				$subtotal = $this->calcularSubtotal($precio,$iva,$_SESSION["cantidadpdts"][$key]);			
+				//$iva = $this->calcularIva($precio,$producto["iva"]);
+				$subtotal = $this->calcularSubtotal($precio,$producto["iva"],$_SESSION["cantidadpdts"][$key]);			
 				
 
 				$this->itemscarrito['id'][] = $idpdt;
 				$this->itemscarrito['precio'][] = $precio;
-				$this->itemscarrito['valor_iva'][] = $iva;
+				//$this->itemscarrito['valor_iva'][] = $iva;
 				$this->itemscarrito['cantidad'][] = $_SESSION["cantidadpdts"][$key];
+				$this->itemscarrito['cantidadstock'][] = $producto["cantidad"];
 				$this->itemscarrito['nombre'][] = $producto["nombre"];
 				$this->itemscarrito['codigo'][] = $producto["codigo"];
-				$this->itemscarrito['iva'][] = $producto["iva"];			
+				$this->itemscarrito['iva'][] = $producto["iva"];
 				$this->itemscarrito['img_principal'][] = $producto["img_principal"];
 				$this->itemscarrito['compania'][] = $producto["compania"];
 				$this->itemscarrito['subtotal'][] = $subtotal;
@@ -117,8 +125,8 @@ class Carrito extends Productos
 			foreach ($_SESSION["idpdts"] as $key => $idpdt) {
 				$producto = $this->infoProducto($idpdt);
 				$precio = $this->ajustarPrecio($producto["precio"],$producto["precio_oferta"]);
-				$iva = $this->calcularIva($precio,$producto["iva"]);
-				$subtotal = $this->calcularSubtotal($precio,$iva,$_SESSION["cantidadpdts"][$key]);
+				//$iva = $this->calcularIva($precio,$producto["iva"]);
+				$subtotal = $this->calcularSubtotal($precio,$producto["iva"],$_SESSION["cantidadpdts"][$key]);
 				
 				$subtotalAntesIva += $subtotal;
 			}
@@ -158,7 +166,7 @@ class Carrito extends Productos
 	}
 
 
-	public function porcDescuentoEscala(){
+	/*public function porcDescuentoEscala(){
 
 		$campanas2 = new Campanas();
 
@@ -169,6 +177,17 @@ class Carrito extends Productos
 
 		$porcentaje = $campanas2->getPorcEscalaDistribuidor($subtotalNetoAntesIva, $id_campana_actual);
 
+		//Ajuste provisional para Nelly Suarez y James Arturo Ortiz
+		if (isset($_SESSION["idusuario"])) {
+			if ($_SESSION["idusuario"] == 29 || $_SESSION["idusuario"] == 28) {
+				$porcentaje["porcentaje"] = 30;
+			}
+		}
+
+		if (empty($porcentaje["porcentaje"])) {
+			$porcentaje["porcentaje"] = 0;
+		}
+
 		return $porcentaje["porcentaje"];
 
 	}
@@ -176,19 +195,19 @@ class Carrito extends Productos
 	public function getDescuentoEscala(){
 
 		$porc_escala = $this->porcDescuentoEscala();
-		$subtotalNetoAntesIva = $this->getSubtotalNetoAntesIva();		
+		$subtotalNetoAntesIva = $this->getSubtotalNetoAntesIva();
 
 		$descuento_escala = $porc_escala/100;
 		$descuentoEscala = $subtotalNetoAntesIva * $descuento_escala;
 
 		return $descuentoEscala;
-	}
+	}*/
 
 	public function getTotalNetoAntesIva(){
 		$subtotalNetoAntesIva = $this->getSubtotalNetoAntesIva();
-		$descuentoEscala = $this->getDescuentoEscala();
-
-		$totalNetoAntesIva = $subtotalNetoAntesIva - $descuentoEscala;
+		//$descuentoEscala = $this->getDescuentoEscala();
+		//$totalNetoAntesIva = $subtotalNetoAntesIva - $descuentoEscala;
+		$totalNetoAntesIva = $subtotalNetoAntesIva;
 
 		return $totalNetoAntesIva;
 	}
@@ -198,7 +217,7 @@ class Carrito extends Productos
 		$totalIva = 0;
 
 		$porc_descuento_cupon = $this->porcDescuentoCupon();
-		$porc_escala = $this->porcDescuentoEscala();
+		//$porc_escala = $this->porcDescuentoEscala();
 
 		if (isset($_SESSION["idpdts"]) && count($_SESSION["idpdts"])>0) {
 			
@@ -208,13 +227,14 @@ class Carrito extends Productos
 
 				$porc_iva = $producto["iva"];			
 				$precio = $this->ajustarPrecio($producto["precio"],$producto["precio_oferta"]);
-				$iva = $this->calcularIva($precio,$porc_iva);
-				$subtotal = $this->calcularSubtotal($precio,$iva,$_SESSION["cantidadpdts"][$key]);
+				//$iva = $this->calcularIva($precio,$porc_iva);
+				$subtotal = $this->calcularSubtotal($precio,$porc_iva,$_SESSION["cantidadpdts"][$key]);
 
 				$subtotal_dto_cupon = $subtotal - ($subtotal*($porc_descuento_cupon/100));
-				$subtotal_dto_escala = $subtotal_dto_cupon - ($subtotal_dto_cupon*($porc_escala/100));
+				//$subtotal_dto_escala = $subtotal_dto_cupon - ($subtotal_dto_cupon*($porc_escala/100));
 
-				$iva = $subtotal_dto_escala * ($porc_iva/100);
+				//$iva = $subtotal_dto_escala * ($porc_iva/100);
+				$iva = $subtotal_dto_cupon * ($porc_iva/100);
 				$totalIva += $iva;
 			}
 
@@ -226,7 +246,7 @@ class Carrito extends Productos
 
 	}
 
-	public function getValorPunto(){
+	/*public function getValorPunto(){
 		//En pesos
 		$valor_punto = 1;
 		return $valor_punto; 
@@ -277,18 +297,23 @@ class Carrito extends Productos
 		}		
 
 		return $pago_puntos;
-	}
+	}*/
 
 	public function calcularFlete(){
 
 		$subtotalAntesIva = $this->getSubtotalAntesIva();
 
 		if ($subtotalAntesIva>0) {
-			if (isset($_SESSION["ciudad"]) && $_SESSION["ciudad"] == "Cali") {
-				$flete = 6000;
+
+			if ($subtotalAntesIva>=400000) {
+				$flete = 0;
 			}else{
-				$flete = 11000;
-			}	
+				if (isset($_SESSION["ciudad"]) && $_SESSION["ciudad"] == "Cali") {
+					$flete = 6000;
+				}else{
+					$flete = 11000;
+				}	
+			}				
 		}else{
 			$flete = 0;
 		}
@@ -300,15 +325,15 @@ class Carrito extends Productos
 		
 		$totalNetoAntesIva = $this->getTotalNetoAntesIva();
 		$totalIva = $this->getIva();
-		$pagoPuntos = $this->getPagoPuntos();
+		//$pagoPuntos = $this->getPagoPuntos();
 		$flete = $this->calcularFlete();
 
-		$total = ($totalNetoAntesIva + $totalIva - $pagoPuntos["valor_pago"]) + $flete;
-
+		//$total = ($totalNetoAntesIva + $totalIva - $pagoPuntos["valor_pago"]) + $flete;
+		$total = ($totalNetoAntesIva + $totalIva) + $flete;
 		return $total;
 	}
 
-	public function getRentabilidad(){
+	/*public function getRentabilidad(){
 		
 		$descuentoCupon	= $this->getDescuentoCupon();
 		$descuentoEscala = $this->getDescuentoEscala();
@@ -316,7 +341,7 @@ class Carrito extends Productos
 		$rentabilidad = $descuentoCupon + $descuentoEscala;
 
 		return $rentabilidad;
-	}
+	}*/
 
 	public function generarCodOrden(){
 
@@ -327,7 +352,7 @@ class Carrito extends Productos
 	}
 
 	public function generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $porcDescuentoEscala, $descuentoEscala, $totalNetoAntesIva, $iva, $pagoPuntos, $valorPunto, $flete, $total, $estado, $fecha_facturacion, $num_factura, $idusuario){
-		$this->conectar();
+		
 		$idorden = $this->insertar("INSERT INTO `ordenes_pedidos`(									
 									`num_orden`, 
 									`fecha_pedido`,
@@ -361,11 +386,11 @@ class Carrito extends Productos
 									'$fecha_facturacion',
 									'$num_factura',
 									'$idusuario')");
-		$this->disconnect();
+		
 		return $idorden;
 	}
 
-	public function getDetalleOrden(){		
+	public function getDetalleOrden(){
 
 		if (isset($_SESSION["idpdts"]) && count($_SESSION["idpdts"]>0)) {
 
@@ -379,8 +404,8 @@ class Carrito extends Productos
 
 				$producto = $this->infoProducto($idpdt);
 				$precio = $this->ajustarPrecio($producto["precio"],$producto["precio_oferta"]);
-				$iva = $this->calcularIva($precio,$producto["iva"]);
-				$subtotal = $this->calcularSubtotal($precio,$iva,$_SESSION["cantidadpdts"][$key]);
+				//$iva = $this->calcularIva($precio,$producto["iva"]);
+				$subtotal = $this->calcularSubtotal($precio,$producto["iva"],$_SESSION["cantidadpdts"][$key]);
 
 				$codigo_pdt = $producto["codigo"];
 				$cantidad_pdt = $_SESSION["cantidadpdts"][$key];
@@ -409,7 +434,7 @@ class Carrito extends Productos
 	}
 
 	public function agregarDetalleOrden($nombre_producto, $cod_producto, $cantidad, $precio, $precio_base, $descuento_cupon, $iva, $descuento_puntos, $idorden){
-		$this->conectar();
+		
 		$id_detalle = $this->insertar("INSERT INTO `detalle_orden`(										
 										`nombre_producto`, 
 										`cod_producto`, 
@@ -429,7 +454,7 @@ class Carrito extends Productos
 										'$iva',
 										'$descuento_puntos',
 										'$idorden')");
-		$this->disconnect();
+		
 		return $id_detalle;
 	}
 
@@ -439,11 +464,11 @@ class Carrito extends Productos
 
 		$fecha_actual = date("Y-m-d");
 
-		$this->conectar();
+		
 		$query = $this->consulta("SELECT `idcodigo`, `titulo`, `aplicacion`, `val_descuento`, `fecha_expiracion`, `tipo`, `privado`, `monto_minimo` 
 									FROM `codigos_descuento` 
 									WHERE `num_codigo_desc`='$cupon' AND `estado`=1 AND `fecha_expiracion`>='$fecha_actual'");
-		$this->disconnect();
+		
 		return $query[0];
 	}
 

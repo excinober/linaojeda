@@ -33,14 +33,14 @@ class Banners extends Database
 			$posicion = "";
 		}
 
-		$this->conectar();
+		
 		$query = $this->consulta("SELECT `idbanner`, `nombre`, `imagen`, `link`, `posicion`, `estado` FROM `banners` WHERE $estados_select $posicion");
-		$this->disconnect();
+		
 		return $query;
 	}
 
 	public function crearBanner($nombre="",$imagen="",$link="",$posicion="",$estado=0){
-		$this->conectar();
+		
 		$idbanner = $this->insertar("INSERT INTO `banners`(									
 									`nombre`, 
 									`imagen`, 
@@ -52,12 +52,12 @@ class Banners extends Database
 									'$link',
 									'$posicion',									
 									'$estado')");
-		$this->disconnect();
+		
 		return $idbanner;
 	}
 
 	public function actualizarBanner($idbanner=0,$nombre="",$imagen="",$link="",$posicion="",$estado=0){
-		$this->conectar();
+		
 
 		if (!empty($imagen)) {
 			
@@ -80,16 +80,16 @@ class Banners extends Database
 		}
 
 		
-		$this->disconnect();
+		
 		return $query;
 	}
 
 
 
 	public function detalleBanner($idbanner){
-		$this->conectar();
+		
 		$query = $this->consulta("SELECT `nombre`, `imagen`, `link`, `posicion`, `estado` FROM `banners` WHERE `idbanner`='$idbanner'");
-		$this->disconnect();
+		
 		return $query;
 	}
 
