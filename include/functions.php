@@ -79,7 +79,7 @@ function filters($categorias_padre){
 		?>		
 		<div class="col-xs-12" style="border:1px solid #000;">
 			<p class="text-xs-center mt-1">
-				<a data-toggle="collapse" href="#collapse<?=$categoria_padre["padre"]?>" aria-expanded="false"><?=$categoria_padre["nombre"]?>
+				<a data-toggle="collapse" href="#collapse<?=$categoria_padre["padre"]?>" aria-expanded="false" style="color:#000;"><?=$categoria_padre["nombre"]?>
 				<i class="fa fa-caret-down float-xs-right" aria-hidden="true"></i>
 				</a> 
 			</p>			
@@ -88,7 +88,7 @@ function filters($categorias_padre){
 				foreach ($categoria_padre["hijas"] as $key => $categoria_hija) {
 				?>
 					<hr class="m-0" style="background: #000;">
-					<a href="<?=URL_SITIO.URL_CATEGORIA."/".$categoria_hija["url"]?>">
+					<a href="<?=URL_SITIO.URL_CATEGORIA."/".$categoria_hija["url"]?>" style="color:#000;">
 					<p class="text-xs-center mt-1"><?=$categoria_hija["nombre"]?></p>
 					</a>
 				<?php

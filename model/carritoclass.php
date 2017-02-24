@@ -107,6 +107,7 @@ class Carrito extends Productos
 				$this->itemscarrito['iva'][] = $producto["iva"];
 				$this->itemscarrito['img_principal'][] = $producto["img_principal"];
 				$this->itemscarrito['compania'][] = $producto["compania"];
+				$this->itemscarrito['url'][] = $producto["url"];
 				$this->itemscarrito['subtotal'][] = $subtotal;
 			}
 		}else{

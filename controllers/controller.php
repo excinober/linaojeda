@@ -15,6 +15,37 @@ class Controller
 		$this->usuarios = new Usuarios();
 	}
 
+	public function logout(){
+		session_destroy();
+		unset($_SESSION["idusuario"]);
+		unset($_SESSION["nombre"]);
+		unset($_SESSION["apellido"]);
+		unset($_SESSION["email"]);
+		unset($_SESSION["telefono"]);
+		unset($_SESSION["telefono_m"]);
+		unset($_SESSION["direccion"]);		
+		unset($_SESSION["ciudad"]);
+		unset($_SESSION["pais"]);
+		unset($_SESSION["cod_postal"]);
+
+		header("Location: ".URL_SITIO);
+	}
+
+	public function updateSession($idusuario, $nombre, $apellido, $email, $telefono, $telefono_m, $direccion, $ciudad, $pais, $cod_postal){
+		
+		$_SESSION["idusuario"] = $idusuario;
+		$_SESSION["nombre"] = $nombre;
+		$_SESSION["apellido"] = $apellido;
+		$_SESSION["email"] = $email;
+		$_SESSION["telefono"] = $telefono;
+		$_SESSION["telefono_m"] = $telefono_m;
+		$_SESSION["direccion"] = $direccion;		
+		$_SESSION["ciudad"] = $ciudad;
+		$_SESSION["pais"] = $pais;
+		$_SESSION["cod_postal"] = $cod_postal;
+		$_SESSION["login"] = true;
+	}
+
 	public function pageHome(){
 
 		$posicion = "MENU";
@@ -28,6 +59,88 @@ class Controller
 
 		include "views/home.php";
 	}
+
+	public function pageContent($url){
+
+		$posicion = "MENU";
+		$estado = 1;
+
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$categorias_padre = $this->getCategoriesPattern();
+
+		$pagina_detalle = $this->paginas->contenidoPagina($url);
+
+		//var_dump($pagina_detalle);
+		include "views/page.php";
+	}
+
+	public function pageRegister(){
+
+		$posicion = "MENU";
+		$estado = 1;
+
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$categorias_padre = $this->getCategoriesPattern();
+
+		if (isset($_POST["createUser"])) {
+			extract($_POST);
+
+			$idusuario = $this->usuarios->crearUsuario($nombre, $apellido, "", "", $email, md5($password), 0, 0, $direccion, $telefono, $telefono_m, 1, fecha_actual("datetime"), $ciudad, $pais, $cod_postal);
+
+			if ($idusuario) {
+
+				$this->updateSession($idusuario, $nombre, $apellido, $email, $telefono, $telefono_m, $direccion, $ciudad, $pais, $cod_postal);
+
+				if (isset($_GET["return"]) && !empty($_GET["return"])) {
+					$redirect = URL_SITIO.$_GET["return"];
+				}else{
+					$redirect = URL_SITIO.URL_INGRESAR;
+				}
+
+				echo "<script> alert('Tu registro fue exitoso. Por favor ingresa con tus datos'); window.location='".$redirect."';</script>";
+			}
+		}
+
+		include "views/register.php";
+	}
+
+
+	public function pageLogin(){
+
+		$posicion = "MENU";
+		$estado = 1;
+
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$categorias_padre = $this->getCategoriesPattern();
+
+		if (isset($_POST["login"])) {
+			extract($_POST);
+
+			$password = md5($password);
+
+			$usuario = $this->usuarios->loguearUsuario($email, $password);			
+
+			if (count($usuario)>0) {
+
+				$this->updateSession($usuario["idusuario"], $usuario["nombre"], $usuario["apellido"], $usuario["email"], $usuario["telefono"], $usuario["telefono_m"], $usuario["direccion"], $usuario["ciudad"], $usuario["pais"], $usuario["cod_postal"]);
+
+				if (isset($_GET["return"]) && !empty($_GET["return"])) {
+					$redirect = URL_SITIO.$_GET["return"];
+				}else{
+					$redirect = URL_SITIO;
+				}
+
+				header("Location: ".$redirect);
+				
+			}else{
+				echo "<script> alert('Los datos de acceso son incorrectos. Por favor intenta de nuevo'); </script>";
+			}
+		}
+
+		include "views/login.php";	
+	}
+
+
 
 
 	public function pageProducts(){
@@ -99,12 +212,12 @@ class Controller
 		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","");
 
 		require "views/product_block.php";
-		include "views/products_list.php";
+		include "views/products_list_personalize.php";
 	}
 
 	public function pageCategory($url=""){
 
-		$categoria = $this->categorias->detalleCategoriaUrl($url);		
+		$categoria = $this->categorias->detalleCategoriaUrl($url);				
 		$estados_productos = array(1);
 		$personalizable = 0;
 		$categorias_padre = $this->getCategoriesPattern();

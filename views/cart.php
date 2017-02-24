@@ -1,13 +1,13 @@
 <?php include "header.php" ?>
-<div class="my-bag hidden-xs-down"><p>MY BAG</p></div>
-<div class="container-fluid pt-1 p-1" style="background-color: #9F972D; color: #fff;">
+<?php //include "my_bag.php"; ?>
+<div class="container-fluid pt-1" style="background-color: #9F972D; color: #fff;">
   <div class="container">
     <h1>MY BAG</h1>
   </div>
 </div>
 <div class="container mt-2">
   <div class="row">
-    <table class="table">
+    <table class="table table-cart">
       <thead>
         <tr>
           <th width="15%">Producto</th>
@@ -48,6 +48,12 @@
           </tr>
         <?php
           }
+        }else{
+          ?>
+          <tr>
+            <td colspan="6"><p class="text-xs-center">No hay productos en el carrito</p></td>
+          </tr>
+          <?php
         }
         ?>
         <tr>
@@ -67,41 +73,53 @@
         </tr>
         <tr>
           <td colspan="4"></td>
-          <td colspan="1" class="text-xs-right">Total</td>                    
-          <td colspan="1" class="text-xs-right"><?=convertir_pesos($total)?></td>
+          <td colspan="1" class="text-xs-right"><b>Total</b></td>                    
+          <td colspan="1" class="text-xs-right"><b><?=convertir_pesos($total)?></b></td>
         </tr>
       </tbody>
     </table>
-    <div class="row p-2" style="background-color: rgba(0,0,0,0.2);">
-      <div class="col-xs-6 col-md-3" style="border-right: 2px solid rgba(0,0,0,0.4); height: 150px;">
-        <h2>DETALLES <br>DE ENVÍO</h2>
+    </div>
+    <div class="row p-2" style="background-color: rgba(0,0,0,0.2);color: #000 !important;">
+      <div class="col-xs-12 col-md-3">
+        <h2 class="mt-2">DETALLES <br>DE ENVÍO</h2>
       </div>
-      <div class="col-xs-6 col-md-3" style="border-right: 2px solid rgba(0,0,0,0.4); height: 150px;">
+      <div class="col-xs-12 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>DIRECCIÓN DE ENVÍO</h6>
-        <p style="line-height: 1rem;">
-          Lorena Perez<br>
-          Cra 53 # 140 - 35<br>
-          111111 Bogotá<br>
-          Colombia<br>
-          321546879
-        </p>
+        <hr class="mt-0">
+        <h5 style="line-height: 1.3rem;">
+          <?php if ($_SESSION["login"]) { ?>
+            <b style="text-transform: uppercase;"><?=$_SESSION["nombre"]." ".$_SESSION["apellido"]?></b><br>
+            <p><?=$_SESSION["direccion"]?><br>
+            <?=$_SESSION["ciudad"]?><br>
+            <?=$_SESSION["pais"]?><br>
+            <?=$_SESSION["telefono_m"]." - ".$_SESSION["telefono"]?></p>
+            <button class="btn btn-sm btn-primary">Actualizar</button>
+          <?php }else{ ?>          
+          <a class="login-popup">Ingresar</a>
+          <?php } ?>
+        </h5>
       </div>
-      <div class="col-xs-6 col-md-3" style="border-right: 2px solid rgba(0,0,0,0.4); height: 150px;">
+      <div class="col-xs-6 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>TRANSPORTE</h6>
-        <p style="line-height: 1rem;">
-          COORDINADORA<br>
+        <hr class="mt-0">
+        <h5 style="line-height: 1.3rem;">
+          <b>COORDINADORA</b><br>
           4 días hábiles
-        </p>
+        </h5>
       </div>
-      <div class="col-xs-6 col-md-3" style="height: 150px;">
+      <div class="col-xs-6 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>COSTO ENVÍO</h6>
-        <p>$20.000</p>
+        <hr class="mt-0">
+        <h5 style="line-height: 1.3rem;">$20.000</h5>
       </div>
     </div>
-    <div class="row mt-1">    
-      <button class="btn btn-primary pull-right ml-1">Continuar Pago</button>
-      <button class="btn btn-success pull-right">Seguir Comprando</button>      
-    </div>
-  </div>
+    <div class="row mt-1">
+      <?php if ($_SESSION["login"]) { ?>
+        <button class="btn btn-primary btn-lg pull-right ml-1">Continuar Pago</button>
+      <?php }else{ ?>      
+        <button class="btn btn-primary btn-lg pull-right ml-1 login-popup">Continuar Pago</button>
+      <?php }?>      
+      <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success pull-right">Seguir Comprando</a>
+    </div>  
 </div>
 <?php include "footer.php" ?>

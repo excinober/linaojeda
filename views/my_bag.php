@@ -7,19 +7,21 @@
   foreach ($itemsCarrito["id"] as $key => $iditem) {
   ?>
     <div class="row">
-
       <div class="col-xs-5">
-        <img src="http://localhost/linaojeda/www/assets/img/productos/producto2.png" class="img-fluid my-1">        
+        <div class="col-xs-12" style="background-color: #fff;">
+          <img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid my-1">        
+        </div>
       </div>
       <div class="col-xs-7">
         <h6><?=$itemsCarrito["nombre"][$key]?></h6>
         <h6>Ref: <?=$itemsCarrito["codigo"][$key]?></h6>
-        <h6>Cantidad: <?=$itemsCarrito["cantidad"][$key]?></h6>
-        <!--<hr class="my-1 bg-white">-->
+        <h6>Cantidad: <?=$itemsCarrito["cantidad"][$key]?></h6>        
         <h6><?=convertir_pesos($itemsCarrito["subtotal"][$key])?></h6>
+        <a class="btn btn-sm btn-secondary" href="<?=URL_SITIO.URL_PRODUCTOS."/".$itemsCarrito["url"][$key]?>">VIEW MORE</a>
       </div>
     </div>
     <hr class="my-1 bg-white">
   <?php
   } ?>
+  <a href="<?=URL_CARRITO?>" class="btn btn-primary">Show Cart</a>
 </div>

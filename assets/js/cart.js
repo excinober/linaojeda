@@ -14,7 +14,8 @@ $(document).ready(function(){
 				/*$("#total-carrito").text("Total a pagar $"+response.total);*/
 				$("#cantidad-carrito").text(response.cantidad);
 				$(".count-bag").text(response.cantidad);				
-				alert('El producto se agrego al carrito');				
+				alert('El producto se agrego al carrito');
+				location.reload();
 			},
 			error: function() {
 				alert('El producto no se agrego');

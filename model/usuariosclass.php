@@ -15,51 +15,41 @@ class Usuarios extends Database
 		return $query;
 	}
 	
-	public function crearUsuario($nombre="", $apellido="", $sexo="", $fecha_nacimiento="", $email="", $password="", $num_identificacion="", $boletines=0, $condiciones=0, $direccion="", $telefono="", $telefono_m="", $segmento="", $foto="", $estado=0, $fecha_registro="", $lider=0, $ciudad=0, $idorganizacion=0){	
+	public function crearUsuario($nombre="", $apellido="", $sexo="", $fecha_nacimiento="", $email="", $password="", $boletines=0, $condiciones=0, $direccion="", $telefono="", $telefono_m="", $estado=0, $fecha_registro="", $ciudad="", $pais="", $cod_postal=""){	
 		
-		$idusuario = $this->insertar("INSERT INTO usuarios(										
+		$idusuario = $this->insertar("INSERT INTO usuarios(
 										nombre,
 										apellido, 
 										sexo, 
 										fecha_nacimiento, 
 										email, 
-										password, 
-										num_identificacion, 
+										password, 										
 										boletines, 
 										condiciones, 
 										direccion, 
+										ciudad,
+										pais,
+										cod_postal,
 										telefono, 
 										telefono_m, 
-										tipo,
-										segmento,
 										estado, 
-										fecha_registro, 
-										lider, 
-										ciudades_idciudad,
-										organizaciones_idorganizacion) VALUES (
+										fecha_registro) VALUES (
 										'$nombre',
 										'$apellido', 
 										'$sexo', 
 										'$fecha_nacimiento', 
 										'$email', 
-										'$password', 
-										'$num_identificacion', 
+										'$password', 										
 										'$boletines', 
 										'$condiciones', 
 										'$direccion', 
-										'$telefono', 
-										'$telefono_m', 
-										'$tipo',										
-										'$segmento',
-										'$estado', 
-										'$fecha_registro', 
-										'$lider', 
 										'$ciudad',
-										'$idorganizacion')");
-
-		if (!empty($foto)) {
-			$foto = $this->insertar("INSERT INTO usuarios(foto) VALUES ('$foto')");
-		}
+										'$pais',
+										'$cod_postal',
+										'$telefono', 
+										'$telefono_m', 										
+										'$estado', 
+										'$fecha_registro')");
 
 		
 		return $idusuario;	
@@ -122,12 +112,11 @@ class Usuarios extends Database
 
 	public function loguearUsuario($email,$password){
 		
-		$query = $this->consulta("SELECT `usuarios`.`idusuario`, `usuarios`.`nombre`, `usuarios`.`apellido`, `usuarios`.`sexo`, `usuarios`.`fecha_nacimiento`, `usuarios`.`email`, `usuarios`.`num_identificacion`, `usuarios`.`boletines`, `usuarios`.`condiciones`, `usuarios`.`direccion`, `usuarios`.`telefono`, `usuarios`.`telefono_m`, `usuarios`.`tipo`, `usuarios`.`segmento`, `usuarios`.`foto`, `usuarios`.`estado`, `usuarios`.`fecha_registro`, `usuarios`.`ciudades_idciudad`, `ciudades`.`ciudad` 
-									FROM `usuarios` 
-									INNER JOIN `ciudades` ON(`usuarios`.`ciudades_idciudad`=`ciudades`.`idciudad`)
+		$query = $this->consulta("SELECT `idusuario`, `nombre`, `apellido`, `sexo`, `fecha_nacimiento`, `email`, `password`, `boletines`, `condiciones`, `direccion`, `ciudad`, `pais`, `cod_postal`, `telefono`, `telefono_m`, `estado`, `fecha_registro`
+									FROM `usuarios` 									
 									WHERE `email`='$email' AND `password`='$password'");
 		
-		return $query;
+		return $query[0];
 	}
 
 	public function loguearPersonal($email,$password){

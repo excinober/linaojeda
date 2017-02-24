@@ -43,6 +43,11 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				$controller->pageHome();
 				break;
 
+			case URL_REGISTRO:
+				$controller->pageRegister();
+				break;
+
+
 			case URL_PRODUCTOS:
 				if (isset($var2) && !empty($var2)) {
 					if ($var2==URL_PRODUCTOS_PERSONALIZAR) {
@@ -114,7 +119,11 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_INGRESAR:
-				# code...
+				$controller->pageLogin();
+				break;
+
+			case URL_PAGINA_CONTENIDO:
+				$controller->pageContent($var2);
 				break;
 
 			case URL_USUARIO:
@@ -122,7 +131,7 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_SALIR:
-				# code...
+				$controller->logout();
 				break;
 
 			case URL_ADMIN:

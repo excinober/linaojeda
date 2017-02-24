@@ -3,18 +3,23 @@
     src: url(../fonts/GillSansStd-Light.otf);
 }
 
+@font-face {
+    font-family: 'Sophia';
+    src: url(../fonts/Sophia.ttf);
+}
+
 body, html{
 	font-family: GillSansStd;
 }
 
 .my-bag{
-	width: 200px;
+	width: 300px;
 	height: 50px;
 	text-align: center;
 	position: fixed;
 	/*right: 320px;*/
-	right: -80px;
-	top: 300px;
+	right: -125px;
+	top: 250px;
 	background-color: #9F972D;
 	color: #fff;	
 	-webkit-transform: rotate(-90deg);
@@ -33,11 +38,11 @@ body, html{
 .bag-box{
 	background-color: rgba(0,0,0,0.7);
 	width: 400px;
-	height: 200px;
+	height: 300px;
 	position: fixed;
 	right: -380px;
 	display: none;
-	top: 225px;
+	top: 125px;
 	z-index: 999;
 	color: #fff;
 	overflow-y: scroll;
@@ -97,4 +102,22 @@ body, html{
 
 .text-white{
 	color: #fff !important;
+}
+
+.badge-header{
+	background-color: #434244;
+	width: 21px;
+	height: 21px;
+	font-size: 9px;
+	color: #fff;
+	padding-top: 5px;
+	margin-top: 6px;
+}
+
+.newsletter{
+	font-size: Sophia;
+}
+
+.table-cart, .table-cart  tr > th, .table-cart  tr > td{
+	border: 1px solid #000;
 }

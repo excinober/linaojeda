@@ -18,9 +18,7 @@ class ControllerAdmin
 			$email = $_POST["email"];
 			$password = md5($_POST["password"]);
 
-			$admin = $this->usuarios->loguearPersonal($email, $password);			
-
-			var_dump($admin);
+			$admin = $this->usuarios->loguearPersonal($email, $password);				
 
 			if (count($admin)>0) {
 				

@@ -14,7 +14,7 @@ class Paginas extends Database
 			$posicion_where = "";
 		}
 
-		$query = $this->consulta("SELECT `idpagina`, `titulo`, `url`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` $posicion_where");
+		$query = $this->consulta("SELECT `idpagina`, `titulo`, `url`, `contenido`, `banner`, `posicion`, `estado` FROM `paginas` $posicion_where");
 		
 		return $query;
 	}
@@ -25,15 +25,13 @@ class Paginas extends Database
 									`titulo`, 
 									`url`, 
 									`contenido`, 
-									`banner`, 
-									`menu`, 
+									`banner`, 									
 									`posicion`, 
 									`estado`) VALUES (									
 									'$titulo',
 									'$url',
 									'$contenido',
-									'$banner',
-									'$menu',
+									'$banner',									
 									'$posicion',
 									'$estado')");
 		
@@ -46,8 +44,7 @@ class Paginas extends Database
 									`titulo`= '$titulo',
 									`url`= '$url',
 									`contenido`= '$contenido',
-									`posicion`= '$posicion',
-									`menu`= '$menu',
+									`posicion`= '$posicion',									
 									`estado`= '$estado' 
 									WHERE `idpagina`='$idpagina'");	
 
@@ -65,14 +62,14 @@ class Paginas extends Database
 
 	public function detallePagina($idpagina){
 		
-		$query = $this->consulta("SELECT `titulo`, `url`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` WHERE `idpagina`='$idpagina'");
+		$query = $this->consulta("SELECT `titulo`, `url`, `contenido`, `banner`, `posicion`, `estado` FROM `paginas` WHERE `idpagina`='$idpagina'");
 		
 		return $query;
 	}
 
 	public function contenidoPagina($url){
 		
-		$query = $this->consulta("SELECT `idpagina`, `titulo`, `contenido`, `banner`, `menu`, `posicion`, `estado` FROM `paginas` WHERE `url`='$url'");
+		$query = $this->consulta("SELECT `idpagina`, `titulo`, `contenido`, `banner`, `posicion`, `estado` FROM `paginas` WHERE `url`='$url'");
 		
 		return $query[0];
 	}

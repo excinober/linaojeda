@@ -1,38 +1,16 @@
 <?php include 'header.php'; ?>
-
+<?php include "my_bag.php"; ?>
 <div class="container">
 	<div class="col-xs-12 col-md-3">
-		<h4>MENÚ</h4>
+		<h4 class="text-bold">MENÚ</h4>
 		
 		<?php include "views/nav_sidebar.php"; ?>
 
-		<h4 class="m-t-3">FILTERS</h4>
-		<?php
-		foreach ($categorias_padre as $key => $categoria_padre) {	
-		?>		
-		<div class="col-xs-12" style="border:1px solid #000;">
-			<p class="text-xs-center mt-1">
-				<a data-toggle="collapse" href="#collapse<?=$categoria_padre["padre"]?>" aria-expanded="false"><?=$categoria_padre["nombre"]?>
-				<i class="fa fa-caret-down float-xs-right" aria-hidden="true"></i>
-				</a> 
-			</p>			
-			<div class="collapse" id="collapse<?=$categoria_padre["padre"]?>">
-				<?php
-				foreach ($categoria_padre["hijas"] as $key => $categoria_hija) {
-				?>
-					<hr class="m-0" style="background: #000;">
-					<p class="text-xs-center mt-1"><?=$categoria_hija["nombre"]?></p>
-				<?php
-				}
-				?>
-			</div>
-		</div>
-		<?php
-		}
-		?>		
+		<h4 class="mt-2">FILTERS</h4>
+		<?php filters($categorias_padre); ?>
 	</div>
 	<div class="col-xs-12 col-md-9">
-		<div class="row">
+		<!--<div class="row">
 			<div class="col-xs-12">
 				<div id="carousel-home" class="carousel slide" data-ride="carousel">        
 				    <div class="carousel-inner" role="listbox">
@@ -57,33 +35,13 @@
 				    </div>    
 				</div>  
 			</div>
-		</div>
-		<div class="row mt-1">
-			<div class="col-xs-12 col-md-6">				
-				<div class="col-xs-4 px-0">
-					ORDENAR POR:
-				</div>
-				<div class="col-xs-5 px-0">
-					<select class="form-control form-control-sm">
-						<option>Precio de mmayor a menor</option>
-					</select>								
-				</div>
-				<div class="col-xs-3 px-0 text-xs-center">
-					VIEW ALL
-				</div>				
-			</div>
-			<div class="col-xs-12 col-md-3">
-				<h6 class="text-xs-center"><i class="fa fa-github" aria-hidden="true"></i> ALEJANDRA / LOG OUT</h6>
-			</div>
-			<div class="col-xs-12 col-md-3">
-				<h6 class="text-xs-center">DREAM <i class="fa fa-github" aria-hidden="true"></i> BOX</h6>
-			</div>
-		</div>
-		<hr class="mt-0">
+		</div>-->
+		<?php include "filters.php"; ?>
+		<hr class="mt-1">
 		<div class="row">
 			<?php 
 			foreach ($productos as $key => $producto) {
-				product_block($producto);
+				product_block_personalize($producto);
 			}
 			?>			
 		</div>

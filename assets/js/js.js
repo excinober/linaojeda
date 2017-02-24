@@ -22,7 +22,7 @@ $(document).ready(function(){
 	$(".my-bag").click(function(){
 
 		if (showbox) {
-			$(this).css('right','-80px');			
+			$(this).css('right','-125px');			
 			$('.bag-box').css('right','-380px');	
 			$('.bag-box').css('display','none');
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 		}else{
 
-			$(this).css('right','320px');
+			$(this).css('right','270px');
 			$('.bag-box').css('display','block');
 			$('.bag-box').css('right','0px');	
 
@@ -45,9 +45,14 @@ $(document).ready(function(){
 		var pricepdt = $(this).attr("price-pdt");
 		var urlpdt = $(this).attr("url-pdt");
 
-		var html = '<div class="row"><div class="col-xs-7"><img src="'+imgpdt+'" class="img-fluid"></div><div class="col-xs-5"><h5>'+namepdt+'<br>'+refpdt+'<br>'+pricepdt+'</h5></div><div class="col-xs-12"><center><a href="'+urlpdt+'" class="btn btn-success mt-2">SHOP NOW</a></center></div></div>';
+		var html = '<div class="row py-2"><div class="col-xs-7 px-2"><img src="'+imgpdt+'" class="img-fluid"></div><div class="col-xs-5 pt-2"><h4>'+namepdt+'<br>'+refpdt+'<br>'+pricepdt+'</h4></div><div class="col-xs-12"><center><a href="'+urlpdt+'" class="btn btn-lg btn-success mt-2">SHOP NOW</a></center></div></div>';
 		modal(html);
 	});
+
+	$(".login-popup").click(function(){
+		var html = '<div class="row mx-2"><h3>CREAR UNA CUENTA</h3><form method="post" action="Registro/?return=Carrito"><div class="form-group"><label>Email</label><input type="email" class="form-control" placeholder="" name="email" required="required"></div><center><button type="submit" class="btn btn-secondary">CREAR UNA CUENTA</button></center></form></div><hr><div class="row px-2"><h3>¿YA ESTÁS REGISTRADO?</h3><form action="Ingresar?return=Carrito" method="post"><div class="col-xs-12 col-md-6"><div class="form-group"><label>Email</label><input type="email" class="form-control" name="email" required="required"></div></div><div class="col-xs-12 col-md-6"><div class="form-group"><label>Contraseña</label><input type="password" class="form-control" name="password" required="required"></div></div><center><button type="submit" class="btn btn-danger" name="login">INICIAR SESIÓN</button></center></form></div>';
+		modal(html);
+	})
 	
 })
 
