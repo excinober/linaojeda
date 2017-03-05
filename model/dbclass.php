@@ -12,7 +12,7 @@ class Database {
   if(!isset($this->conexion))
   {
    
-/*    $this->conexion = new PDO(
+    $this->conexion = new PDO(
     'mysql:host=localhost;dbname=linaojeda',
     'root',
     '',
@@ -20,7 +20,7 @@ class Database {
         PDO::ATTR_PERSISTENT => false
       )
     );
-*/
+/*
    $this->conexion = new PDO(
     'mysql:host=localhost;dbname=linkgm_linaojeda',
     'linkgm_excinober',
@@ -29,7 +29,7 @@ class Database {
         PDO::ATTR_PERSISTENT => false
       )
     );
-
+*/
     $this->conexion->exec("SET CHARACTER SET utf8");
   }
  }

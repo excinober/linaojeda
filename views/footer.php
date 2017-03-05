@@ -2,8 +2,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-4">
-				<h2 class="text-xs-center newsletter">newsletter</h2>
-				<input type="text" class="form-control" name="email" placeholder="SING UP NOW">
+				<h2 class="text-xs-center newsletter mb-0">newsletter</h2>
+				<input type="text" class="form-control" name="email" placeholder="SING UP NOW" style="border: 2px solid #9F972D;color: #9F972D;">
 				<h3 class="text-xs-center mt-1" style="color:#9F972D;">
 					<i class="fa fa-facebook-official" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>

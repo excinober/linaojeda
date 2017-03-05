@@ -1,6 +1,6 @@
 <?php 
-//define("URL_SITIO", "http://localhost/linaojeda/www/");
-define("URL_SITIO", "http://excinober.com/linaojeda/");
+define("URL_SITIO", "http://localhost/linaojeda/www/");
+//define("URL_SITIO", "http://excinober.com/linaojeda/");
 define("NOMBRE_SITIO", "LO");
 define("URL_INICIO", "Inicio");
 define("URL_PRODUCTOS", "Productos");

@@ -40,7 +40,7 @@
 			<div class="col-xs-12"><h6 class="text-muted">LO MINI / BLACK / LOREM IPSUM</h6></div>
 			<div class="col-xs-12 col-md-8">
 				<div class="row">
-					<div class="col-xs-12 p-3" style="border:1px solid #000;">
+					<div class="col-xs-12 p-3">
 						<div style="width: 100%;" class="p-0 col-xs-12 text-xs-center" id="container-personalize">
 								<img src="<?=$producto["img_principal"]?>" class="img-fluid">
 						</div>
@@ -62,34 +62,40 @@
 				<hr>
 				<h2 class="text-xs-center">VISTO RECIENTEMENTE</h2>
 			</div>
-			<div class="col-xs-12 col-md-4">
+			<div class="col-xs-12 col-md-4">								
+				<h2 class="text-xs-center"><?=$producto["nombre"]?></h2>
+				<hr>
 				<?php 
-
 				foreach ($piezas as $key => $pieza) {
 				?>
-				<h3 class="text-xs-center mt-1"><?=$pieza["nombre"]?></h3>
+				
 				<div class="row">
-					<center>
-						<?php
-						foreach ($pieza["opciones"] as $key => $opcion) {
-						?>
-						<div class="col-xs-3 opcion-pieza" title="<?=$opcion["nombre"]?>" urlpieza="<?=$opcion["imagen"]?>">
-							<?php
-							if ($opcion["tipo_convencion"]=="IMAGEN") {
-							?>
-							<div class="w-100" style="height: 50px; background-image: url(<?=$opcion["imagen_convencion"]?>);background-repeat: no-repeat;"></div>
-							<?php
-							}elseif ($opcion["tipo_convencion"]=="COLOR") {
-							?>
-							<div class="w-100" style="height: 50px; background-color: <?=$opcion["color_convencion"]?>"></div>
-							<?php	
-							}
-							?>							
+					<h3 class="text-xs-center mt-1"><?=$pieza["nombre"]?></h3>
+					<div class="card">
+	  					<div class="card-block px-0">
+							<center>
+								<?php
+								foreach ($pieza["opciones"] as $key => $opcion) {
+								?>
+								<div class="col-xs-3 opcion-pieza" title="<?=$opcion["nombre"]?>" urlpieza="<?=$opcion["imagen"]?>">
+									<?php
+									if ($opcion["tipo_convencion"]=="IMAGEN") {
+									?>
+									<div class="w-100" style="height: 40px; background-image: url(<?=$opcion["imagen_convencion"]?>);background-repeat: no-repeat;"></div>
+									<?php
+									}elseif ($opcion["tipo_convencion"]=="COLOR") {
+									?>
+									<div class="w-100" style="height: 50px; background-color: <?=$opcion["color_convencion"]?>"></div>
+									<?php	
+									}
+									?>							
+								</div>
+								<?php
+								}
+								?>
+							</center>
 						</div>
-						<?php
-						}
-						?>
-					</center>
+					</div>
 				</div>		
 				<?php
 				}
@@ -102,7 +108,7 @@
 				<hr>
 				<h3 class="text-xs-center">COLOR</h3>
 				<hr>-->
-				<hr>
+				<!--<hr>-->
 				<h3 class="text-xs-center">QTY</h3>
 				<div class="row">
 					<div class="col-xs-5 offset-xs-3">

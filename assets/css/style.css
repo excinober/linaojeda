@@ -1,12 +1,14 @@
 @font-face {
+    font-family: 'Sophia';
+    src: url(../fonts/Sophia.otf);
+}
+
+@font-face {
     font-family: 'GillSansStd';
     src: url(../fonts/GillSansStd-Light.otf);
 }
 
-@font-face {
-    font-family: 'Sophia';
-    src: url(../fonts/Sophia.ttf);
-}
+
 
 body, html{
 	font-family: GillSansStd;
@@ -115,7 +117,10 @@ body, html{
 }
 
 .newsletter{
-	font-size: Sophia;
+	font-family: Sophia !important;
+	font-size: 80px;
+	line-height: 50px;
+	color: #9F972D;
 }
 
 .table-cart, .table-cart  tr > th, .table-cart  tr > td{
