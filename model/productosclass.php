@@ -117,10 +117,47 @@ class Productos extends Database
 		return $query;
 	}
 
+	public function listarPiezas(){
+		
+		$query = $this->consulta("SELECT `piezas`.`idpieza`, `piezas`.`nombre`, `piezas`.`productos_idproducto`, `productos`.`nombre` AS 'producto'
+									FROM `piezas`
+									INNER JOIN productos ON (`piezas`.`productos_idproducto`=`productos`.`idproducto`)");
+		return $query;
+	}
+
+	public function detallePieza($idpieza){
+		$query = $this->consulta("SELECT `piezas`.`idpieza`, `piezas`.`nombre`, `piezas`.`productos_idproducto`, `productos`.`nombre` AS 'producto'
+									FROM `piezas`
+									INNER JOIN productos ON (`piezas`.`productos_idproducto`=`productos`.`idproducto`)
+									WHERE `piezas`.`idpieza`='$idpieza'");
+		return $query[0];
+	}
+
 	public function piezasProducto($idproducto){
 		
 		$query = $this->consulta("SELECT `idpieza`, `nombre`, `productos_idproducto` FROM `piezas` WHERE `productos_idproducto`='$idproducto'");
 		return $query;
+	}
+
+	public function actualizarPieza($idpieza=0,$nombre="",$producto=0){
+		
+		$query = $this->actualizar("UPDATE `piezas` SET 
+										`nombre`='$nombre',
+										`productos_idproducto`='$producto'										
+										WHERE `idpieza`='$idpieza'");
+		
+		return $query;
+	}
+
+	public function crearPieza($nombre="",$producto=0){
+		
+		$idpieza = $this->insertar("INSERT INTO `piezas`(
+										`nombre`, 
+										`productos_idproducto`) VALUES (
+										'$nombre', 
+										'$producto')");
+		
+		return $idpieza;
 	}
 
 	public function opcionesPieza($idpieza){

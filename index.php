@@ -182,6 +182,21 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 							}
 						break;
 
+						case URL_ADMIN_PIEZAS:
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3=="Nuevo") {
+									$var3 = "";							
+								}
+								$controllerAdmin->adminPiezaDetalle($var3);
+								
+							}else{
+								$controllerAdmin->adminPiezasLista();
+							}
+						break;
+
+
+
 						case URL_ADMIN_USUARIOS:
 							if (isset($var3) && !empty($var3)) {
 

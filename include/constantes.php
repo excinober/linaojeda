@@ -76,6 +76,7 @@ define("URL_ADMIN_INGREDIENTES", "Ingredientes");
 define("URL_ADMIN_PROTOCOLOS", "Protocolos");
 define("URL_ADMIN_PERSONAL", "Personal");
 define("URL_ADMIN_SUSCRIPTORES", "Suscriptores");
+define("URL_ADMIN_PIEZAS", "Piezas");
 
 /**INFORMES**/
 define("URL_ADMIN_INFORMES", "Informes");

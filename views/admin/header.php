@@ -50,6 +50,9 @@ $breadcrumb = explode("/", $_GET["url"]);
                         </li>
                         <li>
                         	<a href="<?=URL_ADMIN."/".URL_ADMIN_CATEGORIAS?>">Categorías</a>
+                        </li>
+                        <li>
+                            <a href="<?=URL_ADMIN."/".URL_ADMIN_PIEZAS?>">Piezas</a>
                         </li>                        
                     </ul>
                 </li>								

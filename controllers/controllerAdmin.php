@@ -181,6 +181,36 @@ class ControllerAdmin
 		include "views/admin/categoria_detalle.php";		
 	}
 
+	public function adminPiezasLista(){
+
+		$piezas = $this->productos->listarPiezas();		
+
+		include "views/admin/piezas_lista.php";	
+	}
+
+	public function adminPiezaDetalle($idpieza){
+
+		$productos = $this->productos->listarProductos(array(1),0,1);
+
+		if (isset($_POST["actualizarPieza"])) {
+
+			extract($_POST);
+			$this->productos->actualizarPieza($idpieza,$nombre,$producto);
+		}
+
+		if (isset($_POST["crearPieza"])) {
+			extract($_POST);
+			$idpieza = $this->productos->crearPieza($nombre,$producto);
+		}
+
+		if (isset($idpieza) && $idpieza!='') {
+			$pieza = $this->productos->detallePieza($idpieza);
+			$opciones_pieza = $this->productos->opcionesPieza($idpieza);
+		}
+
+		include "views/admin/pieza_detalle.php";	
+	}
+
 	public function adminUsuariosLista(){
 
 		$usuariosLista = $this->usuarios->listarUsuarios();		
