@@ -5,7 +5,7 @@
 			<form method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Nombre</label>
-					<input type="text" class="form-control" name="nombre" id="nombre" value="<?=$pieza['nombre']?>" required>
+					<input type="text" class="form-control" name="nombre_pieza" id="nombre_pieza" value="<?=$pieza['nombre']?>" required>
 				</div>												
 				<div class="form-group">
 					<label for="exampleInputEmail1">Producto</label>
@@ -20,7 +20,7 @@
 					</select>
 				</div>
 				<div class="row">
-					<h2 class="text-center">OPCIONES</h2>
+					<h2 class="text-center">OPCIONES <small class="pull-right" id="nueva-opcion">Nueva opción</small></h2>
 					<div class="col-xs-12">
 						<table class="table">
 							<thead>
@@ -33,7 +33,7 @@
 									<th>Acciones</th>
 								</tr>								
 							</thead>
-							<tbody>
+							<tbody id="caja-piezas">
 								<?php 
 									foreach ($opciones_pieza as $key => $opcion) {
 										?>
@@ -51,26 +51,28 @@
 											?>												
 											</td>
 											<td><?=$opcion["estado"]?></td>
-											<td></td>
+											<td>
+												<a class="eliminarOpcionPieza" idopcion="<?=$opcion["idopcionpieza"]?>" idpieza="<?=$idpieza?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+											</td>
 										</tr>
 										<?php
 									}
 								?>
 								<tr>
-									<td><input type="text" name="nombre" class="form-control"></td>
-									<td><input type="file" name="imagen" class="form-control"></td>
+									<td><input type="text" name="nombre[]" class="form-control"></td>
+									<td><input type="file" name="imagen[]" class="form-control"></td>
 									<td>
-									<select name="tipo_convencion" class="form-control">
+									<select name="tipo_convencion[]" class="form-control">
 										<option value="COLOR">COLOR</option>	
 										<option value="IMAGEN">IMAGEN</option>	
 									</select></td>
-									<td><input type="color" name="color_convencion" class="form-control" id="color_convencion"> <input type="file" name="imagen_convencion" class="form-control" id="imagen_convencion" style="display: none;"></td>
+									<td><input type="color" name="color_convencion[]" class="form-control"> <input type="file" name="imagen_convencion[]" class="form-control"  style="display: none;"></td>
 									<td>
-										<select name="estado" class="form-control"> 
+										<select name="estado[]" class="form-control"> 
 											<option value="1">ACTIVO</option>
 											<option value="0">INACTIVO</option>
 										</select>
-									</td>
+									</td>									
 								</tr>
 							</tbody>
 						</table>

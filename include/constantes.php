@@ -1,6 +1,6 @@
 <?php 
-define("URL_SITIO", "http://localhost/linaojeda/www/");
-//define("URL_SITIO", "http://excinober.com/linaojeda/");
+//define("URL_SITIO", "http://localhost/linaojeda/www/");
+define("URL_SITIO", "http://linaojeda.com/demo/");
 define("NOMBRE_SITIO", "LO");
 define("URL_INICIO", "Inicio");
 define("URL_PRODUCTOS", "Productos");
@@ -57,6 +57,8 @@ define("DIR_IMG_CATEGORIAS", "assets/img/categorias/");
 define("DIR_IMG_USUARIOS", "assets/img/usuarios/");
 define("DIR_IMG_INCENTIVOS", "assets/img/incentivos/");
 define("DIR_IMG_DOCUMENTOS", "documentos/");
+define("DIR_IMG_PIEZAS", "assets/img/piezas/");
+define("DIR_IMG_CONVENCIONES", "assets/img/convenciones/");
 
 
 /***ADMIN**/
@@ -77,6 +79,7 @@ define("URL_ADMIN_PROTOCOLOS", "Protocolos");
 define("URL_ADMIN_PERSONAL", "Personal");
 define("URL_ADMIN_SUSCRIPTORES", "Suscriptores");
 define("URL_ADMIN_PIEZAS", "Piezas");
+define("URL_ADMIN_PIEZAS_ELIMINAR_OPCION", "EliminarOpcionPieza");
 
 /**INFORMES**/
 define("URL_ADMIN_INFORMES", "Informes");

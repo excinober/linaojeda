@@ -11,7 +11,7 @@ class Database {
   
   if(!isset($this->conexion))
   {
-   
+  
     $this->conexion = new PDO(
     'mysql:host=localhost;dbname=linaojeda',
     'root',
@@ -22,9 +22,9 @@ class Database {
     );
 /*
    $this->conexion = new PDO(
-    'mysql:host=localhost;dbname=linkgm_linaojeda',
-    'linkgm_excinober',
-    ';,v3?3Od@f7p',
+    'mysql:host=localhost;dbname=linaojed_lo',
+    'linaojed_lo',
+    'vxRuET%umPLs',
     array(
         PDO::ATTR_PERSISTENT => false
       )

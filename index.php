@@ -185,7 +185,9 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 						case URL_ADMIN_PIEZAS:
 							if (isset($var3) && !empty($var3)) {
 
-								if ($var3=="Nuevo") {
+								if ($var3==URL_ADMIN_PIEZAS_ELIMINAR_OPCION) {
+									$controllerAdmin->adminPiezaEliminarOpcion();	 	
+								}elseif ($var3=="Nuevo") {
 									$var3 = "";							
 								}
 								$controllerAdmin->adminPiezaDetalle($var3);

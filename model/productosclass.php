@@ -143,7 +143,7 @@ class Productos extends Database
 		
 		$query = $this->actualizar("UPDATE `piezas` SET 
 										`nombre`='$nombre',
-										`productos_idproducto`='$producto'										
+										`productos_idproducto`='$producto'							
 										WHERE `idpieza`='$idpieza'");
 		
 		return $query;
@@ -168,6 +168,36 @@ class Productos extends Database
 									WHERE `piezas_has_opcion_pieza`.`piezas_idpieza`='$idpieza'");
 		return $query;
 		
+	}
+
+	public function crearOpcionPieza($idpieza, $nombre, $destino_pieza, $tipo_convencion, $color_convencion, $destino_convencion, $estado){
+
+		$idopcionpieza = $this->insertar("INSERT INTO `opcion_pieza`(								
+											`nombre`, 
+											`imagen`, 
+											`tipo_convencion`, 
+											`color_convencion`, 
+											`imagen_convencion`, 
+											`estado`) VALUES (
+											'$nombre',
+											'$destino_pieza',
+											'$tipo_convencion',
+											'$color_convencion',
+											'$destino_convencion',
+											'$estado')");
+		
+
+		$this->insertar("INSERT INTO `piezas_has_opcion_pieza`(`piezas_idpieza`, `opcion_pieza_idopcionpieza`) VALUES ('$idpieza', '$idopcionpieza')");
+		
+		return $idopcionpieza;
+	}
+
+	public function eliminarOpcionPieza($idpieza, $idopcion){
+		$filas = $this->actualizar("DELETE FROM `piezas_has_opcion_pieza` WHERE `piezas_idpieza`='$idpieza' AND `opcion_pieza_idopcionpieza` = '$idopcion'");
+		
+		$this->actualizar("DELETE FROM `piezas` WHERE `idpieza`='$idpieza'");
+
+		return $filas;
 	}
 
 	public function actualizarProducto($idproducto,$nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$compania,$relevancia){

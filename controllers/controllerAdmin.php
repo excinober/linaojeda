@@ -195,7 +195,39 @@ class ControllerAdmin
 		if (isset($_POST["actualizarPieza"])) {
 
 			extract($_POST);
-			$this->productos->actualizarPieza($idpieza,$nombre,$producto);
+			$this->productos->actualizarPieza($idpieza,$nombre_pieza,$producto);
+
+			if (isset($nombre) && count($nombre)>0) {
+
+				foreach ($nombre as $key => $value) {
+
+					$destino_pieza = "";
+					$destino_convencion = "";
+
+					if (!empty($nombre[$key]) && !empty($tipo_convencion[$key])) {	
+						
+						if($_FILES["imagen"]["error"][$key]==UPLOAD_ERR_OK){
+							$rutaimg=$_FILES["imagen"]["tmp_name"][$key];
+							$nombreimg=$_FILES["imagen"]["name"][$key];
+							$destino_pieza = DIR_IMG_PIEZAS.$nombreimg;
+							move_uploaded_file($rutaimg, $destino_pieza);
+						}else{
+							$destino_pieza = "";
+						}
+
+						if($_FILES["imagen_convencion"]["error"][$key]==UPLOAD_ERR_OK){
+							$rutaimg=$_FILES["imagen_convencion"]["tmp_name"][$key];
+							$nombreimg=$_FILES["imagen_convencion"]["name"][$key];
+							$destino_convencion = DIR_IMG_CONVENCIONES.$nombreimg;
+							move_uploaded_file($rutaimg, $destino_convencion);
+						}else{
+							$destino_convencion = "";
+						}
+
+						$idopcionpieza = $this->productos->crearOpcionPieza($idpieza, $nombre[$key], $destino_pieza, $tipo_convencion[$key], $color_convencion[$key], $destino_convencion, $estado[$key]);
+					}
+				}
+			}
 		}
 
 		if (isset($_POST["crearPieza"])) {
@@ -209,6 +241,20 @@ class ControllerAdmin
 		}
 
 		include "views/admin/pieza_detalle.php";	
+	}
+
+	public function adminPiezaEliminarOpcion(){
+		if (isset($_POST["idpieza"]) && !empty($_POST["idpieza"]) && isset($_POST["idopcion"]) && !empty($_POST["idopcion"])) {
+
+			$filas = $this->productos->eliminarOpcionPieza($_POST["idpieza"], $_POST["idopcion"]);
+
+		}else{
+
+			$filas = 0;
+		}
+
+		$return = array('filas' => $filas);
+		echo json_encode($return);
 	}
 
 	public function adminUsuariosLista(){

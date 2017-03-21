@@ -43,6 +43,37 @@ $(document).ready(function(){
         $("#escalas_incentivo").append('<tr><td><input type="text" name="minimo[]" class="form-control"></td><td><input type="text" name="maximo[]" class="form-control"></td><td><input type="text" name="bono[]" class="form-control"></td></tr>');
     });
 
+    $("#nueva-opcion").click(function(){
+        $("#caja-piezas").append('<tr><td><input type="text" name="nombre[]" class="form-control"></td><td><input type="file" name="imagen[]" class="form-control"></td><td><select name="tipo_convencion[]" class="form-control"><option value="COLOR">COLOR</option><option value="IMAGEN">IMAGEN</option></select></td><td><input type="color" name="color_convencion[]" class="form-control"><input type="file" name="imagen_convencion[]" class="form-control"  style="display: none;"></td><td><select name="estado[]" class="form-control"><option value="1">ACTIVO</option><option value="0">INACTIVO</option></select></td></tr>');
+    });
+
+    $(".eliminarOpcionPieza").click(function(){
+        var idpieza = $(this).attr("idpieza");
+        var idopcion = $(this).attr("idopcion");
+
+        var r = confirm("¿Seguro que desea eliminar ésta opción?");
+
+        if (r) {
+
+            $.ajax({
+                type: 'POST',
+                url: "Admin/Piezas/EliminarOpcionPieza",
+                data: { idpieza:idpieza, idopcion:idopcion },
+                dataType: 'json',
+                async: false,
+                success: function(response) {
+                    alert('Se elimino '+response.filas+' opción(es)');
+                    location.reload();
+                },
+                error: function() {
+                    alert('No se pudo eliminar la opción');
+                    location.reload();
+                }
+            });
+        }
+    });
+
+
     var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
