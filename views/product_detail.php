@@ -4,7 +4,7 @@
 	<div class="col-xs-12 col-md-3">
 		<h4>MENÚ</h4>
 		<?php include "views/nav_sidebar.php"; ?>
-		<h4 class="mt-2">FILTERS</h4>
+		<h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
 		<?php filters($categorias_padre); ?>
 	</div>
 	<div class="col-xs-12 col-md-9">
@@ -59,19 +59,32 @@
 					}
 					?>					
 				</div>
-				<hr>
-				<h2 class="text-xs-center">VISTO RECIENTEMENTE</h2>
+				<?php 
+				if (count($vistos)>0) {
+				?>
+					<hr>
+					<h2 class="text-xs-center"><?=Lenguajes::consultarFrase("VISTO RECIENTEMENTE", $_SESSION["lenguaje"])?></h2>
+					<div class="row">						
+						<?php
+							foreach ($vistos as $key => $visto) {
+								product_view($visto);
+							}
+						?>			
+					</div>
+				<?php
+				}
+				?>
 			</div>
 			<div class="col-xs-12 col-md-5">
 				<h1 class="text-xs-center"><?=$producto["nombre"]?></h1>
 				<h2 class="text-xs-center"><?=convertir_pesos($producto["precio"])?></h2>
 				<hr>
-				<h3 class="text-xs-center">DESCRIPTION</h3>
+				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("DESCRIPTION", $_SESSION["lenguaje"])?></h3>
 				<p class="text-xs-justify"><?=$producto["descripcion"]?></p>
 				<hr>
 				<!--<h3 class="text-xs-center">COLOR</h3>
 				<hr>-->
-				<h3 class="text-xs-center">QTY</h3>
+				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("QTY", $_SESSION["lenguaje"])?></h3>
 				<div class="row">
 					<div class="col-xs-4 offset-xs-4">
 						<select name="cantidad" id="cantidad" max="<?=$producto["cantidad"]?>" class="form-control form-control-lg">
@@ -92,10 +105,10 @@
 					</div>
 				</div>
 				<center>					
-					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt">SHOP NOW</button>
+					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></button>
 				</center>
 				<hr>
-				<h3 class="text-xs-center">SHARE</h3>
+				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h3>
 				<h3 class="text-xs-center">
 					<i class="fa fa-facebook-square" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>

@@ -20,8 +20,8 @@ class Database {
         PDO::ATTR_PERSISTENT => false
       )
     );
-/*
-   $this->conexion = new PDO(
+
+  /* $this->conexion = new PDO(
     'mysql:host=localhost;dbname=linaojed_lo',
     'linaojed_lo',
     'vxRuET%umPLs',

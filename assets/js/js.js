@@ -45,7 +45,7 @@ $(document).ready(function(){
 		var pricepdt = $(this).attr("price-pdt");
 		var urlpdt = $(this).attr("url-pdt");
 
-		var html = '<div class="row py-2"><div class="col-xs-7 px-2"><img src="'+imgpdt+'" class="img-fluid"></div><div class="col-xs-5 pt-2"><h4>'+namepdt+'<br>'+refpdt+'<br>'+pricepdt+'</h4></div><div class="col-xs-12"><center><a href="'+urlpdt+'" class="btn btn-lg btn-success mt-2">SHOP NOW</a></center></div></div>';
+		var html = '<div class="row py-2"><div class="col-xs-7 px-2"><img src="'+imgpdt+'" class="img-fluid"></div><div class="col-xs-5 pt-2"><h4>'+namepdt+'<br>'+refpdt+'<br>$'+pricepdt+'</h4></div><div class="col-xs-12"><center><a href="'+urlpdt+'" class="btn btn-lg btn-success mt-2">SHOP NOW</a></center></div></div>';
 		modal(html);
 	});
 

@@ -111,6 +111,14 @@ class Productos extends Database
 		return $query[0];
 	}
 
+	public function actualizarCantidadProducto($idproducto,$cantidad){
+		
+		$query = $this->actualizar("UPDATE `productos` SET 										
+										`cantidad`='$cantidad'									
+										WHERE `idproducto`='$idproducto'");			
+		return $query;
+	}
+
 	public function imgsProducto($idproducto){
 		
 		$query = $this->consulta("SELECT `idimg`, `imagen`, `productos_idproducto` FROM `img_productos` WHERE `productos_idproducto`='$idproducto'");

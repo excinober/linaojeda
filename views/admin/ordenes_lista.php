@@ -16,9 +16,9 @@
 			  </thead>
 			  <tbody>
 			  	<?php
-			  	if (count($ordenesLista)>0) {		  		
+			  	if (count($ordenes)>0) {		  		
 			  	
-				  	foreach ($ordenesLista as $orden) {
+				  	foreach ($ordenes as $orden) {
 			  		?>
 			  		<tr>
 			  			<td><?=$orden["num_orden"]?></td>

@@ -25,43 +25,51 @@
       <!--<nav class="navbar navbar-dark bg-inverse p-t-2 p-b-2">-->
       <nav class="navbar navbar-light pt-2 pb-2">
         <div class="container">
-          <div class="col-xs-12 col-md-2">
-            
+          <div class="col-xs-12 col-md-2">            
               <a href="<?=URL_SITIO?>"><img src="assets/img/logo.png" class="img-fluid pull-xs-left"></a>
-            
-          </div>          
+          </div>
           <div class="col-xs-12 col-md-6">
           <?php 
-          if (empty($GLOBALS['var1'])  || $GLOBALS['var1']==URL_INICIO || $GLOBALS['var1']==URL_CARRITO) {
+          if (empty($GLOBALS['var1'])  || $GLOBALS['var1']==URL_INICIO || $GLOBALS['var1']==URL_CARRITO || $GLOBALS['var1']==URL_RESUMEN_COMPRA) {
           ?>
               <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
                 &#9776;
               </button>
               <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">            
-                <ul class="nav navbar-nav">
-                  <li class="nav-item active mr-2">
-                    <a class="nav-link pt-1" href="<?=URL_PAGINA_CONTENIDO?>/about-us">ABOUT LO <span class="sr-only">(current)</span></a>
-                  </li>                  
+                <ul class="nav navbar-nav">                  
                   <!--<li class="nav-item mr-2">
-                    <a class="nav-link pt-1" href="<?=URL_PRODUCTOS?>">LO DESIGN</a>
+                    <a class="nav-link pt-1" href="<?=URL_PRODUCTOS?>"><?=Lenguajes::consultarFrase("LO DESIGN", $_SESSION["lenguaje"])?></a>
                   </li>-->
                   <li class="nav-item dropdown">
                     <a class="pt-1 nav-link dropdown-toggle" href="<?=URL_PRODUCTOS?>" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      LO DESIGN
+                      <?=Lenguajes::consultarFrase("LO DESIGN", $_SESSION["lenguaje"])?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <a class="dropdown-item" href="<?=URL_CATEGORIA."/lo-big"?>">LO BIG</a>
-                      <a class="dropdown-item" href="<?=URL_CATEGORIA."/lo-mini"?>">LO MINI</a>
-                      <a class="dropdown-item" href="<?=URL_CATEGORIA."/accesories"?>">ACCESORIES</a>
-                      <!--<a class="dropdown-item" href="<?=URL_CATEGORIA."/limited-edition"?>">LIMITED EDITION</a>-->
+                    <?php
+                    foreach ($categorias as $key => $categoria) {
+                      if ($categoria["menu"]) {
+                    ?>
+                      <a class="dropdown-item" href="<?=URL_CATEGORIA."/".$categoria["url"]?>"><?=$categoria["nombre"]?></a>
+                    <?php
+                      }
+                    }
+                    ?>
                     </div>
                   </li>
                   <li class="nav-item mr-2">
-                    <a class="nav-link pt-1" href="<?=URL_PRODUCTOS_PERSONALIZAR?>">CREATE YOUR LO</a>
+                    <a class="nav-link pt-1" href="<?=URL_PRODUCTOS_PERSONALIZAR?>"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a>
                   </li>
-                  <li class="nav-item mr-2">
-                    <a class="nav-link pt-1" href="p/stores">STORES</a>
-                  </li>
+                  <?php 
+                  if (count($menu)>0) {
+                    foreach ($menu as $key => $item) {
+                  ?>
+                    <li class="nav-item mr-2">
+                      <a class="nav-link pt-1" href="p/<?=$item["url"]?>"><?=$item["titulo"]?></a>
+                    </li>
+                  <?php
+                    }
+                  }
+                  ?>                  
                 </ul>
               </div> 
             <?php
@@ -106,7 +114,7 @@
                 </div>
               </div>
               <div class="col-xs-12 col-md-3 text-xs-right px-0">
-                <h5 class="pull-xs-right mt-1" style="color:#000000;"><small>ESP - ENG</small></h5>
+                <h5 class="pull-xs-right mt-1"><small><a href="?lang=es" style="color:#000000;">ESP</a> - <a href="?lang=en" style="color:#000000;">ENG</a></small></h5>
               </div>                          
             </div>          
         </div>

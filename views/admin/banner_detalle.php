@@ -4,12 +4,16 @@
         <div class="col-lg-12">			
 			<form method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Nombre</label>
-					<input type="text" class="form-control" name="nombre" id="nombre" value="<?=$banner[0]['nombre']?>" required>
+					<label for="exampleInputEmail1">Titulo</label>
+					<input type="text" class="form-control" name="titulo" id="nombre" value="<?=$banner['titulo']?>" required>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Link</label>
-					<input type="text" class="form-control" name="link" id="link" value="<?=$banner[0]['link']?>" required>
+					<input type="text" class="form-control" name="link" id="link" value="<?=$banner['link']?>" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Descripción</label>
+					<textarea name="descripcion" id="descripcion" class="form-control"><?=$banner['descripcion']?></textarea>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-md-6">
@@ -20,30 +24,28 @@
 					</div>
 					<div class="col-xs-12 col-md-6">
 						<?php
-						if (!empty($banner[0]['imagen'])) {				
+						if (!empty($banner['imagen'])) {				
 						
 						?>
-							<img src="<?=$banner[0]['imagen']?>" class="img-responsive">
+							<img src="<?=$banner['imagen']?>" class="img-responsive">
 						<?php
 						}	
 						?>				
 					</div>			
 				</div>					
 				<div class="form-group">
-					<label for="exampleInputEmail1">Posición</label>
-					<select name="posicion" id="posicion" class="form-control" required>
-						<option value="HOME" <?php if ($banner[0]['posicion']=='HOME') echo 'selected'; ?>>HOME</option>
-						<option value="SIDEBAR" <?php if ($banner[0]['posicion']=='SIDEBAR') echo 'selected'; ?>>SIDEBAR</option>
-						<option value="PANEL INTERNO" <?php if ($banner[0]['posicion']=='PANEL INTERNO') echo 'selected'; ?>>PANEL INTERNO</option>
-						<option value="CONTACTO" <?php if ($banner[0]['posicion']=='CONTACTO') echo 'selected'; ?>>CONTÁCTO</option>
-						<option value="REGISTRO" <?php if ($banner[0]['posicion']=='REGISTRO') echo 'selected'; ?>>REGISTRO</option>
+					<label for="exampleInputEmail1">Ubicación</label>
+					<select name="ubicacion" id="ubicacion" class="form-control" required>
+						<option value="PRINCIPAL" <?php if ($banner['ubicacion']=='PRINCIPAL') echo 'selected'; ?>>PRINCIPAL</option>
+						<option value="HOME1" <?php if ($banner['ubicacion']=='HOME1') echo 'selected'; ?>>HOME 1</option>
+						<option value="HOME2" <?php if ($banner['ubicacion']=='HOME2') echo 'selected'; ?>>HOME 2</option>						
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Estado</label>
 					<select name="estado" id="estado" class="form-control" required>
-						<option value="1" <?php if ($banner[0]['estado']) echo 'selected'; ?>>Activo</option>
-						<option value="0" <?php if (!$banner[0]['estado']) echo 'selected'; ?>>Inactivo</option>
+						<option value="1" <?php if ($banner['estado']) echo 'selected'; ?>>Activo</option>
+						<option value="0" <?php if (!$banner['estado']) echo 'selected'; ?>>Inactivo</option>
 					</select>
 				</div>
 				<?php

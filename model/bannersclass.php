@@ -5,7 +5,7 @@
 class Banners extends Database
 {
 	
-	public function listarBanners($posicion="", $estados=array()){
+	public function listarBanners($ubicacion="", $estados=array()){
 			
 
 		if (count($estados)>0) {
@@ -27,54 +27,58 @@ class Banners extends Database
 			$estados_select = "";
 		}
 
-		if (!empty($posicion)) {
-			$posicion = "AND `posicion`='$posicion'";
+		if (!empty($ubicacion)) {
+			$ubicacion = "AND `ubicacion`='$ubicacion'";
 		}else{
-			$posicion = "";
+			$ubicacion = "";
 		}
 
 		
-		$query = $this->consulta("SELECT `idbanner`, `nombre`, `imagen`, `link`, `posicion`, `estado` FROM `banners` WHERE $estados_select $posicion");
+		$query = $this->consulta("SELECT `idbanner`, `titulo`, `imagen`, `descripcion`, `link`, `ubicacion`, `estado` FROM `banners` WHERE $estados_select $ubicacion");
 		
 		return $query;
 	}
 
-	public function crearBanner($nombre="",$imagen="",$link="",$posicion="",$estado=0){
+	public function crearBanner($titulo="",$imagen="",$link="",$descripcion="", $ubicacion="",$estado=0){
 		
 		$idbanner = $this->insertar("INSERT INTO `banners`(									
-									`nombre`, 
+									`titulo`, 
 									`imagen`, 
+									`descripcion`, 
 									`link`, 
-									`posicion`, 									
+									`ubicacion`, 
 									`estado`) VALUES (									
-									'$nombre',
+									'$titulo',
 									'$imagen',
+									'$descripcion',
 									'$link',
-									'$posicion',									
+									'$ubicacion',									
 									'$estado')");
 		
 		return $idbanner;
 	}
 
-	public function actualizarBanner($idbanner=0,$nombre="",$imagen="",$link="",$posicion="",$estado=0){
+	public function actualizarBanner($idbanner=0,$titulo="",$imagen="",$link="",$descripcion="", $ubicacion="",$estado=0){
 		
 
 		if (!empty($imagen)) {
 			
 			$query = $this->actualizar("UPDATE `banners` SET
-									`nombre`='$nombre',
+									`titulo`='$titulo',
 									`imagen`='$imagen',
 									`link`='$link',
-									`posicion`='$posicion',
+									`descripcion`='$descripcion',
+									`ubicacion`='$ubicacion',
 									`estado`='$estado' 
 									WHERE `idbanner`='$idbanner'");
 
 		}else{
 
 			$query = $this->actualizar("UPDATE `banners` SET
-									`nombre`='$nombre',									
+									`titulo`='$titulo',									
 									`link`='$link',
-									`posicion`='$posicion',
+									`descripcion`='$descripcion',
+									`ubicacion`='$ubicacion',
 									`estado`='$estado' 
 									WHERE `idbanner`='$idbanner'");	
 		}
@@ -88,11 +92,9 @@ class Banners extends Database
 
 	public function detalleBanner($idbanner){
 		
-		$query = $this->consulta("SELECT `nombre`, `imagen`, `link`, `posicion`, `estado` FROM `banners` WHERE `idbanner`='$idbanner'");
+		$query = $this->consulta("SELECT `idbanner`, `titulo`, `imagen`, `descripcion`, `link`, `ubicacion`, `estado` FROM `banners` WHERE `idbanner`='$idbanner'");
 		
-		return $query;
+		return $query[0];
 	}
-
-	
 }
 ?>

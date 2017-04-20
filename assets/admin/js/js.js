@@ -85,8 +85,8 @@ $(document).ready(function(){
                 $(selector).chosen(config[selector]);
             }
 
+    CKEDITOR.replace('descripcion');  
     CKEDITOR.replace('contenido');
     CKEDITOR.replace('uso');        
     //CKEDITOR.replace('presentacion');
-    CKEDITOR.replace('descripcion');  
 })

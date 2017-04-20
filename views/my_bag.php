@@ -1,5 +1,5 @@
 <div class="my-bag hidden-xs-down">
-  <p>MY BAG <span class="rounded-circle text-white count-bag"><?=Carrito::productosAgregados()?></span></p>
+  <p><?=Lenguajes::consultarFrase("MY BAG", $_SESSION["lenguaje"])?> <span class="rounded-circle text-white count-bag"><?=Carrito::productosAgregados()?></span></p>
 </div>
 <div class="p-2 bag-box">
   <?php 
@@ -17,11 +17,11 @@
         <h6>Ref: <?=$itemsCarrito["codigo"][$key]?></h6>
         <h6>Cantidad: <?=$itemsCarrito["cantidad"][$key]?></h6>        
         <h6><?=convertir_pesos($itemsCarrito["subtotal"][$key])?></h6>
-        <a class="btn btn-sm btn-secondary" href="<?=URL_SITIO.URL_PRODUCTOS."/".$itemsCarrito["url"][$key]?>">VIEW MORE</a>
+        <a class="btn btn-sm btn-secondary" href="<?=URL_SITIO.URL_PRODUCTOS."/".$itemsCarrito["url"][$key]?>"><?=Lenguajes::consultarFrase("VIEW MORE", $_SESSION["lenguaje"])?></a>
       </div>
     </div>
     <hr class="my-1 bg-white">
   <?php
   } ?>
-  <a href="<?=URL_CARRITO?>" class="btn btn-primary">Show Cart</a>
+  <a href="<?=URL_CARRITO?>" class="btn btn-primary"><?=Lenguajes::consultarFrase("SHOW CART", $_SESSION["lenguaje"])?></a>
 </div>

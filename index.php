@@ -2,6 +2,15 @@
 error_reporting(0);
 session_start();
 
+//Lenguaje
+if(!isset($_SESSION["lenguaje"])){
+	$_SESSION["lenguaje"] = "en";
+}
+
+if (isset($_GET["lang"]) && ($_GET["lang"]=="es" || $_GET["lang"]=="en")) {
+	$_SESSION["lenguaje"] = $_GET["lang"];	
+}
+
 /** Require Models **/
 require "model/dbclass.php";
 require "model/paginasclass.php";
@@ -9,6 +18,12 @@ require "model/productosclass.php";
 require "model/categoriasclass.php";
 require "model/carritoclass.php";
 require "model/usuariosclass.php";
+require "model/ordenesclass.php";
+require "model/suscriptoresclass.php";
+require "model/personalclass.php";
+require "model/plantillasclass.php";
+require "model/bannersclass.php";
+require "model/lenguajesclass.php";
 
 /** Require Includes **/
 require "include/constantes.php";
@@ -107,7 +122,11 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_RESUMEN_COMPRA:
-				# code...
+				$controller->cartSummary();
+				break;
+
+			case URL_GENERAR_ORDEN:
+				$controller->createOrder();
 				break;
 
 			case URL_REGISTRO:
@@ -211,6 +230,92 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 								$controllerAdmin->adminUsuariosLista();
 							}												
 						break;
+
+						case URL_ADMIN_ORDENES:						
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3==URL_ADMIN_ELIMINAR_ORDEN) {
+									$controllerAdmin->eliminarOrden();
+								}else{
+
+									if ($var3=="Nuevo") {
+										$var3 = "";
+									}
+									$controllerAdmin->adminOrdenDetalle($var3);							
+								}
+								
+							}else{
+								$controllerAdmin->adminOrdenesLista();
+							}												
+							break;
+
+						case URL_ADMIN_SUSCRIPTORES:
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3=="Nuevo") {
+									$var3 = "";
+								}
+								$controllerAdmin->adminSuscriptorDetalle($var3);
+								
+							}else{
+								$controllerAdmin->adminSuscriptoresLista();
+							}
+							break;
+
+						case URL_ADMIN_PERSONAL:
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3=="Nuevo") {
+									$var3 = "";
+								}
+								$controllerAdmin->adminPersonalDetalle($var3);
+							}else{
+								$controllerAdmin->adminPersonalLista();
+							}							
+							break;
+
+						case URL_ADMIN_PLANTILLAS:
+							if (isset($var3) && !empty($var3)) {
+								
+								if ($var3=="Nuevo") {
+									$var3 = "";
+								}
+								$controllerAdmin->adminPlantillaDetalle($var3);
+								
+							}else{
+								$controllerAdmin->adminPlantillasLista();
+							}						
+							break;
+
+						case URL_ADMIN_BANNERS:
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3=="Nuevo") {
+									$var3 = "";								
+								}
+								$controllerAdmin->adminBannerDetalle($var3);
+								
+							}else{
+								$controllerAdmin->adminBannersLista();
+							}
+							break;
+
+						case URL_ADMIN_PAGINAS:
+							if (isset($var3) && !empty($var3)) {
+								
+								if ($var3=="Nuevo") {
+									$var3 = "";
+								}
+								$controllerAdmin->adminPaginaDetalle($var3);							
+								
+							}else{
+								$controllerAdmin->adminPaginasLista();
+							}
+							break;
+
+						case URL_ADMIN_LENGUAJE:
+							$controllerAdmin->adminLenguaje();
+							break;
 					}
 				}else{
 					$controllerAdmin->adminLoguin();	

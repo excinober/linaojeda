@@ -97,6 +97,7 @@ $breadcrumb = explode("/", $_GET["url"]);
                 <li>
                     <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Administración</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a href="<?=URL_ADMIN."/".URL_ADMIN_LENGUAJE?>">Lenguaje</a></li>
                         <li><a href="<?=URL_ADMIN."/".URL_ADMIN_PERSONAL?>">Personal</a></li>
                         <li><a href="<?=URL_ADMIN."/".URL_ADMIN_PLANTILLAS?>">Plantillas Email</a></li>
                     </ul>

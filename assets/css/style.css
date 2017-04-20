@@ -126,3 +126,24 @@ body, html{
 .table-cart, .table-cart  tr > th, .table-cart  tr > td{
 	border: 1px solid #000;
 }
+
+.input-newsletter{
+	border: 2px solid #9F972D;
+	color: #9F972D !important;
+	text-align:center;
+}
+
+.input-newsletter::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #9F972D !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #9F972D !important;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #9F972D !important;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #9F972D !important;
+}

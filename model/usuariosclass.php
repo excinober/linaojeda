@@ -7,17 +7,17 @@ class Usuarios extends Database
 {
 	public function listarUsuarios(){		
 		
-		$query = $this->consulta("SELECT `idusuario`, `nombre`, `apellido`, `sexo`, `fecha_nacimiento`, `email`, `password`, `num_identificacion`, `boletines`, `condiciones`, `direccion`, `telefono`, `telefono_m`, `foto`, `estado`, `fecha_registro`, `ciudades_idciudad`, `ciudades`.`ciudad` AS 'ciudad'
-									FROM `usuarios`
-									INNER JOIN `ciudades` ON (`usuarios`.`ciudades_idciudad`=`ciudades`.`idciudad`)			
+		$query = $this->consulta("SELECT `idusuario`, `nombre`, `apellido`, `sexo`, `fecha_nacimiento`, `email`, `password`, `num_identificacion`, `boletines`, `condiciones`, `direccion`, `telefono`, `telefono_m`, `estado`, `fecha_registro`, `ciudad`, `pais`, `cod_postal`
+									FROM `usuarios`									
 									ORDER BY `fecha_registro` DESC");
 		
 		return $query;
 	}
 	
-	public function crearUsuario($nombre="", $apellido="", $sexo="", $fecha_nacimiento="", $email="", $password="", $boletines=0, $condiciones=0, $direccion="", $telefono="", $telefono_m="", $estado=0, $fecha_registro="", $ciudad="", $pais="", $cod_postal=""){	
+	public function crearUsuario($nombre="", $apellido="", $sexo="", $fecha_nacimiento="", $email="", $password="", $num_identificacion, $boletines=0, $condiciones=0, $direccion="", $telefono="", $telefono_m="", $estado=0, $fecha_registro="", $ciudad="", $pais="", $cod_postal=""){	
 		
 		$idusuario = $this->insertar("INSERT INTO usuarios(
+										num_identificacion,
 										nombre,
 										apellido, 
 										sexo, 
@@ -34,6 +34,7 @@ class Usuarios extends Database
 										telefono_m, 
 										estado, 
 										fecha_registro) VALUES (
+										'$num_identificacion',
 										'$nombre',
 										'$apellido', 
 										'$sexo', 
@@ -51,31 +52,32 @@ class Usuarios extends Database
 										'$estado', 
 										'$fecha_registro')");
 
-		
 		return $idusuario;	
 	}
 
-	public function actualizarUsuario($idusuario, $nombre, $apellido, $sexo, $fecha_nacimiento, $email, $boletines, $direccion, $telefono, $telefono_m, $tipo, $segmento, $foto, $lider, $ciudad){
+	public function actualizarUsuario($idusuario, $nombre, $apellido, $sexo, $fecha_nacimiento, $email, $num_identificacion, $boletines, $condiciones, $direccion, $telefono, $telefono_m, $estado, $ciudad, $pais, $cod_postal){
 		
 		$query = $this->actualizar("UPDATE `usuarios` SET 									
+									`num_identificacion`='$num_identificacion',
 									`nombre`='$nombre',
 									`apellido`='$apellido',
 									`sexo`='$sexo',
 									`fecha_nacimiento`='$fecha_nacimiento',
 									`email`='$email',
 									`boletines`='$boletines',									
+									`condiciones`='$condiciones',									
 									`direccion`='$direccion',
 									`telefono`='$telefono',
-									`telefono_m`='$telefono_m',
-									`tipo`='$tipo',
-									`segmento`='$segmento',
-									`lider`='$lider',
-									`ciudades_idciudad`= '$ciudad'
+									`telefono_m`='$telefono_m',									
+									`estado`='$estado',									
+									`ciudad`= '$ciudad',
+									`pais`= '$pais',
+									`cod_postal`= '$cod_postal'
 									WHERE `idusuario`='$idusuario'");
 
-		if (!empty($foto)) {
+		/*if (!empty($foto)) {
 			$this->actualizar("UPDATE `usuarios` SET `foto`='$foto' WHERE `idusuario`='$idusuario'");
-		}
+		}*/
 		
 		return $query;
 	}
@@ -130,9 +132,8 @@ class Usuarios extends Database
 
 	public function detalleUsuario($idusuario){
 		
-		$query = $this->consulta("SELECT  `usuarios`.`idusuario`, `usuarios`.`nombre`, `usuarios`.`apellido`, `usuarios`.`sexo`, `usuarios`.`fecha_nacimiento`, `usuarios`.`email`, `usuarios`.`password`, `usuarios`.`num_identificacion`, `usuarios`.`boletines`, `usuarios`.`condiciones`, `usuarios`.`direccion`, `usuarios`.`telefono`, `usuarios`.`telefono_m`, `usuarios`.`foto`, `usuarios`.`estado`, `usuarios`.`fecha_registro`, `usuarios`.`ciudades_idciudad`, `ciudades`.`ciudad` 
-									FROM `usuarios`
-									INNER JOIN `ciudades` ON(`usuarios`.`ciudades_idciudad`=`ciudades`.`idciudad`)
+		$query = $this->consulta("SELECT  `usuarios`.`idusuario`, `usuarios`.`nombre`, `usuarios`.`apellido`, `usuarios`.`sexo`, `usuarios`.`fecha_nacimiento`, `usuarios`.`email`, `usuarios`.`password`, `usuarios`.`num_identificacion`, `usuarios`.`boletines`, `usuarios`.`condiciones`, `usuarios`.`direccion`, `usuarios`.`telefono`, `usuarios`.`telefono_m`, `usuarios`.`estado`, `usuarios`.`fecha_registro`, `usuarios`.`ciudad`, `usuarios`.`pais`, `usuarios`.`cod_postal`
+									FROM `usuarios`									
 									WHERE `idusuario`='$idusuario'");
 		
 		return $query[0];
@@ -401,36 +402,6 @@ class Usuarios extends Database
 		return $idpuntos;
 	}
 
-	public function detallePlantilla($idplantilla){
-		
-		$query = $this->consulta("SELECT `titulo`, `asunto`, `mensaje`, `email`, `estado` 
-									FROM `mensajes_email` 
-									WHERE `idmensaje`='$idplantilla'");
-		
-		return $query[0];
-	}
-
-	public function listarPlantillas(){
-		
-		$query = $this->consulta("SELECT `idmensaje`, `titulo`, `asunto`, `mensaje`, `email`, `estado` 
-									FROM `mensajes_email`");
-		
-		return $query;
-	}
-
-	public function actualizarPlantilla($idmensaje, $titulo, $asunto, $mensaje, $email, $estado){
-		
-		$query = $this->actualizar("UPDATE `mensajes_email` SET 									
-									`titulo`='$titulo',
-									`asunto`='$asunto',
-									`mensaje`='$mensaje',
-									`email`='$email',
-									`estado`='$estado' 
-									WHERE `idmensaje`='$idmensaje'");
-		
-		return $query;
-	}
-
 	/******INGREDIENTES*****/
 
 	public function listarIngredientes(){
@@ -515,55 +486,7 @@ class Usuarios extends Database
 		$query = $this->consulta("SELECT `idzona`, `zona`, `estado`, `lider` FROM `zonas` WHERE `lider`='$idusuario'");		
 		return $query[0];
 	}
-
-	/****NEWSLETTER****/
-	public function suscribirNewsletter($nombre, $email, $fecha){
-		
-		$idsuscriptor = $this->insertar("INSERT INTO `boletines`(
-										`nombre`, 
-										`email`, 
-										`fecha`) 
-										VALUES (
-										'$nombre',
-										'$email',
-										'$fecha')");		
-		return $idsuscriptor;
-	}
-
-	public function listarSuscriptores(){
-
-		$query = $this->consulta("SELECT `id`, `nombre`, `email`, `fecha` FROM `boletines`");
-		return $query;
-	}
-
-	public function suscriptorDetalle($idsuscriptor){
-
-		$query = $this->consulta("SELECT `id`, `nombre`, `email`, `fecha` FROM `boletines` WHERE `id`='$idsuscriptor'");
-		return $query[0];
-	}
-
-	public function crearSuscriptor($nombre,$email,$fecha){
-		
-		$idsuscriptor = $this->insertar("INSERT INTO `boletines`(
-											`nombre`,
-											`email`,
-											`fecha`) 
-											VALUES (
-											'$nombre',
-											'$email',
-											'$fecha')");
-		
-		return $idsuscriptor;
-	}
-
-	public function actualizarSuscriptor($idsuscriptor,$nombre,$email){
-		
-		$query = $this->actualizar("UPDATE `boletines` SET 
-										`nombre`='$nombre',
-										`email`='$email'
-										WHERE `id`='$idsuscriptor'");
-		return $query;
-	}
+	
 
 	/******ORGANIZACIONES******/
 	public function crearOrganizacion($nit, $razon_social, $direccion, $telefono, $ciudad){

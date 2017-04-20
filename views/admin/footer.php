@@ -1,7 +1,7 @@
         
                 <div class="footer">
                     <div class="pull-right">
-                        <strong>Copyright</strong> Piudalí &copy; 2016
+                        <strong>Copyright</strong> Lina Ojeda &copy; 2017
                     </div>
                     <div>
                         

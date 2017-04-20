@@ -3,24 +3,23 @@
 <div class="container">
   <div id="carousel-home" class="carousel slide" data-ride="carousel">        
     <div class="carousel-inner" role="listbox">
-      <div class="carousel-item active">
-        <img src="assets/img/banner1.png" class="img-fluid">
+    <?php      
+    if (count($bannersprincipal)>0) {
+      foreach ($bannersprincipal as $key => $banner) {
+    ?>
+      <div class="carousel-item <?php ($key==0)? print('active') : false; ?>">
+        <img src="<?=$banner["imagen"]?>" class="img-fluid">
 
-        <div class="carousel-caption hidden-sm-down">
-          <div class="col-xs-12">
-            <div class="card card-inverse" style="background-color: #333; border-color: #333;">
-              <div class="card-block">
-                <h3 class="card-title">Special title treatment</h3>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>    
-              </div>
-            </div>
-            <button class="btn btn-primary btn-lg pull-xs-right">SHOP NOW</button>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/img/banner1.png" class="img-fluid">
-      </div>
+        <?php if (!empty($banner["descripcion"])) { ?>
+          <div class="carousel-caption hidden-sm-down">
+            <?=$banner["descripcion"]?>
+          </div>  
+        <?php } ?>        
+      </div>  
+    <?php
+      }
+    }
+    ?>
     </div>    
   </div>  
 </div>
@@ -29,12 +28,23 @@
     <div class="col-xs-12 col-md-6">
       <div id="carousel-big-home" class="carousel slide" data-ride="carousel">        
         <div class="carousel-inner" role="listbox">
-          <div class="carousel-item active">
-            <img src="assets/img/slider1.png" class="img-fluid" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="assets/img/slider1.png" class="img-fluid" alt="...">
-          </div>
+          <?php      
+          if (count($bannershome1)>0) {
+            foreach ($bannershome1 as $key => $banner) {
+          ?>
+            <div class="carousel-item <?php ($key==0)? print('active') : false; ?>">
+              <img src="<?=$banner["imagen"]?>" class="img-fluid">
+
+              <?php if (!empty($banner["descripcion"])) { ?>
+                <div class="carousel-caption pb-1">
+                  <?=$banner["descripcion"]?>
+                </div>  
+              <?php } ?>        
+            </div>  
+          <?php
+            }
+          }
+          ?>
         </div>
         <a href="#carousel-big-home" role="button" data-slide="prev">
           <div class="prev-carousel prev-carousel-white">
@@ -48,7 +58,7 @@
         </a>        
       </div>
     </div>
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-md-6" style="max-height:250px !important;">
       <div id="carousel-shop" class="carousel slide" data-ride="carousel" style="border: 1px solid #000;">        
         <div class="carousel-inner" role="listbox">
           <?php 
@@ -56,7 +66,7 @@
             ?>
               <div class="carousel-item p-2 <?php if ($key==0) echo "active"; ?>">
                 <center>
-                  <img src="<?=$producto["img_principal"]?>" alt="<?=$producto["nombre"]?>" class="img-fluid" style="max-height: 200px;"><br>
+                  <img src="<?=$producto["img_principal"]?>" alt="<?=$producto["nombre"]?>" class="img-fluid" style="max-height: 160px;"><br>
                   <a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1">SHOP NOW</a>
                 </center>
               </div>
@@ -77,11 +87,31 @@
       </div>  	
     </div>
     <div class="col-xs-12 col-md-6 mt-1">
-      <div style="position: absolute;color: #fff;" class="text-xs-center w-100 h-100">
+      <!--<div style="position: absolute;color: #fff;" class="text-xs-center w-100 h-100">
         <h3 class="mt-3">GENTE LO</h3>
         <button class="btn btn-secondary">VIEW MORE</button>
       </div>
-    	<img src="assets/img/gente-lo.png" class="w-100" style="max-height: 220px;">
+    	<img src="assets/img/gente-lo.png" class="w-100" style="max-height: 220px;">-->
+      <div id="carousel-home2" class="carousel slide" data-ride="carousel">        
+        <div class="carousel-inner" role="listbox">
+          <?php      
+          if (count($bannershome2)>0) {
+            foreach ($bannershome2 as $key => $banner) {
+          ?>
+            <div class="carousel-item <?php ($key==0)? print('active') : false; ?>">
+              <img src="<?=$banner["imagen"]?>" class="img-fluid">
+
+              <?php if (!empty($banner["descripcion"])) { ?>
+                <div class="carousel-caption pb-2">
+                  <?=$banner["descripcion"]?>
+                </div>  
+              <?php } ?>        
+            </div>  
+          <?php
+            }
+          }
+          ?>
+        </div>
     </div>
   </div>
 </div>

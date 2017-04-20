@@ -13,6 +13,7 @@ class Controller
 		$this->categorias = new Categorias();
 		$this->carrito = new Carrito();
 		$this->usuarios = new Usuarios();
+		$this->banners = new Banners();
 	}
 
 	public function logout(){
@@ -50,12 +51,21 @@ class Controller
 
 		$posicion = "MENU";
 		$estado = 1;
-
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
 
 		$estados_productos = array(1);
 		$personalizable = 0;
 		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","LIMIT 3");
+
+		$estados = array(1);
+		$posicion_banners = "PRINCIPAL";
+		$bannersprincipal = $this->banners->listarBanners($posicion_banners, $estados);
+		$posicion_banners = "HOME1";
+		$bannershome1 = $this->banners->listarBanners($posicion_banners, $estados);
+		$posicion_banners = "HOME2";
+		$bannershome2 = $this->banners->listarBanners($posicion_banners, $estados);
 
 		include "views/home.php";
 	}
@@ -65,12 +75,13 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
 		$categorias_padre = $this->getCategoriesPattern();
 
 		$pagina_detalle = $this->paginas->contenidoPagina($url);
 
-		//var_dump($pagina_detalle);
 		include "views/page.php";
 	}
 
@@ -145,6 +156,12 @@ class Controller
 
 	public function pageProducts(){
 
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
+
 		$estados_productos = array(1);
 		$personalizable = 0;
 		$categorias_padre = $this->getCategoriesPattern();
@@ -156,20 +173,63 @@ class Controller
 
 	public function pageProductDetail($urlproducto){
 
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
 		$categorias_padre = $this->getCategoriesPattern();
 
 		$producto = $this->productos->detalleProductos(0,$urlproducto);
 		$imgs_producto = $this->productos->imgsProducto($producto["idproducto"]);
+
+		
+		if (isset($_COOKIE["productos_vistos"]) && count($_COOKIE["productos_vistos"]>0)) {
+			
+			foreach ($_COOKIE["productos_vistos"] as $key => $idvisto) {
+				$vistos[$key] = $this->productos->detalleProductos($idvisto);
+			}
+		}
+					
+
+		if (isset($_COOKIE["productos_vistos"])) {
+			$count = count($_COOKIE["productos_vistos"]);
+			if ($count>0) {
+
+				$almacenado = false;
+
+				for ($i=0; $i < $count; $i++) { 
+					if ($_COOKIE["productos_vistos"][$i]==$producto["idproducto"]) {
+						$almacenado = true;
+					}
+				}
+
+				if (!$almacenado) {
+					setcookie('productos_vistos['.$count.']', $producto["idproducto"], time()+3600);
+				}
+			}else{
+				setcookie('productos_vistos[0]', $producto["idproducto"], time()+3600);
+			}
+		}else{
+			setcookie('productos_vistos[0]', $producto["idproducto"], time()+3600);
+		}
 
 		if (!empty($producto["precio_oferta"])) {
 			$porc_oferta=$producto["precio"]-$producto["precio_oferta"];
         	$porc_oferta=round(($porc_oferta/$producto["precio"])*100);
 		}
 
+		require "views/product_block.php";
 		include "views/product_detail.php";
 	}
 
 	public function pageProductPersonalizeDetail($urlproducto){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
 
 		$categorias_padre = $this->getCategoriesPattern();
 
@@ -206,6 +266,12 @@ class Controller
 
 	public function pageProductsPersonalize(){
 
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+
 		$estados_productos = array(1);
 		$personalizable = 1;
 		$categorias_padre = $this->getCategoriesPattern();
@@ -217,6 +283,12 @@ class Controller
 
 	public function pageCategory($url=""){
 
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+		
 		$categoria = $this->categorias->detalleCategoriaUrl($url);				
 		$estados_productos = array(1);
 		$personalizable = 0;
@@ -230,6 +302,10 @@ class Controller
 	/****CART*****/
 
 	public function showCart(){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
 
 		if (isset($_POST["redimirCupon"])) {
 
@@ -261,6 +337,221 @@ class Controller
 		//$rentabilidad = $this->carrito->getRentabilidad();
 
 		include "views/cart.php";
+	}
+
+	public function cartSummary(){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+
+		$itemsCarrito = $this->carrito->listarItems();
+		$subtotalAntesIva = $this->carrito->getSubtotalAntesIva();		
+		$descuentoCupon = $this->carrito->getDescuentoCupon();
+		$subtotalNetoAntesIva = $this->carrito->getSubtotalNetoAntesIva();
+		//$descuentoEscala = $this->carrito->getDescuentoEscala();
+		//$porcDescuentoEscala = $this->carrito->porcDescuentoEscala();
+		$totalNetoAntesIva = $this->carrito->getTotalNetoAntesIva();
+		//$pagoPuntos = $this->carrito->getPagoPuntos();	
+		$iva = $this->carrito->getIva();
+		$flete = $this->carrito->calcularFlete();
+		$total = $this->carrito->getTotal();
+		//$rentabilidad = $this->carrito->getRentabilidad();
+
+		include "views/cart_summary.php";	
+	}
+
+	public function createOrder(){
+
+		if (isset($_SESSION["idusuario"]) && !empty($_SESSION["idusuario"]) && count($_SESSION["idpdts"])>0 && count($_SESSION["cantidadpdts"])>0) {
+
+			$codigo_orden = $this->carrito->generarCodOrden();
+			$fecha_pedido = fecha_actual("date");
+			$subtotalAntesIva = $this->carrito->getSubtotalAntesIva();
+			//$subtotalAntesIvaPremios = $this->carrito->getSubtotalAntesIvaPremios();
+			$descuentoCupon = $this->carrito->getDescuentoCupon();
+			//$descuentoEscala = $this->carrito->getDescuentoEscala();
+			//$porcDescuentoEscala = $this->carrito->porcDescuentoEscala();
+			$totalNetoAntesIva = $this->carrito->getTotalNetoAntesIva();
+			//$retencion = $this->carrito->getRTF();
+			$detalleOrden = $this->carrito->getDetalleOrden();			
+			//$pagoPuntos = $this->carrito->getPagoPuntos();			
+			$iva = $this->carrito->getIva();
+			$flete = $this->carrito->calcularFlete();
+			$total = $this->carrito->getTotal();
+			$estado = "PENDIENTE";
+			$fecha_facturacion = "0000-00-00";
+			$num_factura = "";
+
+			//Descontar puntos usuario
+			/*if ($pagoPuntos["puntos"]>0) {
+
+				$puntos_sin_redimir = $pagoPuntos["puntos"];
+				$puntos_disponibles = $this->usuarios->listarPuntosDisponibles($_SESSION["idusuario"]);
+
+				foreach ($puntos_disponibles as $puntos_fila) {
+					
+					if ($puntos_sin_redimir>=$puntos_fila["disponibles"]) {
+						$puntos_redimidos = $puntos_fila["disponibles"];
+						$puntos_actualizar = $puntos_fila["puntos"];
+					}else{
+						$puntos_restantes = $puntos_sin_redimir;
+						$puntos_actualizar = $puntos_fila["redimido"]+$puntos_restantes;
+						$puntos_redimidos = $puntos_sin_redimir;
+					}
+
+					$puntos_sin_redimir=$puntos_sin_redimir-$puntos_redimidos;
+
+					$this->usuarios->actualizarPuntosRedimidos($puntos_fila["idpuntos"],$puntos_actualizar);
+					
+					if ($puntos_sin_redimir==0) {
+						break;
+					}
+				}
+			}*/
+			
+			//Crear Orden
+			$idorden = $this->carrito->generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, 0, 0, $flete, $total, $estado, $fecha_facturacion, $num_factura, $_SESSION["idusuario"]);
+
+
+
+			if ($idorden) {
+				
+				//Cargar Nuevos Puntos
+				/*$valor_punto = 1;
+				$fecha_adquirido = fecha_actual('datetime');
+				$redimido = 0;
+				$estado_puntos = 0;
+
+				$nuevos_puntos = $totalNetoAntesIva*($valor_punto/100);
+				$idnuevospuntos = $this->usuarios->asignarNuevosPuntos($nuevos_puntos, "COMPRAS", $fecha_adquirido, $redimido, $estado_puntos, $_SESSION["idusuario"], $idorden);
+
+
+				$usuario = $this->usuarios->detalleUsuario($_SESSION["idusuario"]);				
+				$referente = $usuario["referente"];
+
+				if ($referente) {
+					//Abonar puntos a referente
+					$idnuevospuntos_referente = $this->usuarios->asignarNuevosPuntos($nuevos_puntos, "COMPRA DE REFERIDO ".$usuario["nombre"], $fecha_adquirido, $redimido, $estado_puntos, $referente, $idorden);
+				}*/
+
+				//Registrar detalle de orden
+				if (count($detalleOrden)>0) {
+					foreach ($detalleOrden as $key => $producto) {
+
+						//Descontar stock
+						$filas = $this->descontarStock($producto["idpdt"],$producto["cantidad"]);
+
+						//Agregar detalle orden
+						$id_detalle_orden = $this->carrito->agregarDetalleOrden($producto["nombre"], $producto["codigo"], $producto["cantidad"], $producto["precio"], $producto["precio_base"], $producto["descuento_cupon"], $producto["iva"], $producto["descuento_puntos"], $producto["personalizable"], $idorden);
+					}
+				}
+
+
+				//Enviar Email Orden
+				/*$tabla_orden = '<table cellspacing="10" border="0" width="650px" align="center">
+						<thead>
+							<tr>
+								<th align="center">DESCRIPCIÓN</th>
+								<th align="center">PRECIO</th>
+								<th align="center">CANTIDAD</th>
+								<th align="right">SUBTOTAL</th>
+							</tr>
+						</thead>
+						<tbody>';
+
+				if (count($detalleOrden)>0) {
+					foreach ($detalleOrden as $key => $producto) {
+						$tabla_orden .= '<tr><td>'.$producto["nombre"].'<br>'.$producto["codigo"].'<br>'.$producto["iva_porc"].'%</td>
+								<td>$'.number_format($producto["precio"]).'</td>
+								<td align="center">'.$producto["cantidad"].'</td>
+								<td align="right">$'.number_format($producto["subtotal"]).'</td></tr>';
+					}
+				}
+				
+				$tabla_orden .='<tr><td colspan="3" align="right">Subtotal antes de IVA</td>
+								<td align="right">$'.number_format($subtotalAntesIva).'</td></tr>
+							<tr><td colspan="3" align="right">Descuento Cupón</td>
+								<td align="right">$'.number_format($descuentoCupon).'</td></tr>
+							<tr><td colspan="3" align="right">Subtotal Neto Antes de Iva</td>
+								<td align="right">$'.number_format(($subtotalAntesIva-$descuentoCupon)).'</td></tr>
+							<tr><td colspan="3" align="right">Descuento por Escala %</td>
+								<td align="right">'.$porcDescuentoEscala.'%</td></tr>
+							<tr><td colspan="3" align="right">Descuento por Escala $</td>
+								<td align="right">$'.number_format($descuentoEscala).'</td></tr>
+							<tr><td colspan="3" align="right">Total Neto antes de IVA</td>
+								<td align="right">$'.number_format($totalNetoAntesIva).'</td></tr>
+							<tr><td colspan="3" align="right">Retención</td>
+								<td align="right">$'.number_format($retencion).'</td></tr>
+							<tr><td colspan="3" align="right">IVA</td>
+								<td align="right">$'.number_format($iva).'</td></tr>
+							<tr><td colspan="3" align="right">Pago con puntos</td>
+								<td align="right">$'.number_format($pagoPuntos["valor_pago"]).'</td></tr>
+							<tr><td colspan="3" align="right">Costo de Envío</td>
+								<td align="right">$'.number_format($flete).'</td></tr>
+							<tr><td colspan="3" align="right"><b>TOTAL A PAGAR</b></td>
+								<td align="right"><b>$'.number_format($total).'</b></td></tr>
+						</tbody>
+					</table>';
+
+				
+				
+				$idplantilla=1;
+				$plantilla = $this->usuarios->detallePlantilla($idplantilla);
+				$mensaje = shorcodes_orden_compra($_SESSION["nombre"]." ".$_SESSION["apellido"],$codigo_orden,$plantilla["mensaje"],$tabla_orden,$estado);
+				
+				// Always set content-type when sending HTML email
+				$headers = "MIME-Version: 1.0"."\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8"."\r\n";
+
+				// More headers
+				$headers .= 'From: Piudali <'.$plantilla["email"].'>'."\r\n";
+
+				$mail = mail($_SESSION["email"], $plantilla["asunto"], $mensaje, $headers);
+
+				//Variables Pago Payu
+				$merchantId = 502548;
+				$ApiKey = "28tuaar72n6g65ervovdl1sst";
+				$referenceCode = $codigo_orden;
+				//$accountId = ;
+				$description = "COMPRA PRODUCTOS PIUDALI";
+				$currency = "COP";
+				$buyerEmail = $_SESSION["email"];
+				$amount = round($total);
+				$tax = round($iva);
+				if ($iva == 0) {
+					$taxReturnBase = 0;
+				}else{
+					$taxReturnBase = round($totalNetoAntesIva-$pagoPuntos["valor_pago"]);
+				}
+				$lng = "ES";
+				$payerFullName = $_SESSION["nombre"]." ".$_SESSION["apellido"];
+				$extra1 = $_SESSION["idusuario"];
+				$extra3 = "PIUDALI";
+				$responseUrl = "http://naturalvitalis.com/respagos.php";
+				$signature=md5($ApiKey."~".$merchantId."~".$referenceCode."~".$amount."~COP");
+
+				require "include/pago_payu.php";
+				*/
+				unset($_SESSION["idpdts"]);
+				unset($_SESSION["cantidadpdts"]);
+
+				echo "ESPERANDO POR VINCULACIÓN DE PLATAFORMA DE PAGO";
+			}
+			
+		}else{
+			header("Location: ".URL_INGRESAR);
+		}
+	}
+
+	public function descontarStock($idpdt, $cantidad){
+
+		$producto = $this->productos->detalleProductos($idpdt);
+		$cantidad_actual = $producto["cantidad"];
+		$cantidad_nueva = $cantidad_actual - $cantidad;
+		$filas = $this->productos->actualizarCantidadProducto($idpdt,$cantidad_nueva);
+
+		return $filas;
 	}
 
 	public function addPdtCart(){

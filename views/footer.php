@@ -2,8 +2,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-4">
-				<h2 class="text-xs-center newsletter mb-0">newsletter</h2>
-				<input type="text" class="form-control" name="email" placeholder="SING UP NOW" style="border: 2px solid #9F972D;color: #9F972D;">
+				<h2 class="text-xs-center newsletter" style="margin-bottom:-5px;">newsletter</h2>
+				<input type="text" class="form-control input-newsletter" name="email" placeholder="<?=Lenguajes::consultarFrase("SIGN UP NOW", $_SESSION["lenguaje"])?>">
 				<h3 class="text-xs-center mt-1" style="color:#9F972D;">
 					<i class="fa fa-facebook-official" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
 				</ul>
 			</div>
 			<div class="col-xs-12 col-md-3">
-				<h4 style="color: #9F972D;">ATENCIÓN AL CLIENTE</h4>
+				<h4 style="color: #9F972D;"><?=Lenguajes::consultarFrase("CUSTOMER SUPPORT", $_SESSION["lenguaje"])?></h4>
 				<ul class="list-unstyled">
 					<li><a href="#" style="color: #9F972D;">Devoluciones</a></li>
 					<li><a href="#" style="color: #9F972D;">Información de Envío</a></li>
@@ -28,7 +28,7 @@
 				</ul>
 			</div>
 			<div class="col-xs-12 col-md-3">
-				<h4 style="color: #9F972D;">CONTACT US</h4>
+				<h4 style="color: #9F972D;"><?=Lenguajes::consultarFrase("CONTACT US", $_SESSION["lenguaje"])?></h4>
 				<ul class="list-unstyled">
 					<li style="color: #9F972D;">(+57 1) 333 33 33</li>				
 				</ul>

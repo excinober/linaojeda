@@ -7,11 +7,11 @@
                                 <div class="col-sm-6">
                                     <!--<h5></h5>-->
                                     <address>
-                                        <strong>LINK GRUPO MARKETING SAS</strong><br>
+                                        <strong>LINA OJEDA</strong><br>
                                         900218947-1<br><br>
-                                        Cali, Colombia<br>
-                                        (+57)(2) 524 1887 - (+57) 311 627 9068<br>
-                                        contacto@piudali.com.co<br>
+                                        Bogotá, Colombia<br>
+                                        (+57) 301 391 3155<br>
+                                        lohandbag@gmail.com<br>
                                         <!--<abbr title="Phone">P:</abbr> (123) 601-4590-->
                                     </address>
                                     <form method="post">
@@ -54,7 +54,7 @@
                                         <strong><?=$orden["detalle"]["nombre"]." ".$orden["detalle"]["apellido"]?><br>
                                         CC. <?=$orden["detalle"]["num_identificacion"]?></strong><br>                                       
                                         <?=$orden["detalle"]["direccion"]?><br>
-                                        <?=$orden["detalle"]["ciudad"]?><br>
+                                        <?=$orden["detalle"]["ciudad"].", ".$orden["detalle"]["pais"]?><br>
                                         <?=$orden["detalle"]["telefono"]?><br>
                                         <?=$orden["detalle"]["telefono_m"]?><br>
                                     </address>
@@ -84,7 +84,7 @@
 	                                        	<strong><?=$producto["nombre_producto"]?></strong></div>
 	                                        </td>
 	                                        <td><?=$producto["cantidad"]?></td>
-	                                        <td><?=$producto["precio"]?></td>                                        
+	                                        <td><?=convertir_pesos($producto["precio"])?></td>                                        
 	                                    </tr>
 									<?php
 									}
@@ -102,23 +102,11 @@
                                 <tr>
                                     <td><strong>Descuentos Cupón:</strong></td>
                                     <td><?=convertir_pesos($orden["detalle"]["descuentos"])?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Descuento Escala %:</strong></td>
-                                    <td><?=$orden["detalle"]["porc_escala"]?>%</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Descuento Escala $:</strong></td>
-                                    <td><?=convertir_pesos($orden["detalle"]["desc_escala"])?></td>
-                                </tr>
+                                </tr>                                
                                 <tr>
                                     <td><strong>Total Neto Antes de Iva:</strong></td>
                                     <td><?=convertir_pesos($orden["detalle"]["neto_sin_iva"])?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Subtotal Premios:</strong></td>
-                                    <td><?=convertir_pesos($orden["detalle"]["subtotal_premios"])?></td>
-                                </tr>
+                                </tr>                                
                                 <tr>
                                     <td><strong>Iva:</strong></td>
                                     <td><?=convertir_pesos($orden["detalle"]["impuestos"])?></td>

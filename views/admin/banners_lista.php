@@ -6,8 +6,8 @@
 			<table class="table table-striped">
 			  <thead>
 			  	<tr>
-			  		<th>Nombre</th>
-			  		<th>Posición</th>
+			  		<th>Título</th>
+			  		<th>Ubicación</th>
 			  		<th>Estado</th>
 			  		<th>Acciones</th>
 			  	</tr>
@@ -17,8 +17,8 @@
 			  	foreach ($bannersLista as $banner) {
 		  		?>
 		  		<tr>
-		  			<td><?=$banner["nombre"]?></td>
-		  			<td><?=$banner["posicion"]?></td>
+		  			<td><?=$banner["titulo"]?></td>
+		  			<td><?=$banner["ubicacion"]?></td>
 		  			<td><?=$banner["estado"]?></td>
 		  			<td><a href="<?=URL_ADMIN."/".URL_ADMIN_BANNERS."/".$banner['idbanner']?>"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
 		  		</tr>

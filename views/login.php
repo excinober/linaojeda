@@ -4,7 +4,7 @@
   <div class="col-xs-12 col-md-3">
     <h4>MENÚ</h4>
     <?php include "views/nav_sidebar.php"; ?>
-    <h4 class="mt-2">FILTERS</h4>
+    <h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
     <?php filters($categorias_padre); ?>
   </div>
   <div class="mt-3 col-xs-12 offset-md-2 col-md-4">

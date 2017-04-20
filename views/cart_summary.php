@@ -2,7 +2,7 @@
 <?php //include "my_bag.php"; ?>
 <div class="container-fluid pt-1" style="background-color: #9F972D; color: #fff;">
   <div class="container">
-    <h1><?=Lenguajes::consultarFrase("MY BAG", $_SESSION["lenguaje"])?></h1>
+    <h1><?=Lenguajes::consultarFrase("SUMMARY", $_SESSION["lenguaje"])?></h1>
   </div>
 </div>
 <div class="container mt-2">
@@ -33,16 +33,8 @@
             </td>
             <td><div class="rounded-circle mx-auto" style="background-color: #61A257;width: 30px;height: 30px;"></div></td>
             <td class="text-xs-center"><?=convertir_pesos($itemsCarrito["precio"][$key])?></td>
-            <td>
-              <select name="cantidad" id="cantidad" class="form-control input-sm updateQuantity" idpdt="<?=$iditem?>">
-                  <?php 
-                  for ($i=1; $i <= $itemsCarrito["cantidadstock"][$key]; $i++) {
-                    ?>
-                    <option value="<?=$i?>" <?php if ($itemsCarrito["cantidad"][$key]==$i) { echo "selected"; } ?>><?=$i?></option>
-                    <?php
-                  }
-                  ?>
-                </select>
+            <td class="text-xs-center">
+              <?=$itemsCarrito["cantidadstock"][$key]?>
             </td>
             <td class="text-xs-right"><?=convertir_pesos($itemsCarrito["subtotal"][$key])?></td>
           </tr>
@@ -115,7 +107,7 @@
     </div>
     <div class="row mt-1">
       <?php if ($_SESSION["login"]) { ?>
-        <a href="<?=URL_RESUMEN_COMPRA?>" class="btn btn-primary btn-lg pull-right ml-1">Continuar Pago</a>
+        <a href="<?=URL_GENERAR_ORDEN?>" class="btn btn-primary btn-lg pull-right ml-1">Pagar</a>
       <?php }else{ ?>      
         <button class="btn btn-primary btn-lg pull-right ml-1 login-popup">Continuar Pago</button>
       <?php }?>      

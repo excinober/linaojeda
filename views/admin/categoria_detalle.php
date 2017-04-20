@@ -38,6 +38,13 @@
 					</select>
 				</div>
 				<div class="form-group">
+					<label for="exampleInputEmail1">Menú</label>
+					<select name="menu" id="menu" class="form-control" required>
+						<option value="1" <?php if ($categoria['menu']) echo 'selected'; ?>>Mostrar en menú</option>
+						<option value="0" <?php if (!$categoria['menu']) echo 'selected'; ?>>No mostrar en menú</option>
+					</select>
+				</div>
+				<div class="form-group">
 					<label for="exampleInputEmail1">Estado</label>
 					<select name="estado" id="estado" class="form-control" required>
 						<option value="1" <?php if ($categoria['estado']) echo 'selected'; ?>>Activo</option>

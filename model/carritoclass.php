@@ -352,15 +352,13 @@ class Carrito extends Productos
 		return $codigo;
 	}
 
-	public function generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $porcDescuentoEscala, $descuentoEscala, $totalNetoAntesIva, $iva, $pagoPuntos, $valorPunto, $flete, $total, $estado, $fecha_facturacion, $num_factura, $idusuario){
+	public function generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, $pagoPuntos, $valorPunto, $flete, $total, $estado, $fecha_facturacion, $num_factura, $idusuario){
 		
 		$idorden = $this->insertar("INSERT INTO `ordenes_pedidos`(									
 									`num_orden`, 
 									`fecha_pedido`,
 									`subtotal`, 
-									`descuentos`, 
-									`porc_escala`, 
-									`desc_escala`, 
+									`descuentos`, 									
 									`neto_sin_iva`, 
 									`impuestos`, 
 									`pago_puntos`, 
@@ -370,13 +368,12 @@ class Carrito extends Productos
 									`estado`, 
 									`fecha_facturacion`, 
 									`num_factura`, 
-									`usuarios_idusuario`) VALUES (									
+									`usuarios_idusuario`,
+									`direcciones_ordenes_iddireccion_orden`) VALUES (				
 									'$codigo_orden',
 									'$fecha_pedido',
 									'$subtotalAntesIva',
-									'$descuentoCupon',
-									'$porcDescuentoEscala',
-									'$descuentoEscala',
+									'$descuentoCupon',									
 									'$totalNetoAntesIva',
 									'$iva',
 									'$pagoPuntos',
@@ -386,7 +383,8 @@ class Carrito extends Productos
 									'$estado',
 									'$fecha_facturacion',
 									'$num_factura',
-									'$idusuario')");
+									'$idusuario',
+									'1')");
 		
 		return $idorden;
 	}
@@ -397,9 +395,9 @@ class Carrito extends Productos
 
 			$detalle_orden = array();
 			$porc_descuento_cupon = $this->porcDescuentoCupon();
-			$porc_escala = $this->porcDescuentoEscala();
-			$pagoPuntos = $this->getPagoPuntos();
-			$valor_descuento_puntos = $pagoPuntos["valor_pago"]/(count($_SESSION["cantidadpdts"]));
+			//$porc_escala = $this->porcDescuentoEscala();
+			//$pagoPuntos = $this->getPagoPuntos();
+			//$valor_descuento_puntos = $pagoPuntos["valor_pago"]/(count($_SESSION["cantidadpdts"]));
 
 			foreach ($_SESSION["idpdts"] as $key => $idpdt) {
 
@@ -411,21 +409,22 @@ class Carrito extends Productos
 				$codigo_pdt = $producto["codigo"];
 				$cantidad_pdt = $_SESSION["cantidadpdts"][$key];
 				$descuento_cupon_pdt = $subtotal*($porc_descuento_cupon/100);
-				$descuento_escala_pdt = ($subtotal-$descuento_cupon_pdt)*($porc_escala/100);
-				$neto_sin_iva_pdt = $subtotal - $descuento_cupon_pdt - $descuento_escala_pdt;
+				//$descuento_escala_pdt = ($subtotal-$descuento_cupon_pdt)*($porc_escala/100);
+				$neto_sin_iva_pdt = $subtotal - $descuento_cupon_pdt;
 				$iva_pdt = $neto_sin_iva_pdt*($producto["iva"]/100);
 				
 				$detalle_orden[$key]["nombre"] = $producto["nombre"];
 				$detalle_orden[$key]["iva_porc"] = $producto["iva"];
+				$detalle_orden[$key]["personalizable"] = $producto["personalizable"];
 				$detalle_orden[$key]["subtotal"] = $subtotal;
 
 				$detalle_orden[$key]["codigo"] = $codigo_pdt;
 				$detalle_orden[$key]["cantidad"] = $cantidad_pdt;
-				$detalle_orden[$key]["precio"] = $precio;
+				$detalle_orden[$key]["precio"] = $precio;				
 				$detalle_orden[$key]["precio_base"] = ($neto_sin_iva_pdt/$_SESSION["cantidadpdts"][$key]);
 				$detalle_orden[$key]["descuento_cupon"] = ($descuento_cupon_pdt/$_SESSION["cantidadpdts"][$key]);
 				$detalle_orden[$key]["iva"] = ($iva_pdt/$_SESSION["cantidadpdts"][$key]);
-				$detalle_orden[$key]["descuento_puntos"] = ($valor_descuento_puntos/$_SESSION["cantidadpdts"][$key]);
+				//$detalle_orden[$key]["descuento_puntos"] = ($valor_descuento_puntos/$_SESSION["cantidadpdts"][$key]);
 			}
 		}else{
 			$detalle_orden = array();
@@ -434,7 +433,7 @@ class Carrito extends Productos
 		return $detalle_orden;
 	}
 
-	public function agregarDetalleOrden($nombre_producto, $cod_producto, $cantidad, $precio, $precio_base, $descuento_cupon, $iva, $descuento_puntos, $idorden){
+	public function agregarDetalleOrden($nombre_producto, $cod_producto, $cantidad, $precio, $precio_base, $descuento_cupon, $iva, $descuento_puntos, $personalizado, $idorden){
 		
 		$id_detalle = $this->insertar("INSERT INTO `detalle_orden`(										
 										`nombre_producto`, 
@@ -444,7 +443,8 @@ class Carrito extends Productos
 										`precio_base`, 
 										`descuento_cupon`, 
 										`iva`, 
-										`descuento_puntos`, 
+										`descuento_puntos`,
+										`personalizado`, 
 										`ordenes_pedidos_idorden`) VALUES (										
 										'$nombre_producto',
 										'$cod_producto',
@@ -454,6 +454,7 @@ class Carrito extends Productos
 										'$descuento_cupon',
 										'$iva',
 										'$descuento_puntos',
+										'$personalizado',
 										'$idorden')");
 		
 		return $id_detalle;

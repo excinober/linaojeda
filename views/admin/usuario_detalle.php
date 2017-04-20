@@ -29,8 +29,8 @@
 						<input type="email" class="form-control" name="email" id="email" value="<?=$usuario['email']?>" required>
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Número de documento</label>
-						<input type="text" class="form-control" name="num_identificacion" id="num_identificacion" value="<?=$usuario['num_identificacion']?>" required>
+						<label for="exampleInputEmail1">Número de Identificación</label>
+						<input type="text" class="form-control" name="num_identificacion" id="num_identificacion" value="<?=$usuario['num_identificacion']?>">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Dirección</label>
@@ -46,16 +46,15 @@
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Ciudad</label>
-						<select name="ciudad" class="form-control" required>
-							<option value="">-Seleccione-</option>
-							<?php
-							foreach ($ciudades as $key => $ciudad) {
-								?>
-								<option value="<?=$ciudad["idciudad"]?>" <?php if ($usuario["ciudades_idciudad"] == $ciudad["idciudad"]) echo "selected"; ?>><?=$ciudad["ciudad"]?></option>
-								<?php
-							}
-							?>
-						</select>
+						<input type="text" class="form-control" name="ciudad" id="ciudad" value="<?=$usuario['ciudad']?>">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">País</label>
+						<input type="text" class="form-control" name="pais" id="pais" value="<?=$usuario['pais']?>">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Código Postal</label>
+						<input type="text" class="form-control" name="cod_postal" id="cod_postal" value="<?=$usuario['cod_postal']?>">
 					</div>					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Estado</label>
@@ -78,7 +77,7 @@
 					
 				</form>
 			</div>
-			<div class="col-xs-12 col-md-6">
+			<!--<div class="col-xs-12 col-md-6">
 			<?php if (isset($idusuario) && $idusuario!='') { ?>				
 				<h2>ACCIONES</h2>
 				<hr>
@@ -89,7 +88,7 @@
 					<button type="submit" name="ingresoRemoto" class="btn btn-primary" title="Ingresa como <?=$usuario["nombre"]." ".$usuario["apellido"]?>">Ingresar a Cuenta <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></button>
 				</form>
 			<?php } ?>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>

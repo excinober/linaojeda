@@ -1,6 +1,6 @@
 <?php 
-//define("URL_SITIO", "http://localhost/linaojeda/www/");
-define("URL_SITIO", "http://linaojeda.com/demo/");
+define("URL_SITIO", "http://localhost/linaojeda/www/");
+//define("URL_SITIO", "http://linaojeda.com/demo/");
 define("NOMBRE_SITIO", "LO");
 define("URL_INICIO", "Inicio");
 define("URL_PRODUCTOS", "Productos");
@@ -80,6 +80,7 @@ define("URL_ADMIN_PERSONAL", "Personal");
 define("URL_ADMIN_SUSCRIPTORES", "Suscriptores");
 define("URL_ADMIN_PIEZAS", "Piezas");
 define("URL_ADMIN_PIEZAS_ELIMINAR_OPCION", "EliminarOpcionPieza");
+define("URL_ADMIN_LENGUAJE", "Lenguajes");
 
 /**INFORMES**/
 define("URL_ADMIN_INFORMES", "Informes");

@@ -5,17 +5,19 @@
 class Categorias extends Database
 {
 
-	public function crearCategoria($nombre="",$url="",$imagen="",$estado=0){
+	public function crearCategoria($nombre="",$url="",$imagen="",$menu=0, $estado=0){
 		
 		$idcategoria = $this->insertar("INSERT INTO `categorias`(											
 											`nombre`,
 											`url`,
 											`imagen`, 
-											`estado`) VALUES (
+											`estado`,
+											`menu`) VALUES (
 											'$nombre',
 											'$url',
 											'$imagen',
-											'$estado')");
+											'$estado',
+											'$menu')");
 		
 		return $idcategoria;
 	}
@@ -57,7 +59,7 @@ class Categorias extends Database
 			$padre_where = "";
 		}
 
-		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `url`, `imagen`, `padre`, `estado` 
+		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `url`, `imagen`, `padre`, `estado`, `menu` 
 									FROM `categorias` 
 									WHERE $estados_select $padre_where");
 		
@@ -67,24 +69,25 @@ class Categorias extends Database
 
 	public function detalleCategoria($idcategoria){
 		
-		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `url`, `imagen`, `padre`, `estado` FROM `categorias` WHERE `idcategoria`='$idcategoria'");
+		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `url`, `imagen`, `padre`, `estado`, `menu` FROM `categorias` WHERE `idcategoria`='$idcategoria'");
 		
 		return $query[0];
 	}
 
 	public function detalleCategoriaUrl($url){
 		
-		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `imagen`, `estado` FROM `categorias` WHERE `url`='$url'");
+		$query = $this->consulta("SELECT `idcategoria`, `nombre`, `imagen`, `estado`, `menu` FROM `categorias` WHERE `url`='$url'");
 		
 		return $query[0];
 	}
 
-	public function actualizarCategoria($idcategoria,$nombre="",$url="",$imagen="",$estado=0){
+	public function actualizarCategoria($idcategoria,$nombre="",$url="",$imagen="",$menu=0, $estado=0){
 		
 		$query = $this->actualizar("UPDATE `categorias` SET 
 										`nombre`='$nombre',
 										`url`='$url',										
-										`estado`='$estado'										
+										`estado`='$estado',
+										`menu`='$menu'
 										WHERE `idcategoria`='$idcategoria'");
 
 		if (!empty($imagen)) {
