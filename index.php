@@ -78,8 +78,15 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_PRODUCTOS_PERSONALIZAR:
-				if (isset($var2) && !empty($var2)) {						
-					$controller->pageProductPersonalizeDetail($var2);
+				if (isset($var2) && !empty($var2)) {
+					if ($var2 == URL_PRODUCTOS_PERSONALIZAR_IMG) {
+						$controller->saveImgPersonalizer();
+					}elseif ($var2 == URL_PRODUCTOS_PERSONALIZAR_AGREGAR_OPCION) {
+						$controller->agregarOpcionPieza();
+					}else{
+
+						$controller->pageProductPersonalizeDetail($var2);
+					}
 				}else{
 					$controller->pageProductsPersonalize();
 				}

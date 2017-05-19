@@ -20,7 +20,9 @@
 		}
 		?>		
 		<div class="row mt-3">
-			<?=$pagina_detalle["contenido"]?>
+			<div class="col-xs-12">
+				<?=$pagina_detalle["contenido"]?>
+			</div>
 		</div>
 	</div>
 </div>

@@ -20,7 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body <?php if ($onbeforeunload){ echo 'onbeforeunload="return confirmarSalida()"'; } ?>>
     <div class="container-fluid">      
       <!--<nav class="navbar navbar-dark bg-inverse p-t-2 p-b-2">-->
       <nav class="navbar navbar-light pt-2 pb-2">
@@ -56,14 +56,14 @@
                     ?>
                     </div>
                   </li>
-                  <li class="nav-item mr-2">
+                  <li class="nav-item">
                     <a class="nav-link pt-1" href="<?=URL_PRODUCTOS_PERSONALIZAR?>"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a>
                   </li>
                   <?php 
                   if (count($menu)>0) {
                     foreach ($menu as $key => $item) {
                   ?>
-                    <li class="nav-item mr-2">
+                    <li class="nav-item">
                       <a class="nav-link pt-1" href="p/<?=$item["url"]?>"><?=$item["titulo"]?></a>
                     </li>
                   <?php
@@ -98,7 +98,9 @@
                       <i class="fa fa-user" aria-hidden="true"></i> <!--<?=$_SESSION["nombre"]?>-->
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="<?=URL_SITIO.URL_SALIR?>">Salir</a>                    
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO_PERFIL?>">My Account</a>
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO_ORDENES?>">My Orders</a>
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_SALIR?>">Sign Out</a>                    
                     </div>
                   </div>
                   <?php }else{ ?>                                    

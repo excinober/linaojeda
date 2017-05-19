@@ -104,7 +104,8 @@
 					</h4>
 					</div>
 				</div>
-				<center>					
+				<center>
+					<input type="hidden" name="personalizable" id="personalizable" value="<?=$producto["personalizable"]?>">	
 					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></button>
 				</center>
 				<hr>

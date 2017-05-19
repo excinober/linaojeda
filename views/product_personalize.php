@@ -60,7 +60,7 @@
 					?>					
 				</div>
 				<hr>
-				<h2 class="text-xs-center">VISTO RECIENTEMENTE</h2>
+				<!--<h2 class="text-xs-center">VISTO RECIENTEMENTE</h2>-->
 			</div>
 			<div class="col-xs-12 col-md-4">								
 				<h2 class="text-xs-center"><?=$producto["nombre"]?></h2>
@@ -77,15 +77,15 @@
 								<?php
 								foreach ($pieza["opciones"] as $key => $opcion) {
 								?>
-								<div class="col-xs-3 opcion-pieza" title="<?=$opcion["nombre"]?>" urlpieza="<?=$opcion["imagen"]?>">
+								<div class="col-xs-3 opcion-pieza" title="<?=$opcion["nombre"]?>" urlpieza="<?=$opcion["imagen"]?>" idopcion="<?=$opcion["idopcionpieza"]?>" idpieza="<?=$pieza["idpieza"]?>" idpdt="<?=$producto["idproducto"]?>">
 									<?php
 									if ($opcion["tipo_convencion"]=="IMAGEN") {
 									?>
-									<div class="w-100" style="height: 40px; background-image: url(<?=$opcion["imagen_convencion"]?>);background-repeat: no-repeat;"></div>
+									<div class="w-100" style="height: 40px; background-image: url(<?=$opcion["imagen_convencion"]?>);background-repeat: no-repeat;cursor:pointer;"></div>
 									<?php
 									}elseif ($opcion["tipo_convencion"]=="COLOR") {
 									?>
-									<div class="w-100" style="height: 50px; background-color: <?=$opcion["color_convencion"]?>"></div>
+									<div class="w-100" style="height: 50px; background-color: <?=$opcion["color_convencion"]?>;cursor:pointer;"></div>
 									<?php	
 									}
 									?>							
@@ -129,11 +129,12 @@
 					</h4>
 					</div>
 				</div>
-				<center>					
-					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt">SHOP NOW</button>
+				<center>
+					<input type="hidden" name="personalizable" id="personalizable" value="<?=$producto["personalizable"]?>">
+					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></button>
 				</center>
 				<hr>
-				<h3 class="text-xs-center">SHARE</h3>
+				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h3>
 				<h3 class="text-xs-center">
 					<i class="fa fa-facebook-square" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>

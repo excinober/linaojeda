@@ -104,11 +104,16 @@ class Carrito extends Productos
 				$this->itemscarrito['cantidadstock'][] = $producto["cantidad"];
 				$this->itemscarrito['nombre'][] = $producto["nombre"];
 				$this->itemscarrito['codigo'][] = $producto["codigo"];
-				$this->itemscarrito['iva'][] = $producto["iva"];
-				$this->itemscarrito['img_principal'][] = $producto["img_principal"];
+				$this->itemscarrito['iva'][] = $producto["iva"];				
 				$this->itemscarrito['compania'][] = $producto["compania"];
 				$this->itemscarrito['url'][] = $producto["url"];
 				$this->itemscarrito['subtotal'][] = $subtotal;
+
+				if (!empty($_SESSION["imgspdts"][$key])) {
+					$this->itemscarrito['img_principal'][] = $_SESSION["imgspdts"][$key];
+				}else{
+					$this->itemscarrito['img_principal'][] = $producto["img_principal"];	
+				}
 			}
 		}else{
 			$this->itemscarrito=array();

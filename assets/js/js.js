@@ -1,3 +1,8 @@
+
+function confirmarSalida(){
+	return "Si sales de esta página podrías perder tu personalización";
+}
+
 $(document).ready(function(){
 
 	var showbox = false; 
@@ -16,6 +21,22 @@ $(document).ready(function(){
 
 	$(".opcion-pieza").click(function(){
 		var urlpieza = $(this).attr("urlpieza");
+		var idopcion = $(this).attr("idopcion");
+		var idpieza = $(this).attr("idpieza");
+		var idpdt = $(this).attr("idpdt");
+
+		if (idopcion !='' && idpieza !='' && idpdt !='') {
+			$.ajax({
+			  type: "POST",
+			  url: "Personalizar/agregarOpcionPieza",
+			  data: { idopcion:idopcion, idpieza:idpieza, idpdt:idpdt },
+			  success: function(response){
+			  	alert(response.ok);
+			  },
+			  dataType: 'json'
+			});
+		}
+
 		$("#container-personalize").append('<img src="'+urlpieza+'" class="m-0 p-0 img-fluid" style="left:0px; top:0; position: absolute;z-index: 999;">');
 	})
 

@@ -23,5 +23,5 @@
     <hr class="my-1 bg-white">
   <?php
   } ?>
-  <a href="<?=URL_CARRITO?>" class="btn btn-primary"><?=Lenguajes::consultarFrase("SHOW CART", $_SESSION["lenguaje"])?></a>
+  <a href="<?=URL_CARRITO?>" class="btn btn-primary mb-1"><?=Lenguajes::consultarFrase("SHOW CART", $_SESSION["lenguaje"])?></a>
 </div>

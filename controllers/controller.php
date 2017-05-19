@@ -52,6 +52,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
 
@@ -78,6 +79,7 @@ class Controller
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
 
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 		$categorias_padre = $this->getCategoriesPattern();
 
 		$pagina_detalle = $this->paginas->contenidoPagina($url);
@@ -91,6 +93,7 @@ class Controller
 		$estado = 1;
 
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 		$categorias_padre = $this->getCategoriesPattern();
 
 		if (isset($_POST["createUser"])) {
@@ -122,6 +125,7 @@ class Controller
 		$estado = 1;
 
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 		$categorias_padre = $this->getCategoriesPattern();
 
 		if (isset($_POST["login"])) {
@@ -159,6 +163,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
 
@@ -176,6 +181,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
 		$categorias_padre = $this->getCategoriesPattern();
@@ -228,6 +234,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
 
@@ -245,6 +252,8 @@ class Controller
 				$piezas[$key]["opciones"] = $opciones_pieza;
 			}
 		}
+
+		$onbeforeunload = true;
 
 		include "views/product_personalize.php";
 	}
@@ -269,6 +278,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
 
@@ -286,6 +296,7 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
 		
@@ -306,6 +317,9 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
 
 		if (isset($_POST["redimirCupon"])) {
 
@@ -344,6 +358,9 @@ class Controller
 		$posicion = "MENU";
 		$estado = 1;
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));
 
 		$itemsCarrito = $this->carrito->listarItems();
 		$subtotalAntesIva = $this->carrito->getSubtotalAntesIva();		
@@ -535,6 +552,7 @@ class Controller
 				*/
 				unset($_SESSION["idpdts"]);
 				unset($_SESSION["cantidadpdts"]);
+				unset($_SESSION["imgspdts"]);
 
 				echo "ESPERANDO POR VINCULACIÓN DE PLATAFORMA DE PAGO";
 			}
@@ -554,14 +572,30 @@ class Controller
 		return $filas;
 	}
 
+	public function agregarOpcionPieza(){
+		
+		if (isset($_POST["idpdt"]) && isset($_POST["idopcion"]) && isset($_POST["idpieza"])) {
+			
+			extract($_POST);
+
+			$_SESSION["idpdts"][] = $idpdt;
+
+			$return = array();
+			echo json_encode($return);
+		}		
+	}
+
+
 	public function addPdtCart(){
 
 		if (isset($_POST["idpdt"]) && isset($_POST["cantidad"])) {
 		
 			$idpdt = $_POST["idpdt"];
 			$cantidad = $_POST["cantidad"];
+			$personalizable = $_POST["personalizable"];
+			$img = $_POST["img"];
 
-			if (in_array($idpdt, $_SESSION["idpdts"])) {
+			if (in_array($idpdt, $_SESSION["idpdts"]) && !$personalizable) {
 				
 				$clave = array_search($idpdt, $_SESSION["idpdts"]);
 				$_SESSION["cantidadpdts"][$clave] = $_SESSION["cantidadpdts"][$clave] + $cantidad;
@@ -570,6 +604,7 @@ class Controller
 
 				$_SESSION["idpdts"][] = $idpdt;
 				$_SESSION["cantidadpdts"][] = $cantidad;
+				$_SESSION["imgspdts"][] = $img;
 			}
 
 			$total = $this->carrito->getTotal();
@@ -577,7 +612,6 @@ class Controller
 
 			$return = array('total' => number_format($total), 'cantidad' => $cantidad);
 			echo json_encode($return);
-			//echo json_encode(array('total' => number_format(10000), 'cantidad' => 10));
 		}
 	}
 
@@ -594,6 +628,20 @@ class Controller
 
 				echo "OK";
 			}			
+		}
+	}
+
+	public function saveImgPersonalizer(){
+
+		if (isset($_POST['imgdata']) && !empty($_POST['imgdata'])) {
+			
+			$imagedata = base64_decode($_POST['imgdata']);
+			$filename = md5(uniqid(rand(), true));
+			//path where you want to upload image
+			$file = DIR_IMG_PERSONALIZADOS.$filename.'.png';
+			$imageurl  = DIR_IMG_PERSONALIZADOS.$filename.'.png';
+			file_put_contents($file,$imagedata);
+			echo $imageurl;
 		}
 	}
 }

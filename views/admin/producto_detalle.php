@@ -38,21 +38,23 @@
 						<option value="2" <?php if ($producto['relevancias_idrelevancia']==2) echo "selected"; ?>>Poco Relevante</option>
 					</select>
 				</div>
-				<div class="col-xs-12 col-md-6">
-					<div class="form-group">
-						<label for="exampleInputEmail1">Imágen Principal</label>
-						<input type="file" name="img_principal" class="form-control">
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<div class="form-group">
+							<label for="exampleInputEmail1">Imágen Principal</label>
+							<input type="file" name="img_principal" class="form-control">
+						</div>
 					</div>
-				</div>
-				<div class="col-xs-12 col-md-6">
-					<?php
-					if (!empty($producto['img_principal'])) {				
-					
-					?>
-						<img src="<?=$producto['img_principal']?>" class="img-responsive" style="max-width: 300px;">
-					<?php
-					}	
-					?>				
+					<div class="col-xs-12 col-md-6">
+						<?php
+						if (!empty($producto['img_principal'])) {				
+						
+						?>
+							<img src="<?=$producto['img_principal']?>" class="img-responsive" style="max-width: 300px;">
+						<?php
+						}	
+						?>				
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Registro</label>

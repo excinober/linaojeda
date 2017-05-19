@@ -47,13 +47,13 @@
           ?>
         </div>
         <a href="#carousel-big-home" role="button" data-slide="prev">
-          <div class="prev-carousel prev-carousel-white">
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          <div class="prev-carousel">
+            <img src="assets/img/arrow_left.png" class="img-fluid">
           </div>
         </a>
         <a href="#carousel-big-home" role="button" data-slide="next">
-          <div class="next-carousel next-carousel-white">
-            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          <div class="next-carousel">
+            <img src="assets/img/arrow-right.png" class="img-fluid">
           </div>
         </a>        
       </div>
@@ -75,13 +75,20 @@
           ?>
         </div>
         <a href="#carousel-shop" role="button" data-slide="prev">
-          <div class="prev-carousel prev-carousel-black">
+          <!--<div class="prev-carousel prev-carousel-black">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <img src="assets/img/arrow_left.png" class="img-fluid">
+          </div>-->
+          <div class="prev-carousel">            
+            <img src="assets/img/arrow_left.png" class="img-fluid">
           </div>
         </a>
         <a href="#carousel-shop" role="button" data-slide="next">
-          <div class="next-carousel next-carousel-black">
+          <!--<div class="next-carousel next-carousel-black">
             <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </div>-->
+          <div class="next-carousel">            
+            <img src="assets/img/arrow-right.png" class="img-fluid">
           </div>
         </a>
       </div>  	

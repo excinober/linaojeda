@@ -71,7 +71,7 @@ function product_view($producto){
 function product_block_personalize($producto){
 ?>
 <div class="col-xs-12 col-md-4 text-xs-center">
-	<div class="col-xs-12 px-2 py-3" style="border: 1px solid rgba(0,0,0,0.5);height: auto;">
+	<div class="col-xs-12 px-2 py-3" style="border: 1px solid rgba(0,0,0,0.5);height: 250px;">
 		<div id="popup<?=$producto["idproducto"]?>" class="text-xs-center rounded-circle popup-product-list pt-1" style="position:absolute;background-color: rgba(0,0,0,0.7);width: 90%;height: 90%;left: 5%;top:5%;display: none;color: #fff;">
 			<?php if ($producto["personalizable"]) {
 			?>

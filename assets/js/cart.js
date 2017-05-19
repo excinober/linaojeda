@@ -1,26 +1,68 @@
 $(document).ready(function(){
 	$(".addPdt").click(function(){
 
-		idpdt = $(this).attr("idpdt");
-		cantidad = $("#cantidad").val();
+		var idpdt = $(this).attr("idpdt");
+		var cantidad = $("#cantidad").val();
+		var personalizable = $("#personalizable").val();
 
-		$.ajax({
-			type: 'POST',
-			url: "Carrito/AgregarPdt",
-			data: {	idpdt:idpdt, cantidad:cantidad },
-			dataType: 'json',
-			async: false,
-			success: function(response) {
-				/*$("#total-carrito").text("Total a pagar $"+response.total);*/
-				$("#cantidad-carrito").text(response.cantidad);
-				$(".count-bag").text(response.cantidad);				
-				alert('El producto se agrego al carrito');
-				location.reload();
-			},
-			error: function() {
-				alert('El producto no se agrego');
-			}
-		});
+		if (personalizable==1) {
+
+	        html2canvas($("#container-personalize"), {
+			    onrendered: function (canvas) {
+			        var imagedata = canvas.toDataURL('image/png');
+					var imgdata = imagedata.replace(/^data:image\/(png|jpg);base64,/, "");
+					//ajax call to save image inside folder
+					$.ajax({
+						url: 'Personalizar/GuardarImg',
+						data: {
+						       imgdata:imgdata
+							   },
+						type: 'post',
+						success: function (url) {   
+			             	var urlimg = url;
+			             	$.ajax({
+								type: 'POST',
+								url: "Carrito/AgregarPdt",
+								data: {	idpdt:idpdt, cantidad:cantidad, personalizable:personalizable, img:urlimg},
+								dataType: 'json',
+								async: false,
+								success: function(response) {					
+									$("#cantidad-carrito").text(response.cantidad);
+									$(".count-bag").text(response.cantidad);				
+									alert('El producto personalizado se agrego al carrito');
+									$("body").removeAttr("onbeforeunload");
+									location.href="Carrito/";
+								},
+								error: function() {
+									alert('El producto no se agrego');
+								}
+							});
+						}
+					});
+			    }
+		   });
+
+		}else{
+
+			$.ajax({
+				type: 'POST',
+				url: "Carrito/AgregarPdt",
+				data: {	idpdt:idpdt, cantidad:cantidad, personalizable:personalizable, img:""},
+				dataType: 'json',
+				async: false,
+				success: function(response) {					
+					$("#cantidad-carrito").text(response.cantidad);
+					$(".count-bag").text(response.cantidad);				
+					alert('El producto se agrego al carrito');
+					//location.reload();
+					location.href="Carrito/";
+				},
+				error: function() {
+					alert('El producto no se agrego');
+				}
+			});
+		}
+		
 	});
 
 	$(".updateQuantity").change(function(){

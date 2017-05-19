@@ -9,7 +9,8 @@ define("URL_CONTACTO", "Contacto");
 define("URL_PAGINA_CONTENIDO", "p");
 define("URL_BUSCAR", "Resultados");
 define("URL_PRODUCTOS_PERSONALIZAR", "Personalizar");
-
+define("URL_PRODUCTOS_PERSONALIZAR_AGREGAR_OPCION", "agregarOpcionPieza");
+define("URL_PRODUCTOS_PERSONALIZAR_IMG", "GuardarImg");
 /***CARRITO****/
 define("URL_CARRITO", "Carrito");
 define("URL_RESUMEN_COMPRA", "ResumenCompra");
@@ -24,6 +25,7 @@ define("URL_USUARIO", "Usuario");
 define("URL_USUARIO_PERFIL", "Perfil");
 define("URL_USUARIO_CAMBIAR_DATOS", "CambiarDatos");
 define("URL_USUARIO_NEGOCIO", "Negocio");
+define("URL_USUARIO_ORDENES", "Ordenes");
 define("URL_USUARIO_DETALLE_ORDEN", "DetalleOrden");
 define("URL_USUARIO_PREMIOS", "Premios");
 define("URL_USUARIO_PROMOCIONES", "Promociones");
@@ -59,6 +61,7 @@ define("DIR_IMG_INCENTIVOS", "assets/img/incentivos/");
 define("DIR_IMG_DOCUMENTOS", "documentos/");
 define("DIR_IMG_PIEZAS", "assets/img/piezas/");
 define("DIR_IMG_CONVENCIONES", "assets/img/convenciones/");
+define("DIR_IMG_PERSONALIZADOS", "assets/img/personalizados/");
 
 
 /***ADMIN**/

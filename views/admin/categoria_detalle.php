@@ -27,7 +27,8 @@
 				</div>								
 				<div class="form-group">
 					<label for="exampleInputEmail1">Categoría Padre</label>
-					<select name="padre" id="padre" class="form-control" required>
+					<select name="padre" id="padre" class="form-control">
+					<option value="">--Seleccione-</option>
 						<?php 
 						foreach ($categorias as $key => $categoria_padre) {
 						?>

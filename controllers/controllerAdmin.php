@@ -87,6 +87,8 @@ class ControllerAdmin
 				$destino = "";
 			}
 
+			$img_principal = $destino;
+
 			$aplica_cupon = 1;
 			$url = convierte_url($_POST["nombre"]);
 
@@ -109,6 +111,8 @@ class ControllerAdmin
 
 				$destino = "";
 			}
+
+			$img_principal = $destino;
 
 			$aplica_cupon = 1;
 			$url = convierte_url($_POST["nombre"]);

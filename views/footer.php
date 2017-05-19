@@ -13,18 +13,34 @@
 			<div class="col-xs-12 col-md-2" style="color: #9F972D;">
 				<h4>MENÚ</h4>
 				<ul class="list-unstyled">
-					<li><a href="#" style="color: #9F972D;">LO New</a></li>
-					<li><a href="#" style="color: #9F972D;">SHOP NOW</a></li>
-					<li><a href="#" style="color: #9F972D;">LO Design</a></li>
-					<li><a href="#" style="color: #9F972D;">LO Collection</a></li>
+					<li><a href="<?=URL_PRODUCTOS_PERSONALIZAR?>" style="color: #9F972D;"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a></li>
+					<?php 
+	                  if (count($menu)>0) {
+	                    foreach ($menu as $key => $item) {
+	                  ?>
+	                    <li>
+	                    	<a href="p/<?=$item["url"]?>" style="color: #9F972D;" href="p/<?=$item["url"]?>"><?=$item["titulo"]?></a>
+	                    </li>
+	                  <?php
+	                    }
+	                  }
+	                  ?>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-md-3">
 				<h4 style="color: #9F972D;"><?=Lenguajes::consultarFrase("CUSTOMER SUPPORT", $_SESSION["lenguaje"])?></h4>
 				<ul class="list-unstyled">
-					<li><a href="#" style="color: #9F972D;">Devoluciones</a></li>
-					<li><a href="#" style="color: #9F972D;">Información de Envío</a></li>
-					<li><a href="#" style="color: #9F972D;">Políticas de Garantía</a></li>				
+					<?php 
+	                  if (count($pages_footer)>0) {
+	                    foreach ($pages_footer as $key => $page) {
+	                  ?>
+	                    <li>
+	                    	<a href="p/<?=$page["url"]?>" style="color: #9F972D;" href="p/<?=$page["url"]?>"><?=$page["titulo"]?></a>
+	                    </li>
+	                  <?php
+	                    }
+	                  }
+	                  ?>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-md-3">
@@ -57,10 +73,12 @@
 	  </div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/js/jquery-3.1.0.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/js.js"></script>
     <script type="text/javascript" src="assets/js/cart.js"></script>
+    <script type="text/javascript" src="assets/js/html2canvas.js"></script>
   </body>
 </html>
