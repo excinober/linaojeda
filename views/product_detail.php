@@ -77,7 +77,7 @@
 			</div>
 			<div class="col-xs-12 col-md-5">
 				<h1 class="text-xs-center"><?=$producto["nombre"]?></h1>
-				<h2 class="text-xs-center"><?=convertir_pesos($producto["precio"])?></h2>
+				<h2 class="text-xs-center"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h2>
 				<hr>
 				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("DESCRIPTION", $_SESSION["lenguaje"])?></h3>
 				<p class="text-xs-justify"><?=$producto["descripcion"]?></p>

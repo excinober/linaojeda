@@ -16,7 +16,7 @@
         <h6><?=$itemsCarrito["nombre"][$key]?></h6>
         <h6>Ref: <?=$itemsCarrito["codigo"][$key]?></h6>
         <h6>Cantidad: <?=$itemsCarrito["cantidad"][$key]?></h6>        
-        <h6><?=convertir_pesos($itemsCarrito["subtotal"][$key])?></h6>
+        <h6><?=conversor_monedas("COP",$_SESSION["moneda"],$itemsCarrito["subtotal"][$key])?></h6>
         <a class="btn btn-sm btn-secondary" href="<?=URL_SITIO.URL_PRODUCTOS."/".$itemsCarrito["url"][$key]?>"><?=Lenguajes::consultarFrase("VIEW MORE", $_SESSION["lenguaje"])?></a>
       </div>
     </div>

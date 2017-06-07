@@ -550,11 +550,17 @@ class Controller
 
 				require "include/pago_payu.php";
 				*/
+
+				$amount = 1000000;
+				$currency = "COP";
+
+				require "test.php";
+
 				unset($_SESSION["idpdts"]);
 				unset($_SESSION["cantidadpdts"]);
 				unset($_SESSION["imgspdts"]);
 
-				echo "ESPERANDO POR VINCULACIÓN DE PLATAFORMA DE PAGO";
+				
 			}
 			
 		}else{

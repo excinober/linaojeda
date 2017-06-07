@@ -32,11 +32,11 @@
               Cantidad: <?=$itemsCarrito["cantidad"][$key]?><br>
             </td>
             <td><div class="rounded-circle mx-auto" style="background-color: #61A257;width: 30px;height: 30px;"></div></td>
-            <td class="text-xs-center"><?=convertir_pesos($itemsCarrito["precio"][$key])?></td>
+            <td class="text-xs-center"><?=conversor_monedas("COP",$_SESSION["moneda"],$itemsCarrito["precio"][$key])?></td>
             <td class="text-xs-center">
               <?=$itemsCarrito["cantidadstock"][$key]?>
             </td>
-            <td class="text-xs-right"><?=convertir_pesos($itemsCarrito["subtotal"][$key])?></td>
+            <td class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$itemsCarrito["subtotal"][$key])?></td>
           </tr>
         <?php
           }
@@ -51,22 +51,22 @@
         <tr>
           <td colspan="4"></td>
           <td colspan="1" class="text-xs-right">Subtotal</td>                    
-          <td colspan="1" class="text-xs-right"><?=convertir_pesos($subtotalAntesIva)?></td>
+          <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$subtotalAntesIva)?></td>
         </tr>
         <tr>
           <td colspan="4"></td>
           <td colspan="1" class="text-xs-right">Impuesto</td>                    
-          <td colspan="1" class="text-xs-right"><?=convertir_pesos($iva)?></td>
+          <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$iva)?></td>
         </tr>
         <tr>
           <td colspan="4"></td>
           <td colspan="1" class="text-xs-right">Flete</td>                    
-          <td colspan="1" class="text-xs-right"><?=convertir_pesos($flete)?></td>
+          <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$flete)?></td>
         </tr>
         <tr>
           <td colspan="4"></td>
           <td colspan="1" class="text-xs-right"><b>Total</b></td>                    
-          <td colspan="1" class="text-xs-right"><b><?=convertir_pesos($total)?></b></td>
+          <td colspan="1" class="text-xs-right"><b><?=conversor_monedas("COP",$_SESSION["moneda"],$total)?></b></td>
         </tr>
       </tbody>
     </table>
@@ -102,7 +102,7 @@
       <div class="col-xs-6 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>COSTO ENVÍO</h6>
         <hr class="mt-0">
-        <h5 style="line-height: 1.3rem;">$20.000</h5>
+        <h5 style="line-height: 1.3rem;"><?=conversor_monedas("COP",$_SESSION["moneda"],20000)?></h5>
       </div>
     </div>
     <div class="row mt-1">

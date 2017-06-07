@@ -11,6 +11,15 @@ if (isset($_GET["lang"]) && ($_GET["lang"]=="es" || $_GET["lang"]=="en")) {
 	$_SESSION["lenguaje"] = $_GET["lang"];	
 }
 
+//Moneda
+if(!isset($_SESSION["moneda"])){
+	$_SESSION["moneda"] = "COP";
+}
+
+if (isset($_GET["currency"]) && ($_GET["currency"]=="COP" || $_GET["currency"]=="USD")) {
+	$_SESSION["moneda"] = $_GET["currency"];	
+}
+
 /** Require Models **/
 require "model/dbclass.php";
 require "model/paginasclass.php";

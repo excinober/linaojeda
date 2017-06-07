@@ -60,6 +60,13 @@ function convertir_pesos($valor_entero){
 	return "$".$valor_pesos;
 }
 
+function convertir_dolar($valor_entero){
+
+	$valor_dolar = number_format($valor_entero,2,".",",");
+
+	return "$".$valor_dolar;
+}
+
 function fecha_actual($tipo="date"){
 
 	if ($tipo == "date") {		
@@ -98,5 +105,47 @@ function filters($categorias_padre){
 		</div>
 		<?php
 		}
+}
+
+function conversor_monedas($moneda_origen,$moneda_destino,$cantidad) {
+	
+	if ($moneda_origen != $moneda_destino) {	
+
+		$get = file_get_contents("https://www.google.com/finance/converter?a=$cantidad&from=$moneda_origen&to=$moneda_destino");
+		$get = explode("<span class=bld>",$get);
+		$get = explode("</span>",$get[1]);  
+		$return = preg_replace("/[^0-9\.]/", null, $get[0]);
+
+		switch ($moneda_destino) {
+			case 'COP':
+				$return = convertir_pesos($return);
+				break;
+
+			case 'USD':
+				$return = convertir_dolar($return);
+				break;
+			
+			default:
+				$return = round($return);
+				break;
+		}
+	}else{
+
+		switch ($moneda_destino) {
+			case 'COP':
+				$return = convertir_pesos($cantidad);
+				break;
+
+			case 'USD':
+				$return = convertir_dolar($cantidad);
+				break;
+
+			default:
+				$return = $cantidad;
+				break;
+		}
+	}
+
+	return $return;
 }
 ?>

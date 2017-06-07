@@ -8,7 +8,7 @@ function product_block($producto){
 			?>
 			<a class="btn btn-success mt-3" href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
 			<?php }else{ ?>
-			<a class="quick-view" name-pdt="<?=$producto["nombre"]?>" img-pdt="<?=$producto["img_principal"]?>" ref-pdt="<?=$producto["codigo"]?>" price-pdt="<?=$producto["precio"]?>" url-pdt="<?=URL_PRODUCTOS."/".$producto["url"]?>" style="cursor: pointer;">
+			<a class="quick-view" name-pdt="<?=$producto["nombre"]?>" img-pdt="<?=$producto["img_principal"]?>" ref-pdt="<?=$producto["codigo"]?>" price-pdt="<?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?>" url-pdt="<?=URL_PRODUCTOS."/".$producto["url"]?>" style="cursor: pointer;">
 				<h3 class="mt-3" ><?=Lenguajes::consultarFrase("QUICK VIEW", $_SESSION["lenguaje"])?></h3>
 			</a>
 			<?php } ?>
@@ -27,7 +27,7 @@ function product_block($producto){
 		}
 		?>
 		</p>
-		<h4 class="m-0"><?=convertir_pesos($producto["precio"])?></h4>
+		<h4 class="m-0"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h4>
 		<?php if ($producto["personalizable"]) {
 		?>
 		<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
@@ -56,7 +56,7 @@ function product_view($producto){
 		}
 		?>
 		</p>
-		<h6 class="m-0"><?=convertir_pesos($producto["precio"])?></h6>
+		<h6 class="m-0"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h6>
 		<?php if ($producto["personalizable"]) {
 		?>
 		<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
@@ -77,7 +77,7 @@ function product_block_personalize($producto){
 			?>
 			<a class="btn btn-success mt-3" href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
 			<?php }else{ ?>
-			<a class="quick-view" name-pdt="<?=$producto["nombre"]?>" img-pdt="<?=$producto["img_principal"]?>" ref-pdt="<?=$producto["codigo"]?>" price-pdt="<?=$producto["precio"]?>" url-pdt="<?=URL_PRODUCTOS."/".$producto["url"]?>">
+			<a class="quick-view" name-pdt="<?=$producto["nombre"]?>" img-pdt="<?=$producto["img_principal"]?>" ref-pdt="<?=$producto["codigo"]?>" price-pdt="<?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?>" url-pdt="<?=URL_PRODUCTOS."/".$producto["url"]?>">
 				<h3 class="mt-3"><?=Lenguajes::consultarFrase("QUICK VIEW", $_SESSION["lenguaje"])?></h3>
 			</a>
 			<?php } ?>
