@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Instagram</title>
+</head>
+<body>
+<div class="instagram"></div>
+<script type="text/javascript" src="assets/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax({
+		  type: "GET",
+		  dataType: "jsonp",
+		  cache: false,
+		  url: "https://api.instagram.com/v1/users/185833638/media/recent/?access_token=185833638.2ed95b3.c2aa50316e5d4e80a6fb81cb9fa7b122",
+		  success: function(data) {
+		  	
+		  	console.log(data);
+
+		    for (var i = 0; i < 6; i++) {
+		      if(data.data[i]) { // to prevent a bug with non missing images
+		         $(".instagram").append('<div class="instagram-placeholder"><a href="' + data.data[i].link + '" target="_blank"><img class="instagram-image" src="' + data.data[i].images.thumbnail.url + '" alt="" /></a></div>');
+		      }
+		    }
+		  }
+		});
+});
+</script>
+</body>
+</html>

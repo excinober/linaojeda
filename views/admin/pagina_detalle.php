@@ -8,6 +8,10 @@
 					<input type="text" class="form-control" name="titulo" id="titulo" value="<?=$pagina[0]['titulo']?>" required>
 				</div>
 				<div class="form-group">
+					<label for="exampleInputEmail1">Título Inglés</label>
+					<input type="text" class="form-control" name="titulo_en" id="titulo_en" value="<?=$pagina[0]['titulo_en']?>" required>
+				</div>
+				<div class="form-group">
 					<label for="exampleInputEmail1">Url</label>
 					<input type="text" class="form-control" name="url" id="url" value="<?=$pagina[0]['url']?>" required>
 				</div>
@@ -34,10 +38,15 @@
 					<textarea name="contenido" id="descripcion" class="form-control"><?=$pagina[0]['contenido']?></textarea>
 				</div>
 				<div class="form-group">
+					<label for="exampleInputEmail1">Contenido Inglés</label>
+					<textarea name="contenido_en" id="contenido" class="form-control"><?=$pagina[0]['contenido_en']?></textarea>
+				</div>
+				<div class="form-group">
 					<label for="exampleInputEmail1">Posición</label>
 					<select name="posicion" id="posicion" class="form-control" required>
 						<option value="MENU" <?php if ($pagina[0]['posicion']=='MENU') echo 'selected'; ?>>MENÚ</option>
 						<option value="FOOTER" <?php if ($pagina[0]['posicion']=='FOOTER') echo 'selected'; ?>>FOOTER</option>
+						<option value="CONSIGNACION" <?php if ($pagina[0]['posicion']=='CONSIGNACION') echo 'selected'; ?>>CONSIGNACION</option>
 					</select>
 				</div>
 				<div class="form-group">

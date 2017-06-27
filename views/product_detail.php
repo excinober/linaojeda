@@ -4,40 +4,23 @@
 	<div class="col-xs-12 col-md-3">
 		<h4>MENÚ</h4>
 		<?php include "views/nav_sidebar.php"; ?>
-		<h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
-		<?php filters($categorias_padre); ?>
+		<?php 
+	    if (FILTER_SIDEBAR) {
+	    ?>
+			<h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
+			<?php filters($categorias_padre); 
+		}?>
+		<?php 
+	    if (COLECCIONES_SIDEBAR) {
+	    ?>
+		<h4 class="mt-2"><?=Lenguajes::consultarFrase("COLLECTIONS", $_SESSION["lenguaje"])?></h4>
+		<?php collections($colecciones); 
+		}?>
 	</div>
-	<div class="col-xs-12 col-md-9">
-		<!--<div class="row">
-			<div class="col-xs-12">
-				<div id="carousel-home" class="carousel slide" data-ride="carousel">        
-				    <div class="carousel-inner" role="listbox">
-				      <div class="carousel-item active">
-				        <img src="assets/img/banner1.png" class="img-fluid">
-
-				        <div class="carousel-caption hidden-sm-down">
-				          <div class="col-xs-12">
-				            <div class="card card-inverse" style="background-color: #333; border-color: #333;">
-				              <div class="card-block">
-				                <h3 class="card-title">Special title treatment</h3>
-				                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>    
-				              </div>
-				            </div>
-				            <button class="btn btn-primary btn-lg pull-xs-right">SHOP NOW</button>
-				          </div>
-				        </div>
-				      </div>
-				      <div class="carousel-item">
-				        <img src="assets/img/banner1.png" class="img-fluid">
-				      </div>
-				    </div>    
-				</div>  
-			</div>
-		</div>-->
-		<?php include "filters.php"; ?>
-		<hr class="mt-1">
-		<div class="row">
-			<div class="col-xs-12"><h6 class="text-muted">LO MINI / BLACK / LOREM IPSUM</h6></div>
+	<div class="col-xs-12 col-md-9">		
+		<?php //include "filters.php"; ?>
+		<!--<hr class="mt-1">-->
+		<div class="row mt-3">
 			<div class="col-xs-12 col-md-7">
 				<div class="row">
 					<div class="col-xs-12">
@@ -63,7 +46,7 @@
 				if (count($vistos)>0) {
 				?>
 					<hr>
-					<h2 class="text-xs-center"><?=Lenguajes::consultarFrase("VISTO RECIENTEMENTE", $_SESSION["lenguaje"])?></h2>
+					<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("VISTO RECIENTEMENTE", $_SESSION["lenguaje"])?></h4>
 					<div class="row">						
 						<?php
 							foreach ($vistos as $key => $visto) {
@@ -77,14 +60,14 @@
 			</div>
 			<div class="col-xs-12 col-md-5">
 				<h1 class="text-xs-center"><?=$producto["nombre"]?></h1>
-				<h2 class="text-xs-center"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h2>
+				<h3 class="text-xs-center"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h3>
 				<hr>
-				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("DESCRIPTION", $_SESSION["lenguaje"])?></h3>
+				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("DESCRIPTION", $_SESSION["lenguaje"])?></h4>
 				<p class="text-xs-justify"><?=$producto["descripcion"]?></p>
 				<hr>
 				<!--<h3 class="text-xs-center">COLOR</h3>
 				<hr>-->
-				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("QTY", $_SESSION["lenguaje"])?></h3>
+				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("QTY", $_SESSION["lenguaje"])?></h4>
 				<div class="row">
 					<div class="col-xs-4 offset-xs-4">
 						<select name="cantidad" id="cantidad" max="<?=$producto["cantidad"]?>" class="form-control form-control-lg">
@@ -109,7 +92,7 @@
 					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></button>
 				</center>
 				<hr>
-				<h3 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h3>
+				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h4>
 				<h3 class="text-xs-center">
 					<i class="fa fa-facebook-square" aria-hidden="true"></i>
 					<i class="fa fa-instagram" aria-hidden="true"></i>

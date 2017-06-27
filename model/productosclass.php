@@ -52,7 +52,7 @@ class Productos extends Database
 		return $idproducto;
 	}
 
-	public function listarProductos($estados=array(1), $idcategoria=0, $personalizable=0, $buscar="", $limit=""){
+	public function listarProductos($estados=array(1), $idcategoria=0, $personalizable=0, $buscar="", $limit="", $order=""){
 
 		if (count($estados)>0) {
 
@@ -90,9 +90,47 @@ class Productos extends Database
 								FROM `productos`
 								INNER JOIN `companias` ON (`productos`.`companias_idcompania`=`companias`.`idcompania`)
 								INNER JOIN `categorias` ON (`productos`.`categorias_idcategoria`=`categorias`.`idcategoria`)
-								WHERE $estados_select $tipos_select $categoria_where $buscar_where AND `productos`.`personalizable`='$personalizable' $limit");
+								WHERE $estados_select $tipos_select $categoria_where $buscar_where AND `productos`.`personalizable`='$personalizable' $order $limit");
+		return $query;	
+	}
+
+
+	public function listarProductosColeccion($estados=array(1), $idcoleccion=0, $order=""){
+
+		if (count($estados)>0) {
+
+			$estados_select = "(";
+
+			$count = 0;
+
+			foreach ($estados as $estado) {
+				if ($count>0) {
+					$estados_select .= " OR ";
+				}
+
+				$estados_select .= "`productos`.`estado` = '$estado'";
+				$count++;
+			}
+			$estados_select .= ")";
+		}else{
+			$estados_select = "";
+		}
+
+		if (!empty($idcoleccion)) {
+			$coleccion_where = " AND `productos`.`colecciones_idcoleccion`='$idcoleccion'";
+		}else{
+			$coleccion_where = "";
+		}
+
+		
+		$query = $this->consulta("SELECT `productos`.`idproducto`, `productos`.`nombre`, `productos`.`cantidad`, `productos`.`precio`, `productos`.`iva`, `productos`.`aplica_cupon`, `productos`.`precio_oferta`, `productos`.`presentacion`, `productos`.`registro`, `productos`.`codigo`, `productos`.`descripcion`, `productos`.`img_principal`, `productos`.`url`, `productos`.`estado`, `productos`.`uso`, `productos`.`mas_info`, `productos`.`metas`, `productos`.`personalizable`, `productos`.`categorias_idcategoria`, `productos`.`companias_idcompania`, `productos`.`relevancias_idrelevancia`, `companias`.`nombre` AS 'compania', `categorias`.`nombre` AS 'categoria'
+								FROM `productos`
+								INNER JOIN `companias` ON (`productos`.`companias_idcompania`=`companias`.`idcompania`)
+								INNER JOIN `categorias` ON (`productos`.`categorias_idcategoria`=`categorias`.`idcategoria`)
+								WHERE $estados_select $coleccion_where $order");
 		return $query;
 	}
+
 
 	public function detalleProductos($idproducto=0,$url=""){
 		
@@ -109,6 +147,21 @@ class Productos extends Database
 								$where");
 		
 		return $query[0];
+	}
+
+	public function eliminarProducto($idproducto){
+		
+		$filas_imagenes = $this->actualizar("DELETE FROM `img_productos` WHERE `productos_idproducto`='$idproducto'");
+
+		$filas_codigos = $this->actualizar("DELETE FROM `productos_has_codigos_descuento` WHERE `productos_idproducto`='$idproducto'");
+
+		$filas_relacionados = $this->actualizar("DELETE FROM `productos_relacionados` WHERE `productos_idproducto`='$idproducto' OR `productos_idproducto_relacionado`='$idproducto'");
+
+		$filas_piezas = $this->actualizar("DELETE FROM `piezas` WHERE `productos_idproducto`='$idproducto'");
+
+		$filas = $this->actualizar("DELETE FROM `productos` WHERE `idproducto`='$idproducto'");
+
+		return $filas;
 	}
 
 	public function actualizarCantidadProducto($idproducto,$cantidad){
@@ -239,9 +292,6 @@ class Productos extends Database
 
 		
 		return $query;
-	}
-
-
-	
+	}	
 }
 ?>

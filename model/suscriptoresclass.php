@@ -6,14 +6,12 @@ class Suscriptores extends Database
 {
 	
 	/****NEWSLETTER****/
-	public function suscribirNewsletter($nombre, $email, $fecha){
+	public function suscribirNewsletter($email, $fecha){
 		
-		$idsuscriptor = $this->insertar("INSERT INTO `boletines`(
-										`nombre`, 
+		$idsuscriptor = $this->insertar("INSERT INTO `boletines`(									
 										`email`, 
 										`fecha`) 
-										VALUES (
-										'$nombre',
+										VALUES (										
 										'$email',
 										'$fecha')");		
 		return $idsuscriptor;

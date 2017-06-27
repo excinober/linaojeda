@@ -73,6 +73,37 @@ $(document).ready(function(){
         }
     });
 
+    $(".eliminarEntidad").click(function(){
+
+        var entidad = $(this).attr("entidad");
+        var identidad = $(this).attr("identidad");
+
+        var r = confirm("¿Seguro que desea eliminar "+entidad+"?");
+
+        if (r) {
+
+            $.ajax({
+                type: 'POST',
+                url: "Admin/EliminarEntidad",
+                data: { identidad:identidad, entidad:entidad },
+                dataType: 'json',
+                async: false,
+                success: function(response) {
+
+                        if (response.filas==false) {
+                            alert("No se pudo eliminar la entidad. Es posible que otros elementos dependan de ella.");                            
+                        }else{
+                            alert('Se elimino '+response.filas+' '+response.entidad);
+                            location.reload();
+                        }
+                },
+                error: function() {
+                    alert('No se pudo eliminar el registro');
+                }
+            });
+        }
+    });
+
 
     var config = {
                 '.chosen-select'           : {},

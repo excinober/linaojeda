@@ -13,7 +13,11 @@ class Controller
 		$this->categorias = new Categorias();
 		$this->carrito = new Carrito();
 		$this->usuarios = new Usuarios();
+		$this->suscriptores = new Suscriptores();
 		$this->banners = new Banners();
+		$this->configuracion = new Configuracion();
+		$this->colecciones = new Colecciones();
+		$this->ordenes = new Ordenes();
 	}
 
 	public function logout(){
@@ -77,6 +81,7 @@ class Controller
 		$estado = 1;
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
@@ -95,11 +100,12 @@ class Controller
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 		$categorias_padre = $this->getCategoriesPattern();
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		if (isset($_POST["createUser"])) {
 			extract($_POST);
 
-			$idusuario = $this->usuarios->crearUsuario($nombre, $apellido, "", "", $email, md5($password), 0, 0, $direccion, $telefono, $telefono_m, 1, fecha_actual("datetime"), $ciudad, $pais, $cod_postal);
+			$idusuario = $this->usuarios->crearUsuario($nombre, $apellido, "", "", $email, md5($password), $num_identificacion, 0, 0, $direccion, $telefono, $telefono_m, 1, fecha_actual("datetime"), $ciudad, $pais, $cod_postal);
 
 			if ($idusuario) {
 
@@ -127,6 +133,7 @@ class Controller
 		$menu = $this->paginas->listarPaginas($posicion, $estado);
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 		$categorias_padre = $this->getCategoriesPattern();
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		if (isset($_POST["login"])) {
 			extract($_POST);
@@ -155,7 +162,42 @@ class Controller
 		include "views/login.php";	
 	}
 
+	public function suscribirNewsletter(){
+		extract($_POST);
 
+		if (isset($email)) {
+			$idsuscriptor = $this->suscriptores->suscribirNewsletter($email,fecha_actual('datetime'));
+		}
+
+		if ($idsuscriptor) {
+			$return = "Tu suscripción se realizó con éxito";
+
+		}else{
+			$return = "Tu suscripción no se logro realizar, intenta más tarde";
+		}
+
+		return $return;
+	}
+
+	public function orderProducts($order){
+
+		if (isset($order) && !empty($order)) {
+
+			switch ($order) {
+				case 'mayor-a-menor':
+					$return = "ORDER BY `productos`.`precio` DESC";
+					break;
+				
+				default:
+					$return = "ORDER BY `productos`.`precio` ASC";
+					break;
+			}
+		}else{
+			$return = "ORDER BY `productos`.`idproducto` DESC";
+		}
+
+		return $return;
+	}
 
 
 	public function pageProducts(){
@@ -166,11 +208,17 @@ class Controller
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		$estados_productos = array(1);
 		$personalizable = 0;
 		$categorias_padre = $this->getCategoriesPattern();
-		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","");
+
+		$order = $this->orderProducts($_GET["order"]);
+
+		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","",$order);
+
+		$modulo = URL_PRODUCTOS;
 
 		require "views/product_block.php";
 		include "views/products_list.php";
@@ -185,6 +233,7 @@ class Controller
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
 		$categorias_padre = $this->getCategoriesPattern();
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		$producto = $this->productos->detalleProductos(0,$urlproducto);
 		$imgs_producto = $this->productos->imgsProducto($producto["idproducto"]);
@@ -237,7 +286,7 @@ class Controller
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));
-
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 		$categorias_padre = $this->getCategoriesPattern();
 
 		$producto = $this->productos->detalleProductos(0,$urlproducto);
@@ -281,11 +330,17 @@ class Controller
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 
 		$estados_productos = array(1);
 		$personalizable = 1;
 		$categorias_padre = $this->getCategoriesPattern();
-		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","");
+		
+		$order = $this->orderProducts($_GET["order"]);
+
+		$productos = $this->productos->listarProductos($estados_productos,0,$personalizable,"","",$order);
+
+		$modulo = URL_PRODUCTOS_PERSONALIZAR;
 
 		require "views/product_block.php";
 		include "views/products_list_personalize.php";
@@ -299,15 +354,49 @@ class Controller
 		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
 
 		$categorias = $this->categorias->listarCategorias(0, array(1));	
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
 		
-		$categoria = $this->categorias->detalleCategoriaUrl($url);				
+		$categoria_actual = $this->categorias->detalleCategoriaUrl($url);
+
+
 		$estados_productos = array(1);
 		$personalizable = 0;
 		$categorias_padre = $this->getCategoriesPattern();
-		$productos = $this->productos->listarProductos($estados_productos,$categoria["idcategoria"],$personalizable,"","");
+
+		$order = $this->orderProducts($_GET["order"]);
+
+		$productos = $this->productos->listarProductos($estados_productos,$categoria_actual["idcategoria"],$personalizable,"","", $order);
+
+		$modulo = URL_CATEGORIA."/".$url;
 
 		require "views/product_block.php";		
 		include "views/products_category.php";
+	}
+
+
+	public function pageCollection($url=""){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
+		
+		$coleccion = $this->colecciones->detalleColeccionUrl($url);
+		$estados_productos = array(1);
+		$personalizable = 0;
+		$categorias_padre = $this->getCategoriesPattern();
+
+		$order = $this->orderProducts($_GET["order"]);
+
+		$productos = $this->productos->listarProductosColeccion($estados_productos,$coleccion["idcoleccion"], $order);
+
+		$modulo = URL_COLECCIONES."/".$url;
+
+		require "views/product_block.php";		
+		include "views/products_collection.php";
 	}
 
 	/****CART*****/
@@ -378,9 +467,9 @@ class Controller
 		include "views/cart_summary.php";	
 	}
 
-	public function createOrder(){
+	public function createOrder($method){
 
-		if (isset($_SESSION["idusuario"]) && !empty($_SESSION["idusuario"]) && count($_SESSION["idpdts"])>0 && count($_SESSION["cantidadpdts"])>0) {
+		if (isset($_SESSION["idusuario"]) && !empty($_SESSION["idusuario"]) && count($_SESSION["idpdts"])>0 && count($_SESSION["cantidadpdts"])>0 && ($_SESSION["login"]) && !empty($_SESSION["direccion"]) && !empty($_SESSION["ciudad"]) && !empty($_SESSION["pais"])) {
 
 			$codigo_orden = $this->carrito->generarCodOrden();
 			$fecha_pedido = fecha_actual("date");
@@ -397,6 +486,7 @@ class Controller
 			$flete = $this->carrito->calcularFlete();
 			$total = $this->carrito->getTotal();
 			$estado = "PENDIENTE";
+			$metodo = $method;
 			$fecha_facturacion = "0000-00-00";
 			$num_factura = "";
 
@@ -428,7 +518,7 @@ class Controller
 			}*/
 			
 			//Crear Orden
-			$idorden = $this->carrito->generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, 0, 0, $flete, $total, $estado, $fecha_facturacion, $num_factura, $_SESSION["idusuario"]);
+			$idorden = $this->carrito->generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, 0, 0, $flete, $total, $estado, $metodo, $fecha_facturacion, $num_factura, $_SESSION["idusuario"]);
 
 
 
@@ -551,10 +641,25 @@ class Controller
 				require "include/pago_payu.php";
 				*/
 
-				$amount = 1000000;
-				$currency = "COP";
+				if ($metodo == "IATAI") {
+					
+					$amount = 1000000;
+					$currency = "COP";
 
-				require "test.php";
+					require "test.php";	
+				
+				}elseif ($metodo == "CONSIGNACION") {
+					
+					$info_consignacion = $this->paginas->detallePagina(7); 
+
+					$info_orden = array(
+									'codigo_orden' => $codigo_orden, 
+									'total' => $total,
+									'moneda' => $_SESSION["moneda"],
+									'estado' => $estado
+									);
+					include "views/consignacion.php";
+				}
 
 				unset($_SESSION["idpdts"]);
 				unset($_SESSION["cantidadpdts"]);
@@ -649,6 +754,121 @@ class Controller
 			file_put_contents($file,$imagedata);
 			echo $imageurl;
 		}
+	}
+
+	/****USUARIOS***/
+	public function userProfile(){
+
+		if (!empty($_SESSION["idusuario"])) {
+
+			$posicion = "MENU";
+			$estado = 1;
+			$menu = $this->paginas->listarPaginas($posicion, $estado);
+			$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+
+			$categorias = $this->categorias->listarCategorias(0, array(1));	
+
+			$usuario = $this->usuarios->detalleUsuario($_SESSION["idusuario"]);
+			
+			include "views/user_profile.php";
+		}
+	}
+
+	public function usuarioCambiarDatos($return=""){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+
+		
+		if (!empty($_SESSION["idusuario"])) {
+
+			if (isset($_POST["cambiarDatos"])) {
+
+				extract($_POST);
+
+				if (empty($boletines)) {
+					$boletines = 0;
+				}
+
+				if (empty($condiciones)) {
+					$condiciones = 0;
+				}
+
+				$estado = 1;
+
+				$actualizar_usuario = $this->usuarios->actualizarUsuario($_SESSION["idusuario"],$nombre, $apellido, $sexo, $fecha_nacimiento, $email, $num_identificacion, $boletines, $condiciones, $direccion, $telefono, $telefono_m, $estado, $ciudad, $pais, $cod_postal);
+
+				if (!empty($nueva_contrasena)) {
+					
+					$cambio_contrasena = $this->usuarios->cambiarContrasenaUsuario($_SESSION["idusuario"], md5($contrasena_actual), md5($nueva_contrasena));
+
+					if ($cambio_contrasena===1) {
+
+						echo "<script> alert('La contraseña fue actualizada'); </script>";
+						
+					}else{
+
+						echo "<script> alert('La contraseña no fue actualizada'); </script>";
+					}
+				}
+
+				$this->actualizarSesion($_SESSION["idusuario"], $nombre, $apellido, $email, $telefono, $telefono_m, $direccion, $ciudad, $pais, $cod_postal);
+
+				if ($actualizar_usuario===1) {
+					if (!empty($return)) {
+						header("Location: ".URL_SITIO.$return);
+					}				
+				}
+			}
+			
+			$usuario = $this->usuarios->detalleUsuario($_SESSION["idusuario"]);
+			
+			include "views/user_update_profile.php";
+
+		}else{
+			header("Location: ".URL_SITIO);
+		}
+	}
+
+	public function actualizarSesion($idusuario, $nombre, $apellido, $email, $telefono, $telefono_m, $direccion, $ciudad, $pais, $cod_postal){
+		
+		$_SESSION["idusuario"] = $idusuario;
+		$_SESSION["nombre"] = $nombre;
+		$_SESSION["apellido"] = $apellido;
+		$_SESSION["email"] = $email;
+		$_SESSION["telefono"] = $telefono;
+		$_SESSION["telefono_m"] = $telefono_m;
+		$_SESSION["direccion"] = $direccion;
+		$_SESSION["ciudad"] = $ciudad;
+		$_SESSION["pais"] = $pais;
+		$_SESSION["cod_postal"] = $cod_postal;
+	}
+
+	public function usuarioOrdenes(){
+
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+
+		$ordenes = $this->ordenes->listarOrdenesUsuario($_SESSION["idusuario"], "","",['APROBADO','DECLINADO','PENDIENTE','FACTURADO']);
+
+		include "views/user_orders.php";
+	}
+
+	public function usuarioDetalleOrden($idorden){
+		$posicion = "MENU";
+		$estado = 1;
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+		$categorias = $this->categorias->listarCategorias(0, array(1));	
+
+		$orden = $this->ordenes->detalleOrden($idorden);
+		include "views/user_order_detail.php";	
 	}
 }
 ?>

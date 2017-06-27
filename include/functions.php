@@ -82,29 +82,45 @@ function fecha_actual($tipo="date"){
 
 function filters($categorias_padre){
 	
-		foreach ($categorias_padre as $key => $categoria_padre) {	
+		foreach ($categorias_padre as $key => $categoria_padre) {
 		?>		
-		<div class="col-xs-12" style="border:1px solid #000;">
-			<p class="text-xs-center mt-1">
-				<a data-toggle="collapse" href="#collapse<?=$categoria_padre["padre"]?>" aria-expanded="false" style="color:#000;"><?=$categoria_padre["nombre"]?>
-				<i class="fa fa-caret-down float-xs-right" aria-hidden="true"></i>
-				</a> 
-			</p>			
-			<div class="collapse" id="collapse<?=$categoria_padre["padre"]?>">
-				<?php
-				foreach ($categoria_padre["hijas"] as $key => $categoria_hija) {
-				?>
-					<hr class="m-0" style="background: #000;">
-					<a href="<?=URL_SITIO.URL_CATEGORIA."/".$categoria_hija["url"]?>" style="color:#000;">
-					<p class="text-xs-center mt-1"><?=$categoria_hija["nombre"]?></p>
-					</a>
-				<?php
-				}
-				?>
+		<div class="row px-1">
+			<div class="col-xs-12" style="border:1px solid #000;">
+				<p class="text-xs-center mt-1">
+					<a data-toggle="collapse" href="#collapse<?=$categoria_padre["padre"]?>" aria-expanded="false" style="color:#000;"><?=$categoria_padre["nombre"]?>
+					<i class="fa fa-caret-down float-xs-right" aria-hidden="true"></i>
+					</a> 
+				</p>			
+				<div class="collapse" id="collapse<?=$categoria_padre["padre"]?>">
+					<?php
+					foreach ($categoria_padre["hijas"] as $key => $categoria_hija) {
+					?>
+						<hr class="m-0" style="background: #000;">
+						<a href="<?=URL_SITIO.URL_CATEGORIA."/".$categoria_hija["url"]?>" style="color:#000;">
+						<p class="text-xs-center mt-1"><?=$categoria_hija["nombre"]?></p>
+						</a>
+					<?php
+					}
+					?>
+				</div>
 			</div>
 		</div>
 		<?php
 		}
+}
+
+function collections($collections){
+	foreach ($collections as $key => $collection) {
+		?>
+		<div class="row px-1">
+			<div class="col-xs-12" style="border:1px solid #000;">
+				<a href="<?=URL_SITIO.URL_COLECCIONES."/".$collection["url"]?>" style="color:#000;">
+					<p class="text-xs-center mt-1"><?=$collection["nombre"]?></p>
+				</a>
+			</div>
+		</div>
+		<?php
+	}
 }
 
 function conversor_monedas($moneda_origen,$moneda_destino,$cantidad) {

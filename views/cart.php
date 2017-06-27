@@ -114,9 +114,11 @@
       </div>
     </div>
     <div class="row mt-1">
-      <?php if ($_SESSION["login"]) { ?>
+      <?php if ($_SESSION["login"]) { 
+              if ($total>0) {
+        ?>
         <a href="<?=URL_RESUMEN_COMPRA?>" class="btn btn-primary btn-lg pull-right ml-1">Continuar Pago</a>
-      <?php }else{ ?>      
+      <?php }}else{ ?>      
         <button class="btn btn-primary btn-lg pull-right ml-1 login-popup">Continuar Pago</button>
       <?php }?>      
       <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success pull-right">Seguir Comprando</a>

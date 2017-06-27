@@ -357,7 +357,7 @@ class Carrito extends Productos
 		return $codigo;
 	}
 
-	public function generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, $pagoPuntos, $valorPunto, $flete, $total, $estado, $fecha_facturacion, $num_factura, $idusuario){
+	public function generarOrden($codigo_orden, $fecha_pedido, $subtotalAntesIva, $descuentoCupon, $totalNetoAntesIva, $iva, $pagoPuntos, $valorPunto, $flete, $total, $estado, $metodo, $fecha_facturacion, $num_factura, $idusuario){
 		
 		$idorden = $this->insertar("INSERT INTO `ordenes_pedidos`(									
 									`num_orden`, 
@@ -371,6 +371,7 @@ class Carrito extends Productos
 									`costo_envio`, 
 									`total`, 
 									`estado`, 
+									`metodo`, 
 									`fecha_facturacion`, 
 									`num_factura`, 
 									`usuarios_idusuario`,
@@ -386,6 +387,7 @@ class Carrito extends Productos
 									'$flete',
 									'$total',
 									'$estado',
+									'$metodo',
 									'$fecha_facturacion',
 									'$num_factura',
 									'$idusuario',

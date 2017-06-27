@@ -25,6 +25,7 @@ require "model/dbclass.php";
 require "model/paginasclass.php";
 require "model/productosclass.php";
 require "model/categoriasclass.php";
+require "model/coleccionesclass.php";
 require "model/carritoclass.php";
 require "model/usuariosclass.php";
 require "model/ordenesclass.php";
@@ -33,10 +34,21 @@ require "model/personalclass.php";
 require "model/plantillasclass.php";
 require "model/bannersclass.php";
 require "model/lenguajesclass.php";
+require "model/configuracionclass.php";
 
 /** Require Includes **/
 require "include/constantes.php";
 require "include/functions.php";
+
+
+/**PARAMETROS**/
+$configuracion = new Configuracion();
+$filtros_sidebar = $configuracion->getParameters("Filtros Sidebar");
+$colecciones_sidebar = $configuracion->getParameters("Colecciones Sidebar");
+
+define("FILTER_SIDEBAR", $filtros_sidebar);
+define("COLECCIONES_SIDEBAR", $colecciones_sidebar);
+
 
 require "controllers/controller.php";
 require "controllers/controllerAdmin.php";
@@ -102,10 +114,18 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_CATEGORIA:
-				if (isset($var2) && !empty($var2)) {					
+				if (isset($var2) && !empty($var2)) {
 					$controller->pageCategory($var2);
 				}else{
-					$controller->pageCategories();
+					$controller->error404();
+				}
+				break;
+
+			case URL_COLECCIONES:
+				if (isset($var2) && !empty($var2)) {					
+					$controller->pageCollection($var2);
+				}else{
+					$controller->error404();
 				}
 				break;
 
@@ -142,7 +162,11 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				break;
 
 			case URL_GENERAR_ORDEN:
-				$controller->createOrder();
+				if (isset($_GET["method"]) && !empty($_GET["method"])) {
+					$controller->createOrder($_GET["method"]);
+				}else{
+					$controller->createOrder("IATAI");	
+				}				
 				break;
 
 			case URL_REGISTRO:
@@ -161,8 +185,41 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				$controller->pageContent($var2);
 				break;
 
+			case URL_SUSCRIBIR_NEWSLETTER:
+				echo $controller->suscribirNewsletter();
+				break;
+
 			case URL_USUARIO:
-				# code...
+				if (isset($var2) && !empty($var2)) {
+
+					switch ($var2) {
+						
+						case URL_USUARIO_PERFIL:
+							$controller->userProfile();
+							break;
+
+						case URL_USUARIO_CAMBIAR_DATOS:
+							if (isset($var3) && !empty($var3)) {
+								$return = $var3;
+							}else{
+								$return = "";
+							}
+							$controller->usuarioCambiarDatos($return);
+							break;
+
+						case URL_USUARIO_ORDENES:
+							if (isset($var3) && !empty($var3)) {
+								$controller->usuarioDetalleOrden($var3);
+							}else{
+								$controller->usuarioOrdenes();
+							}							
+							break;
+
+						default:
+							$controller->usuarioPerfil();
+							break;
+					}
+				}
 				break;
 
 			case URL_SALIR:
@@ -214,6 +271,19 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 								
 							}else{
 								$controllerAdmin->adminCategoriasLista();
+							}
+						break;
+
+						case URL_ADMIN_COLECCIONES:
+							if (isset($var3) && !empty($var3)) {
+
+								if ($var3=="Nuevo") {
+									$var3 = "";							
+								}
+								$controllerAdmin->adminColeccionDetalle($var3);
+								
+							}else{
+								$controllerAdmin->adminColeccionesLista();
 							}
 						break;
 
@@ -331,6 +401,14 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 
 						case URL_ADMIN_LENGUAJE:
 							$controllerAdmin->adminLenguaje();
+							break;
+
+						case URL_ADMIN_CONFIGURACION:							
+							$controllerAdmin->adminConfiguracion();
+							break;
+
+						case URL_ADMIN_ELIMINAR_ENTIDAD:
+							$controllerAdmin->eliminarEntidad();
 							break;
 					}
 				}else{

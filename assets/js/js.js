@@ -31,7 +31,7 @@ $(document).ready(function(){
 			  url: "Personalizar/agregarOpcionPieza",
 			  data: { idopcion:idopcion, idpieza:idpieza, idpdt:idpdt },
 			  success: function(response){
-			  	alert(response.ok);
+			  	//alert(response.ok);
 			  },
 			  dataType: 'json'
 			});
@@ -71,8 +71,29 @@ $(document).ready(function(){
 	});
 
 	$(".login-popup").click(function(){
-		var html = '<div class="row mx-2"><h3>CREAR UNA CUENTA</h3><form method="post" action="Registro/?return=Carrito"><div class="form-group"><label>Email</label><input type="email" class="form-control" placeholder="" name="email" required="required"></div><center><button type="submit" class="btn btn-secondary">CREAR UNA CUENTA</button></center></form></div><hr><div class="row px-2"><h3>¿YA ESTÁS REGISTRADO?</h3><form action="Ingresar?return=Carrito" method="post"><div class="col-xs-12 col-md-6"><div class="form-group"><label>Email</label><input type="email" class="form-control" name="email" required="required"></div></div><div class="col-xs-12 col-md-6"><div class="form-group"><label>Contraseña</label><input type="password" class="form-control" name="password" required="required"></div></div><center><button type="submit" class="btn btn-danger" name="login">INICIAR SESIÓN</button></center></form></div>';
+		var html = '<div class="row mx-2"><h3>CREAR UNA CUENTA</h3><form method="post" action="Registro/?return=Carrito"><div class="form-group"><label>Email</label><input type="email" class="form-control" placeholder="" name="email" required="required"></div><center><button type="submit" class="btn btn-success">CREAR UNA CUENTA</button></center></form></div><hr><div class="row px-2"><h3>¿YA ESTÁS REGISTRADO?</h3><form action="Ingresar?return=Carrito" method="post"><div class="col-xs-12 col-md-6"><div class="form-group"><label>Email</label><input type="email" class="form-control" name="email" required="required"></div></div><div class="col-xs-12 col-md-6"><div class="form-group"><label>Contraseña</label><input type="password" class="form-control" name="password" required="required"></div></div><center><button type="submit" class="btn btn-success" name="login">INICIAR SESIÓN</button></center></form></div>';
 		modal(html);
+	})
+
+	$("#enviar_newsletter").click(function(){
+
+		var email = $("#email").val();
+
+		if (email !='') {
+
+			$.ajax({
+			  type: "POST",
+			  url: "SuscribirNewsletter/",
+			  data: $("#form-newsletter").serialize(),
+			  success: function(data){
+			  	alert(data);
+			  	location.reload();
+			  },
+			  dataType: 'html'
+			});
+		}else{
+			alert("Escribe tu email");
+		}
 	})
 	
 })

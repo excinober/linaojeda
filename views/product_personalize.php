@@ -4,8 +4,18 @@
 	<div class="col-xs-12 col-md-3">
 		<h4>MENÚ</h4>
 		<?php include "views/nav_sidebar.php"; ?>
-		<h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
-		<?php filters($categorias_padre); ?>	
+		<?php 
+	    if (FILTER_SIDEBAR) {
+	    ?>
+			<h4 class="mt-2"><?=Lenguajes::consultarFrase("FILTERS", $_SESSION["lenguaje"])?></h4>
+			<?php filters($categorias_padre); 
+		}?>	
+		<?php 
+	    if (COLECCIONES_SIDEBAR) {
+	    ?>
+		<h4 class="mt-2"><?=Lenguajes::consultarFrase("COLLECTIONS", $_SESSION["lenguaje"])?></h4>
+		<?php collections($colecciones); 
+		}?>
 	</div>
 	<div class="col-xs-12 col-md-9">
 		<!--<div class="row">
@@ -34,10 +44,9 @@
 				</div>  
 			</div>
 		</div>-->
-		<?php include "filters.php"; ?>
-		<hr class="mt-1">
-		<div class="row">
-			<div class="col-xs-12"><h6 class="text-muted">LO MINI / BLACK / LOREM IPSUM</h6></div>
+		<?php //include "filters.php"; ?>
+		<!--<hr class="mt-1">-->
+		<div class="row mt-3">
 			<div class="col-xs-12 col-md-8">
 				<div class="row">
 					<div class="col-xs-12 p-3">

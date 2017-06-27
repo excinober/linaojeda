@@ -61,7 +61,7 @@ function product_view($producto){
 		?>
 		<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
 		<?php }else{ ?>
-		<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></a>
+		<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-sm btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW VIEWS", $_SESSION["lenguaje"])?></a>
 		<?php } ?>
 	</div>
 </div>

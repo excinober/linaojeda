@@ -5,6 +5,7 @@ define("NOMBRE_SITIO", "LO");
 define("URL_INICIO", "Inicio");
 define("URL_PRODUCTOS", "Productos");
 define("URL_CATEGORIA", "Categoria");
+define("URL_COLECCIONES", "Colecciones");
 define("URL_CONTACTO", "Contacto");
 define("URL_PAGINA_CONTENIDO", "p");
 define("URL_BUSCAR", "Resultados");
@@ -62,6 +63,7 @@ define("DIR_IMG_DOCUMENTOS", "documentos/");
 define("DIR_IMG_PIEZAS", "assets/img/piezas/");
 define("DIR_IMG_CONVENCIONES", "assets/img/convenciones/");
 define("DIR_IMG_PERSONALIZADOS", "assets/img/personalizados/");
+define("DIR_IMG_COLECCIONES", "assets/img/colecciones/");
 
 
 /***ADMIN**/
@@ -84,6 +86,9 @@ define("URL_ADMIN_SUSCRIPTORES", "Suscriptores");
 define("URL_ADMIN_PIEZAS", "Piezas");
 define("URL_ADMIN_PIEZAS_ELIMINAR_OPCION", "EliminarOpcionPieza");
 define("URL_ADMIN_LENGUAJE", "Lenguajes");
+define("URL_ADMIN_CONFIGURACION", "Configuracion");
+define("URL_ADMIN_COLECCIONES", "Colecciones");
+define("URL_ADMIN_ELIMINAR_ENTIDAD", "EliminarEntidad");
 
 /**INFORMES**/
 define("URL_ADMIN_INFORMES", "Informes");

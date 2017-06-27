@@ -9,6 +9,7 @@ class ControllerAdmin
 		$this->paginas = new Paginas();		
 		$this->productos = new Productos();
 		$this->categorias = new Categorias();
+		$this->colecciones = new Colecciones();
 		$this->usuarios = new Usuarios();
 		$this->ordenes = new Ordenes();
 		$this->suscriptores = new Suscriptores();
@@ -16,6 +17,7 @@ class ControllerAdmin
 		$this->plantillas = new Plantillas();
 		$this->banners = new Banners();
 		$this->lenguajes = new Lenguajes();
+		$this->configuracion = new Configuracion();
 	}
 
 	public function adminLoguin(){
@@ -191,6 +193,74 @@ class ControllerAdmin
 		include "views/admin/categoria_detalle.php";		
 	}
 
+
+	public function adminColeccionesLista(){
+
+		$estados = array(0,1);
+		
+		$colecciones = $this->colecciones->listarColecciones($estados);
+		include "views/admin/colecciones_lista.php";	
+	}
+
+	public function adminColeccionDetalle($idcoleccion){
+
+		if (isset($_POST["actualizarColeccion"])) {
+
+			extract($_POST);
+
+			//Upload banner
+			if($_FILES["imagen"]["error"]==UPLOAD_ERR_OK){
+
+				$rutaimg=$_FILES["imagen"]["tmp_name"];
+				$nombreimg=$_FILES["imagen"]["name"];
+				$destino = DIR_IMG_COLECCIONES.$nombreimg;
+				move_uploaded_file($rutaimg, $destino);
+
+			}else{
+
+				$destino = "";
+			}
+
+			$imagen = $destino;
+			$url = convierte_url($nombre);
+
+			$this->colecciones->actualizarColeccion($idcoleccion,$nombre,$url,$imagen,$descripcion,$estado);
+
+		}
+
+		if (isset($_POST["crearColeccion"])) {
+
+			extract($_POST);
+
+			//Upload banner
+			if($_FILES["imagen"]["error"]==UPLOAD_ERR_OK){
+
+				$rutaimg=$_FILES["imagen"]["tmp_name"];
+				$nombreimg=$_FILES["imagen"]["name"];
+				$destino = DIR_IMG_COLECCIONES.$nombreimg;
+				move_uploaded_file($rutaimg, $destino);
+
+			}else{
+
+				$destino = "";
+			}
+			
+			$imagen = $destino;
+			$url = convierte_url($nombre);
+
+			$idcoleccion = $this->colecciones->crearColeccion($nombre,$url,$imagen,$descripcion,$estado, fecha_actual('datetime'));
+		}
+
+		if (isset($idcoleccion) && $idcoleccion!='') {
+			$coleccion = $this->colecciones->detalleColeccion($idcoleccion);
+		}
+
+		include "views/admin/coleccion_detalle.php";		
+	}
+
+
+
+
 	public function adminPiezasLista(){
 
 		$piezas = $this->productos->listarPiezas();		
@@ -327,7 +397,7 @@ class ControllerAdmin
 		
 			extract($_POST);
 			$fecha_facturacion = fecha_actual('datetime');
-			$this->usuarios->actualizarOrden($idorden, $estado, $fecha_facturacion, $num_factura, $guia_flete);
+			$this->ordenes->actualizarOrden($idorden, $estado, $fecha_facturacion, $num_factura, $guia_flete);
 
 			if ($estado == "FACTURADO") {
 
@@ -517,7 +587,7 @@ class ControllerAdmin
 
 	/***paginas***/
 
-	public function adminPaginaDetalle($idpagina){	
+	public function adminPaginaDetalle($idpagina){
 
 		extract($_POST);	
 
@@ -538,7 +608,7 @@ class ControllerAdmin
 			$banner = $destino;
 			$url = convierte_url($_POST["url"]);		
 
-			$this->paginas->actualizarPagina($idpagina,$titulo,$url,$contenido,$posicion,$banner,$menu,$estado);
+			$this->paginas->actualizarPagina($idpagina,$titulo,$titulo_en,$url,$contenido,$contenido_en,$posicion,$banner,$menu,$estado);
 		}
 
 		if (isset($_POST["crearPagina"])) {
@@ -559,7 +629,7 @@ class ControllerAdmin
 
 			$url = convierte_url($_POST["url"]);
 
-			$idpagina = $this->paginas->crearPagina($titulo,$url,$contenido,$posicion,$banner,$menu,$estado);
+			$idpagina = $this->paginas->crearPagina($titulo,$titulo_en,$url,$contenido,$contenido_en,$posicion,$banner,$menu,$estado);
 		}
 
 
@@ -590,6 +660,54 @@ class ControllerAdmin
 		$frases = $this->lenguajes->listarFrases();
 
 		include "views/admin/lenguajes.php";
+	}
+
+	public function adminConfiguracion(){
+
+		if (isset($_POST["actualizarParametro"])) {
+			
+			extract($_POST);
+
+			$filas = $this->configuracion->actualizarParametro($idparametro, $estado);
+		}
+
+		$parametros = $this->configuracion->listarParametros();
+		include "views/admin/configuracion.php";
+	}
+
+	public function eliminarEntidad(){
+
+		if (isset($_POST["entidad"]) && !empty($_POST["entidad"]) && isset($_POST["identidad"]) && !empty($_POST["identidad"])) {
+			
+			switch ($_POST["entidad"]) {
+
+				case 'ordenes':
+					$filas = $this->ordenes->eliminarOrden($_POST["identidad"]);
+					break;
+
+				case 'productos':
+					$filas = $this->productos->eliminarProducto($_POST["identidad"]);
+					break;
+
+				case 'categorias':
+					$filas = $this->productos->eliminarCategoria($_POST["identidad"]);
+					break;
+
+				case 'paginas':
+					$filas = $this->paginas->eliminarPagina($_POST["identidad"]);
+					break;
+
+				default:
+					# code...
+					break;
+			}
+		}else{
+			$filas = 0;
+		}
+
+		$return = array('filas' => $filas, 'entidad' => $_POST["entidad"]);
+
+		echo json_encode($return);
 	}
 
 }

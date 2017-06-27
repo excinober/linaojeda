@@ -21,14 +21,14 @@
 	</div>
 	<div class="col-xs-12 col-md-9">
 		<?php
-		if (!empty($categoria_actual['imagen'])) {
+		if (!empty($coleccion['imagen'])) {
 		?>
 		<div class="row mb-2">
-			<img src="<?=$categoria_actual['imagen']?>" class="img-fluid">
+			<img src="<?=$coleccion['imagen']?>" class="img-fluid">
 		</div>
 		<?php
 		}
-		?>		
+		?>
 		<?php include "filters.php"; ?>
 		<hr class="mt-1">
 		<div class="row">
@@ -38,7 +38,7 @@
 					product_block($producto);
 				}
 			}else{
-				echo "<p class='text-xs-center'>".Lenguajes::consultarFrase("NO PRODUCTS IN CATEGORY", $_SESSION["lenguaje"])."</p>";
+				echo "<p class='text-xs-center'>".Lenguajes::consultarFrase("NO PRODUCTS IN COLLECTION", $_SESSION["lenguaje"])."</p>";
 			}
 			
 			?>			

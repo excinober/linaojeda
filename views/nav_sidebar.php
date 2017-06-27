@@ -24,7 +24,14 @@
         foreach ($menu as $key => $item) {
       ?>
         <li class="nav-item mt-1">
-		<a class="nav-link" href="p/<?=$item["url"]?>" style="color: #262424;border-bottom: 1px solid #000;width: 100%;"><?=$item["titulo"]?></a>
+		<a class="nav-link" href="p/<?=$item["url"]?>" style="color: #262424;border-bottom: 1px solid #000;width: 100%;">
+			<?php 
+	        if ($_SESSION["lenguaje"]=="es")
+	          echo $item["titulo"]; 
+	        else 
+	          echo $item["titulo_en"]; 
+	        ?>
+	    </a>
 	</li>
       <?php
         }

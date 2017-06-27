@@ -3,23 +3,23 @@
 <div class="container">
   <div id="carousel-home" class="carousel slide" data-ride="carousel">        
     <div class="carousel-inner" role="listbox">
-    <?php      
-    if (count($bannersprincipal)>0) {
-      foreach ($bannersprincipal as $key => $banner) {
-    ?>
+      <?php 
+      if (count($bannersprincipal)>0) {
+        foreach ($bannersprincipal as $key => $banner) {
+      ?>
       <div class="carousel-item <?php ($key==0)? print('active') : false; ?>">
         <img src="<?=$banner["imagen"]?>" class="img-fluid">
 
         <?php if (!empty($banner["descripcion"])) { ?>
-          <div class="carousel-caption hidden-sm-down">
-            <?=$banner["descripcion"]?>
-          </div>  
+        <div class="carousel-caption hidden-sm-down">
+          <?=$banner["descripcion"]?>
+        </div>  
         <?php } ?>        
       </div>  
-    <?php
+      <?php
+        }
       }
-    }
-    ?>
+      ?>
     </div>    
   </div>  
 </div>
@@ -67,7 +67,7 @@
               <div class="carousel-item p-2 <?php if ($key==0) echo "active"; ?>">
                 <center>
                   <img src="<?=$producto["img_principal"]?>" alt="<?=$producto["nombre"]?>" class="img-fluid" style="max-height: 160px;"><br>
-                  <a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1">SHOP NOW</a>
+                  <a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></a>
                 </center>
               </div>
             <?php
@@ -119,13 +119,14 @@
           }
           ?>
         </div>
+      </div>
     </div>
   </div>
 </div>
 <div class="container mt-2">
   <div class="row">
-  	<h2 class="text-xs-center"><i>INSTAGRAM</i></h2>
-  	<div class="col-xs-6 col-md-3">
+  	<h2 class="text-xs-center my-2"><?=Lenguajes::consultarFrase("LYFESTYLE", $_SESSION["lenguaje"])?></h2>
+  	<!--<div class="col-xs-6 col-md-3">
   		<img src="assets/img/instagram1.png" class="img-fluid">
   	</div>
   	<div class="col-xs-6 col-md-3">
@@ -136,10 +137,12 @@
   	</div>
   	<div class="col-xs-6 col-md-3">
   		<img src="assets/img/instagram4.png" class="img-fluid">
-  	</div>
+  	</div>-->
+    <div class="row instagram">
+    </div>
   	<div class="col-xs-12">
   		<center>
-        <button class="btn btn-lg btn-default mt-2">FOLLOW</button>
+        <a href="https://www.instagram.com/linaojedaoficial/" class="btn btn-lg btn-success mt-2" target="_blank"><?=Lenguajes::consultarFrase("FOLLOW US", $_SESSION["lenguaje"])?></a>
       </center>
   	</div>
   </div>

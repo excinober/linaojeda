@@ -64,7 +64,14 @@
                     foreach ($menu as $key => $item) {
                   ?>
                     <li class="nav-item">
-                      <a class="nav-link pt-1" href="p/<?=$item["url"]?>"><?=$item["titulo"]?></a>
+                      <a class="nav-link pt-1" href="p/<?=$item["url"]?>">
+                      <?php 
+                        if ($_SESSION["lenguaje"]=="es")
+                          echo $item["titulo"]; 
+                        else 
+                          echo $item["titulo_en"]; 
+                        ?>
+                      </a>
                     </li>
                   <?php
                     }
@@ -98,9 +105,9 @@
                       <i class="fa fa-user" aria-hidden="true"></i> <!--<?=$_SESSION["nombre"]?>-->
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO_PERFIL?>">My Account</a>
-                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO_ORDENES?>">My Orders</a>
-                      <a class="dropdown-item" href="<?=URL_SITIO.URL_SALIR?>">Sign Out</a>                    
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO."/".URL_USUARIO_PERFIL?>"><?=Lenguajes::consultarFrase("MY ACCOUNT", $_SESSION["lenguaje"])?></a>
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_USUARIO."/".URL_USUARIO_ORDENES?>"><?=Lenguajes::consultarFrase("MY ORDERS", $_SESSION["lenguaje"])?></a>
+                      <a class="dropdown-item" href="<?=URL_SITIO.URL_SALIR?>"><?=Lenguajes::consultarFrase("SIGN OUT", $_SESSION["lenguaje"])?></a>                    
                     </div>
                   </div>
                   <?php }else{ ?>                                    
@@ -109,14 +116,25 @@
                     </a>-->
                     <a href="<?=URL_SITIO.URL_INGRESAR?>" style="color:#9E962C;">
                       <img src="assets/img/icon-your-lo.png" class="img-fluid" style="max-width: 20px;">
-                      <span style="color: #9F972D;font-size: 13px;">YOUR LO</span>
+                      <span style="color: #9F972D;font-size: 13px;"><?=Lenguajes::consultarFrase("YOUR LO", $_SESSION["lenguaje"])?></span>
                     </a>      
                   <?php } ?>
                   </div>
                 </div>
               </div>
               <div class="col-xs-12 col-md-3 text-xs-right px-0">
-                <h5 class="pull-xs-right mt-1"><small><a href="?lang=es" style="color:#000000;">ESP</a> - <a href="?lang=en" style="color:#000000;">ENG</a></small></h5>
+                <h5 class="pull-xs-right my-0 text-xs-center">
+                  <small>
+                    <a href="?lang=es" style="color:<?php ($_SESSION["lenguaje"]=="es")? print("#9f972d") : print("#000000")?>;">ESP</a> - 
+                    <a href="?lang=en" style="color:<?php ($_SESSION["lenguaje"]=="en")? print("#9f972d") : print("#000000")?>;">ENG</a>
+                  </small>
+                </h5>
+                <h5 class="pull-xs-right my-0 text-xs-center">
+                  <small>
+                    <a href="?currency=COP" style="color:<?php ($_SESSION["moneda"]=="COP")? print("#9f972d") : print("#000000")?>;">COP</a> - 
+                    <a href="?currency=USD" style="color:<?php ($_SESSION["moneda"]=="USD")? print("#9f972d") : print("#000000")?>;">USD</a>
+                  </small>
+                </h5>
               </div>                          
             </div>          
         </div>
