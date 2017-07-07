@@ -1,6 +1,6 @@
 <?php include "header.php" ?>
 <?php //include "my_bag.php"; ?>
-<div class="container-fluid pt-1" style="background-color: #9F972D; color: #fff;">
+<div class="container-fluid pt-1" style="background-color: #c8b496; color: #fff;">
   <div class="container">
     <h1><?=Lenguajes::consultarFrase("SUMMARY", $_SESSION["lenguaje"])?></h1>
   </div>

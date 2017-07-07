@@ -28,11 +28,11 @@
           <div class="col-xs-12 col-md-2">            
               <a href="<?=URL_SITIO?>"><img src="assets/img/logo.png" class="img-fluid pull-xs-left"></a>
           </div>
-          <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12 col-md-6 text-xs-center">
           <?php 
           if (empty($GLOBALS['var1'])  || $GLOBALS['var1']==URL_INICIO || $GLOBALS['var1']==URL_CARRITO || $GLOBALS['var1']==URL_RESUMEN_COMPRA) {
           ?>
-              <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+              <button class="navbar-toggler hidden-sm-up mt-1 " type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
                 &#9776;
               </button>
               <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">            
@@ -86,19 +86,19 @@
           <div class="col-xs-12 col-md-4">
             <div class="col-xs-12 col-md-9 px-0">
               <div class="row" style="font-size:22px;margin-top: 8px;">
-                <div class="col-xs-3 pl-0">
+                <div class="col-xs-3 col-md-3 pl-0">
                     <a href="<?=URL_SITIO.URL_CARRITO?>" style="text-decoration: none;color:#9E962C;">
-                      <img src="assets/img/icon-cart.png" class="img-fluid" style="max-width: 20px;">
-                      <div class="rounded-circle text-xs-center float-xs-right badge-header" id="cantidad-carrito"><?=Carrito::productosAgregados()?></div>
+                      <img src="assets/img/icon-cart.png" class="img-fluid float-xs-left float-md-none" style="max-width: 20px;">
+                      <div class="rounded-circle text-xs-center float-xs-left  float-md-right badge-header" id="cantidad-carrito"><?=Carrito::productosAgregados()?></div>
                     </a>
                 </div>
-                <div class="col-xs-3 pl-0">
+                <div class="col-xs-3 col-md-3 pl-0">
                     <a href="#">
-                      <img src="assets/img/icon-dream-box.png" class="img-fluid" style="max-width: 20px;">
-                      <div class="rounded-circle text-xs-center float-xs-right badge-header" id="cantidad-carrito">0</div>
+                      <img src="assets/img/icon-dream-box.png" class="img-fluid float-xs-left float-md-none" style="max-width: 20px;">
+                      <div class="rounded-circle text-xs-center float-xs-left  float-md-right badge-header" id="cantidad-carrito">0</div>
                     </a>              
                 </div>              
-                <div class="col-xs-6">
+                <div class="col-xs-6 col-md-6 pl-0 text-xs-right text-md-center">
                   <?php if ($_SESSION["login"]) { ?>
                   <div class="dropdown">                
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -116,23 +116,23 @@
                     </a>-->
                     <a href="<?=URL_SITIO.URL_INGRESAR?>" style="color:#9E962C;">
                       <img src="assets/img/icon-your-lo.png" class="img-fluid" style="max-width: 20px;">
-                      <span style="color: #9F972D;font-size: 13px;"><?=Lenguajes::consultarFrase("YOUR LO", $_SESSION["lenguaje"])?></span>
+                      <span style="color: #c8b496;font-size: 13px;"><?=Lenguajes::consultarFrase("YOUR LO", $_SESSION["lenguaje"])?></span>
                     </a>      
                   <?php } ?>
                   </div>
                 </div>
               </div>
-              <div class="col-xs-12 col-md-3 text-xs-right px-0">
+              <div class="col-xs-12 col-md-3 text-xs-center px-0">
                 <h5 class="pull-xs-right my-0 text-xs-center">
                   <small>
-                    <a href="?lang=es" style="color:<?php ($_SESSION["lenguaje"]=="es")? print("#9f972d") : print("#000000")?>;">ESP</a> - 
-                    <a href="?lang=en" style="color:<?php ($_SESSION["lenguaje"]=="en")? print("#9f972d") : print("#000000")?>;">ENG</a>
+                    <a href="?lang=es" style="color:<?php ($_SESSION["lenguaje"]=="es")? print("#c8b496") : print("#000000")?>;">ESP</a> - 
+                    <a href="?lang=en" style="color:<?php ($_SESSION["lenguaje"]=="en")? print("#c8b496") : print("#000000")?>;">ENG</a>
                   </small>
                 </h5>
                 <h5 class="pull-xs-right my-0 text-xs-center">
                   <small>
-                    <a href="?currency=COP" style="color:<?php ($_SESSION["moneda"]=="COP")? print("#9f972d") : print("#000000")?>;">COP</a> - 
-                    <a href="?currency=USD" style="color:<?php ($_SESSION["moneda"]=="USD")? print("#9f972d") : print("#000000")?>;">USD</a>
+                    <a href="?currency=COP" style="color:<?php ($_SESSION["moneda"]=="COP")? print("#c8b496") : print("#000000")?>;">COP</a> - 
+                    <a href="?currency=USD" style="color:<?php ($_SESSION["moneda"]=="USD")? print("#c8b496") : print("#000000")?>;">USD</a>
                   </small>
                 </h5>
               </div>                          

@@ -1,4 +1,4 @@
-<div class="container-fluid pt-3 mt-2" style="border-top: 2px solid #9F972D;font-size:0.9rem;">
+<div class="container-fluid pt-3 mt-2" style="border-top: 2px solid #C8B496;font-size:0.9rem;">
 	<!--<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-4">
@@ -53,7 +53,7 @@
 	</div>-->
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-3 col-md-2">
+			<div class="col-xs-6 col-md-2">
 				<h6 style="color:#696c70;">Menú</h6>
 				<ul class="list-unstyled">
 					<li><a href="<?=URL_PRODUCTOS_PERSONALIZAR?>" class="text-muted"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a></li>
@@ -77,7 +77,7 @@
 	                  ?>
 				</ul>
 			</div>
-			<div class="col-xs-3 col-md-2">
+			<div class="col-xs-6 col-md-2">
 				<h6 style="color:#696c70;">
 					<?=Lenguajes::consultarFrase("CUSTOMER SUPPORT", $_SESSION["lenguaje"])?>
 				</h6>
@@ -95,7 +95,7 @@
 	                ?>
 				</ul>				
 			</div>
-			<div class="col-xs-3 col-md-2">
+			<div class="col-xs-6 col-md-2">
 				<h6 style="color:#696c70;">
 					<?=Lenguajes::consultarFrase("CONTACT US", $_SESSION["lenguaje"])?>
 				</h6>
@@ -105,7 +105,7 @@
 					</li>					
 				</ul>
 			</div>
-			<div class="col-xs-3 col-md-2">
+			<div class="col-xs-6 col-md-2">
 				<h6 style="color:#696c70;"><a href="<?=URL_INGRESAR?>" class="text-muted"><?=Lenguajes::consultarFrase("ACCOUNT", $_SESSION["lenguaje"])?></a></h6>
 				<ul class="list-unstyled">
 					
@@ -137,7 +137,7 @@
 					<li><a href="#" class="text-muted">FAQS</a></li>-->
 				</ul>
 			</div>
-			<div class="col-xs-6 col-md-2">
+			<div class="col-xs-12 col-md-2">
 				<h2 style="font-family:Times;"><?=Lenguajes::consultarFrase("NEWSLETTER", $_SESSION["lenguaje"])?></h2>
 				<form id="form-newsletter">
 					<label class="sr-only" for="inlineFormInputGroup">Username</label>
@@ -149,10 +149,10 @@
 				  	</div>
 				</form>
 			</div>
-			<div class="col-xs-6 col-md-2" style="border-left:1px solid #ababad;">
+			<div class="col-xs-12 col-md-2" style="border-left:1px solid #ababad;">
 				<center>
 					<a href="<?=URL_SITIO?>">
-						<img src="assets/img/logo-footer.jpg" class="img-fluid">
+						<img src="assets/img/logo.png" class="img-fluid">
 					</a>
 				</center>
 				<div class="row mt-2">
@@ -231,9 +231,9 @@
 			  	
 			  	console.log(data);
 
-			    for (var i = 0; i < 8; i++) {
+			    for (var i = 0; i < 6; i++) {
 			      if(data.data[i]) { // to prevent a bug with non missing images
-			         $(".instagram").append('<div class="col-xs-6 col-md-3 mt-1"><a href="'+data.data[i].link+'" target="_blank"><img src="'+data.data[i].images.low_resolution.url+'" class="img-fluid"></a></div>');
+			         $(".instagram").append('<div class="col-xs-6 col-md-4 mt-1"><a href="'+data.data[i].link+'" target="_blank"><img src="'+data.data[i].images.low_resolution.url+'" class="img-fluid"></a></div>');
 			      }
 			    }
 			  }

@@ -4,7 +4,7 @@ session_start();
 
 //Lenguaje
 if(!isset($_SESSION["lenguaje"])){
-	$_SESSION["lenguaje"] = "en";
+	$_SESSION["lenguaje"] = "es";
 }
 
 if (isset($_GET["lang"]) && ($_GET["lang"]=="es" || $_GET["lang"]=="en")) {

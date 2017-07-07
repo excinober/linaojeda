@@ -1,6 +1,6 @@
 <?php include "header.php" ?>
 <?php //include "my_bag.php"; ?>
-<div class="container-fluid pt-1" style="background-color: #9F972D; color: #fff;">
+<div class="container-fluid pt-1" style="background-color: #c8b496; color: #fff;">
   <div class="container">
     <h1><?=Lenguajes::consultarFrase("MY BAG", $_SESSION["lenguaje"])?></h1>
   </div>
@@ -10,7 +10,7 @@
     <table class="table table-cart">
       <thead>
         <tr>
-          <th width="15%">Producto</th>
+          <th colspan="2" width="15%"><?=Lenguajes::consultarFrase("PRODUCT", $_SESSION["lenguaje"])?></th>
           <th class="text-xs-center" width="20%">Descripción</th>
           <th class="text-xs-center">Disponibilidad</th>
           <th class="text-xs-center">Precio Unitario</th>
@@ -25,7 +25,10 @@
           foreach ($itemsCarrito["id"] as $key => $iditem) {
         ?>
           <tr>
-            <td><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid"></td>
+            <td class="align-middle" style="border-right:0;">
+              <a class="deletePdtCart" idpdt="<?=$iditem?>"><i class="fa fa-times" aria-hidden="true"></i></a>
+            </td>
+            <td style="border-left:0;"><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid"></td>
             <td>
               <?=$itemsCarrito["nombre"][$key]?><br>
               Ref: <?=$itemsCarrito["codigo"][$key]?><br>              
@@ -51,28 +54,28 @@
         }else{
           ?>
           <tr>
-            <td colspan="6"><p class="text-xs-center">No hay productos en el carrito</p></td>
+            <td colspan="7"><p class="text-xs-center">No hay productos en el carrito</p></td>
           </tr>
           <?php
         }
         ?>
         <tr>
-          <td colspan="4"></td>
+          <td colspan="5"></td>
           <td colspan="1" class="text-xs-right">Subtotal</td>                    
           <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$subtotalAntesIva)?></td>
         </tr>
         <tr>
-          <td colspan="4"></td>
+          <td colspan="5"></td>
           <td colspan="1" class="text-xs-right">Impuesto</td>                    
           <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$iva)?></td>
         </tr>
         <tr>
-          <td colspan="4"></td>
+          <td colspan="5"></td>
           <td colspan="1" class="text-xs-right">Flete</td>                    
           <td colspan="1" class="text-xs-right"><?=conversor_monedas("COP",$_SESSION["moneda"],$flete)?></td>
         </tr>
         <tr>
-          <td colspan="4"></td>
+          <td colspan="5"></td>
           <td colspan="1" class="text-xs-right"><b>Total</b></td>                    
           <td colspan="1" class="text-xs-right"><b><?=conversor_monedas("COP",$_SESSION["moneda"],$total)?></b></td>
         </tr>

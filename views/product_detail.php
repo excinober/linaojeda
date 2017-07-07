@@ -68,6 +68,7 @@
 				<!--<h3 class="text-xs-center">COLOR</h3>
 				<hr>-->
 				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("QTY", $_SESSION["lenguaje"])?></h4>
+				<?php if($producto["cantidad"]>0) { ?>
 				<div class="row">
 					<div class="col-xs-4 offset-xs-4">
 						<select name="cantidad" id="cantidad" max="<?=$producto["cantidad"]?>" class="form-control form-control-lg">
@@ -87,9 +88,14 @@
 					</h4>
 					</div>
 				</div>
+				<?php }else{ ?>
+					<p class="text-xs-center">No disponible</p>
+				<?php } ?>
 				<center>
 					<input type="hidden" name="personalizable" id="personalizable" value="<?=$producto["personalizable"]?>">	
+					<?php if($producto["cantidad"]>0) { ?>
 					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-primary btn-lg mt-1 addPdt"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></button>
+					<?php } ?>
 				</center>
 				<hr>
 				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h4>

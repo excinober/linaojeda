@@ -23,16 +23,20 @@ function product_block($producto){
 		if ($producto["cantidad"]>0) {
 			echo Lenguajes::consultarFrase("QUANTITY AVAILABLE", $_SESSION["lenguaje"]).": ".$producto["cantidad"];
 		}else{
-			echo Lenguajes::consultarFrase("QUANTITY AVAILABLE", $_SESSION["lenguaje"]).": ".$producto["cantidad"];
+			echo "No existen unidades disponibles";
 		}
 		?>
 		</p>
 		<h4 class="m-0"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h4>
-		<?php if ($producto["personalizable"]) {
-		?>
-		<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
+		<?php if ($producto["cantidad"]>0) { ?>
+			<?php if ($producto["personalizable"]) {
+			?>
+			<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
+			<?php }else{ ?>
+			<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></a>
+			<?php } ?>
 		<?php }else{ ?>
-		<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW", $_SESSION["lenguaje"])?></a>
+			<a class="btn btn-default mt-1">No disponible</a>
 		<?php } ?>
 	</div>
 </div>
@@ -45,23 +49,27 @@ function product_view($producto){
 	<div class="col-xs-12 px-2 py-3" style="border: 1px solid rgba(0,0,0,0.5);height: auto;">
 		<img src="<?=$producto["img_principal"]?>" class="img-fluid img-product-list" idpdt="<?=$producto["idproducto"]?>">
 	</div>
-	<div class="col-xs-12 p-1 text-xs-center">
+	<div class="col-xs-12 px-0 pt-1 text-xs-center">
 		<h5 class="m-0"><?=$producto["nombre"]?></h5>
 		<p class="mb-0" style="color:red;">
+
 		<?php 
 		if ($producto["cantidad"]>0) {
 			echo Lenguajes::consultarFrase("QUANTITY AVAILABLE", $_SESSION["lenguaje"]).": ".$producto["cantidad"];
 		}else{
-			echo Lenguajes::consultarFrase("QUANTITY AVAILABLE", $_SESSION["lenguaje"]).": ".$producto["cantidad"];
+			echo "No existen unidades disponibles";
 		}
 		?>
 		</p>
 		<h6 class="m-0"><?=conversor_monedas("COP",$_SESSION["moneda"],$producto["precio"])?></h6>
-		<?php if ($producto["personalizable"]) {
-		?>
-		<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
+		<?php if ($producto["cantidad"]>0) { ?>
+		<?php if ($producto["personalizable"]) { ?>		
+			<a href="<?=URL_PRODUCTOS_PERSONALIZAR."/".$producto["url"]?>" class="btn btn-primary mt-1"><?=Lenguajes::consultarFrase("PERSONALIZE", $_SESSION["lenguaje"])?></a>
+			<?php }else{ ?>
+			<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-sm btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW VIEWS", $_SESSION["lenguaje"])?></a>
+			<?php } ?>
 		<?php }else{ ?>
-		<a href="<?=URL_PRODUCTOS."/".$producto["url"]?>" class="btn btn-sm btn-primary mt-1"><?=Lenguajes::consultarFrase("SHOP NOW VIEWS", $_SESSION["lenguaje"])?></a>
+			<a class="btn btn-default mt-1">No disponible</a>
 		<?php } ?>
 	</div>
 </div>

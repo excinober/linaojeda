@@ -742,6 +742,23 @@ class Controller
 		}
 	}
 
+	public function deletePdtCart(){
+
+		if (isset($_POST["idpdt"]) && !empty($_POST["idpdt"])) {
+
+			$idpdt = $_POST["idpdt"];
+
+			if (in_array($idpdt, $_SESSION["idpdts"])) {
+
+				$clave = array_search($idpdt, $_SESSION["idpdts"]);
+				unset($_SESSION["cantidadpdts"][$clave]);
+				unset($_SESSION["idpdts"][$clave]);
+
+				echo "OK";
+			}
+		}
+	}
+
 	public function saveImgPersonalizer(){
 
 		if (isset($_POST['imgdata']) && !empty($_POST['imgdata'])) {
