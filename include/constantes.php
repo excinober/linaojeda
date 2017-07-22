@@ -1,6 +1,6 @@
 <?php 
-define("URL_SITIO", "http://localhost/linaojeda/www/");
-//define("URL_SITIO", "http://linaojeda.com/demo/");
+//define("URL_SITIO", "http://localhost/linaojeda/www/");
+define("URL_SITIO", "http://linaojeda.com/demo/");
 define("NOMBRE_SITIO", "LO");
 define("URL_INICIO", "Inicio");
 define("URL_PRODUCTOS", "Productos");
@@ -12,10 +12,12 @@ define("URL_BUSCAR", "Resultados");
 define("URL_PRODUCTOS_PERSONALIZAR", "Personalizar");
 define("URL_PRODUCTOS_PERSONALIZAR_AGREGAR_OPCION", "agregarOpcionPieza");
 define("URL_PRODUCTOS_PERSONALIZAR_IMG", "GuardarImg");
+
 /***CARRITO****/
 define("URL_CARRITO", "Carrito");
 define("URL_RESUMEN_COMPRA", "ResumenCompra");
 define("URL_CARRITO_AGREGAR", "AgregarPdt");
+define("URL_CARRITO_AGREGAR_DESEOS", "AgregarPdtDeseos");
 define("URL_CARRITO_ACTUALIZAR_CANTIDAD", "ActualizarCantidadPdt");
 define("URL_CARRITO_ELIMINAR_PRODUCTO", "EliminarPdtCarrito");
 define("URL_GENERAR_ORDEN", "GenerarOrden");
@@ -45,6 +47,8 @@ define("URL_USUARIO_DOCUMENTOS", "Documentos");
 
 
 define("URL_REGISTRO", "Registro");
+define("URL_DESEOS", "ListaDeseos");
+define("URL_DESEOS_ELIMINAR", "EliminarPdtDeseos");
 define("URL_INGRESAR", "Ingresar");
 define("URL_SALIR", "Salir");
 define("URL_RESTAURAR_CONTRASENA", "RestaurarContrasena");

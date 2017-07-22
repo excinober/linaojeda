@@ -65,6 +65,28 @@ $(document).ready(function(){
 		
 	});
 
+	$(".addBox").click(function(){
+		var idpdt = $(this).attr("idpdt");
+
+		if (idpdt !='') {
+
+			$.ajax({
+				type: 'POST',
+				url: "Carrito/AgregarPdtDeseos",
+				data: {	idpdt:idpdt },
+				dataType: 'json',
+				async: false,
+				success: function(response) {
+					$("#cantidad-deseos").text(response.cantidad);
+					alert('El producto se agrego a la lista');
+				},
+				error: function() {
+					alert('El producto no se agrego a la lista');
+				}
+			});
+		}
+	});
+
 	$(".updateQuantity").change(function(){
 
 

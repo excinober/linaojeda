@@ -148,3 +148,32 @@ body, html{
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #c8b496 !important;
 }
+
+
+@media(max-width: 576px) { 
+	.block-your-lo{
+		margin-top: -10px;
+	}
+
+	h1{
+		font-size:1.8rem;
+	}
+
+	h2{
+		font-size: 1.6rem;
+	}
+
+	h3{
+		font-size: 1.4rem;
+	}
+
+	h4{
+		font-size: 1.2rem;
+	}
+
+	h5{
+		font-size: 1.1rem;
+	}
+}
+
+

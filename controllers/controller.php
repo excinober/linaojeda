@@ -105,6 +105,10 @@ class Controller
 		if (isset($_POST["createUser"])) {
 			extract($_POST);
 
+			if ($pais == "COLOMBIA") {
+				$ciudad = $ciudadco;
+			}
+
 			$idusuario = $this->usuarios->crearUsuario($nombre, $apellido, "", "", $email, md5($password), $num_identificacion, 0, 0, $direccion, $telefono, $telefono_m, 1, fecha_actual("datetime"), $ciudad, $pais, $cod_postal);
 
 			if ($idusuario) {
@@ -162,6 +166,36 @@ class Controller
 		include "views/login.php";	
 	}
 
+	public function pageListaDesos(){
+
+		$posicion = "MENU";
+		$estado = 1;
+
+		$menu = $this->paginas->listarPaginas($posicion, $estado);
+		$pages_footer = $this->paginas->listarPaginas("FOOTER", $estado);
+		$categorias_padre = $this->getCategoriesPattern();
+		$categorias = $this->categorias->listarCategorias(0, array(1));
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
+		
+		$colecciones = $this->colecciones->listarColecciones(array(1));	
+
+
+		$productos = array();
+
+		if (count($_SESSION["idpdtsdeseos"])>0) {
+			
+			foreach ($_SESSION["idpdtsdeseos"] as $key => $idpdt) {
+				
+				$detalleproducto = $this->productos->detalleProductos($idpdt);
+				$productos[] = $detalleproducto;
+			}
+		}
+
+		require "views/product_block.php";
+		include "views/dreams_list.php";
+
+	}
+
 	public function suscribirNewsletter(){
 		extract($_POST);
 
@@ -193,7 +227,7 @@ class Controller
 					break;
 			}
 		}else{
-			$return = "ORDER BY `productos`.`idproducto` DESC";
+			$return = "ORDER BY `relevancias`.`relevancia` DESC";
 		}
 
 		return $return;
@@ -726,6 +760,30 @@ class Controller
 		}
 	}
 
+	public function addPdtDeseos(){
+
+		if (isset($_POST["idpdt"])) {
+		
+			$idpdt = $_POST["idpdt"];
+
+			if (!in_array($idpdt, $_SESSION["idpdtsdeseos"])) {
+
+				$_SESSION["idpdtsdeseos"][] = $idpdt;
+
+				$return = true;
+			}else{
+				$return = false;
+			}
+
+		}else{
+				$return = false;
+		}
+
+		$return = array('cantidad' => count($_SESSION["idpdtsdeseos"]));
+
+		echo json_encode($return);
+	}
+
 	public function updateCantPdt(){
 		if (isset($_POST["idpdt"]) && isset($_POST["cantidad"])) {
 		
@@ -757,6 +815,20 @@ class Controller
 				echo "OK";
 			}
 		}
+	}
+
+	public function deleteProductDeseos($idpdt){
+
+		if (!empty($idpdt)) {
+
+			if (in_array($idpdt, $_SESSION["idpdtsdeseos"])) {
+
+				$clave = array_search($idpdt, $_SESSION["idpdtsdeseos"]);
+				unset($_SESSION["idpdtsdeseos"][$clave]);
+			}
+		}
+
+		header("Location: ../".URL_DESEOS);
 	}
 
 	public function saveImgPersonalizer(){
@@ -812,6 +884,10 @@ class Controller
 
 				if (empty($condiciones)) {
 					$condiciones = 0;
+				}
+
+				if ($pais == "COLOMBIA") {
+					$ciudad = $ciudadco;
 				}
 
 				$estado = 1;

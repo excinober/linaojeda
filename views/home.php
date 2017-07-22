@@ -109,9 +109,9 @@
               <img src="<?=$banner["imagen"]?>" class="img-fluid">
 
               <?php if (!empty($banner["descripcion"])) { ?>
-                <div class="carousel-caption pb-2">
+                <div class="carousel-caption pb-2" style="background-color:rgba(225,225,225,0.8)">
                   <?=$banner["descripcion"]?>
-                </div>  
+                </div>
               <?php } ?>        
             </div>  
           <?php

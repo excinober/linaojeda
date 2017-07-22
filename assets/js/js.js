@@ -95,6 +95,16 @@ $(document).ready(function(){
 			alert("Escribe tu email");
 		}
 	})
+
+	$("#pais").change(function(){
+		if ($(this).val() == "COLOMBIA") {
+			$("#ciudad").hide();
+			$("#ciudadco").show();
+		}else{
+			$("#ciudad").show();
+			$("#ciudadco").hide();
+		}
+	})
 	
 })
 

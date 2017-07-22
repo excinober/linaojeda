@@ -73,7 +73,9 @@ class ControllerAdmin
 
 		extract($_POST);
 
-		$categorias = $this->categorias->listarCategorias(0,array(1));		
+		$categorias = $this->categorias->listarCategorias(0,array(1));
+		$estados_colecciones = array(1);		
+		$colecciones = $this->colecciones->listarColecciones($estados_colecciones);
 
 		if (isset($_POST["actualizarProducto"])) {
 			//Upload foto
@@ -94,7 +96,7 @@ class ControllerAdmin
 			$aplica_cupon = 1;
 			$url = convierte_url($_POST["nombre"]);
 
-			$this->productos->actualizarProducto($idproducto,$nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$compania,$relevancia);
+			$this->productos->actualizarProducto($idproducto,$nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$coleccion,$compania,$relevancia);
 		}
 
 		if (isset($_POST["crearProducto"])) {
@@ -119,7 +121,7 @@ class ControllerAdmin
 			$aplica_cupon = 1;
 			$url = convierte_url($_POST["nombre"]);
 
-			$idproducto = $this->productos->crearProducto($nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$compania,$relevancia);
+			$idproducto = $this->productos->crearProducto($nombre,$cantidad,$precio,$iva,$aplica_cupon,$precio_oferta,$presentacion,$registro,$codigo,$descripcion,$img_principal,$url,$estado,$uso,$mas_info,$metas,$personalizable,$categoria,$coleccion,$compania,$relevancia);
 		}
 
 		if (isset($idproducto) && $idproducto!='') {

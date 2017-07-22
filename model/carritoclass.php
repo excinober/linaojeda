@@ -28,17 +28,16 @@ class Carrito extends Productos
 		return $total_cantidad;
 	}
 
+	public static function productosDeseos(){
+
+		return count($_SESSION["idpdtsdeseos"]);
+	}
+
 	public static function getProductsCart(){
 		$carrito2 = new Carrito();
 		$items = $carrito2->listarItems();
 		return $items;
 	}
-
-	/*static function totalCarrito(){
-		$carrito2 = new Carrito();
-		$total_carrito = $carrito2->getTotal();
-		return $total_carrito;
-	}*/
 
 	public function infoProducto($idpdt){
 		
@@ -311,15 +310,21 @@ class Carrito extends Productos
 
 		if ($subtotalAntesIva>0) {
 
-			if ($subtotalAntesIva>=400000) {
-				$flete = 0;
-			}else{
-				if (isset($_SESSION["ciudad"]) && $_SESSION["ciudad"] == "Cali") {
-					$flete = 6000;
+			if (isset($_SESSION["pais"])) {
+				
+				if ($_SESSION["pais"] == "COLOMBIA") {
+				
+					if (isset($_SESSION["ciudad"]) && $_SESSION["ciudad"] == "BOGOTA") {
+						$flete = FLETE_LOCAL;		
+					}else{
+						$flete = FLETE_NACIONAL;
+					}			
 				}else{
-					$flete = 11000;
-				}	
-			}				
+					$flete = FLETE_INTERNACIONAL;
+				}		
+			}else{
+				$flete = 0;	
+			}	
 		}else{
 			$flete = 0;
 		}

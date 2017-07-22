@@ -101,7 +101,7 @@
 				</h6>
 				<ul class="list-unstyled">
 					<li>
-						<a href="tel:5713333333" class="text-muted">(+57 1) 333 33 33</a>
+						<a href="tel:5713333333" class="text-muted"><?=Lenguajes::consultarFrase("PHONE NUMBER", $_SESSION["lenguaje"])?></a>
 					</li>					
 				</ul>
 			</div>

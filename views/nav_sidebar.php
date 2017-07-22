@@ -16,9 +16,11 @@
 	      ?>
 	    </div>		
 	</li>
+	<?php if (CREATE_LO) { ?>
 	<li class="nav-item mt-1">
 		<a class="nav-link" href="<?=URL_PRODUCTOS_PERSONALIZAR?>" style="color: #262424;border-bottom: 1px solid #000;width: 100%;"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a>
 	</li>
+	<?php } ?>
 	<?php 
       if (count($menu)>0) {
         foreach ($menu as $key => $item) {

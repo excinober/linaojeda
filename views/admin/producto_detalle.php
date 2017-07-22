@@ -24,6 +24,19 @@
 					</select>
 				</div>
 				<div class="form-group">
+					<label for="exampleInputEmail1">Colección</label>
+					<select name="coleccion" id="coleccion" class="form-control">
+						<option value="0">--Seleccione--</option>					
+						<?php 
+						foreach ($colecciones as $key => $coleccion) {
+						?>
+							<option value="<?=$coleccion['idcoleccion']?>" <?php if ($producto['colecciones_idcoleccion']==$coleccion['idcoleccion']) echo "selected"; ?>><?=$coleccion['nombre']?></option>
+						<?php
+						}
+						?>					
+					</select>
+				</div>
+				<div class="form-group">
 					<label for="exampleInputEmail1">Compañía</label>
 					<select name="compania" id="compania" class="form-control" required>
 						<option value="1" <?php if ($producto['companias_idcompania']==1) echo "selected"; ?>>LO</option>

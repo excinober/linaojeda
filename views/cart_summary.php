@@ -25,7 +25,7 @@
           foreach ($itemsCarrito["id"] as $key => $iditem) {
         ?>
           <tr>
-            <td><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid"></td>
+            <td><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid" style="min-width:90px;"></td>
             <td>
               <?=$itemsCarrito["nombre"][$key]?><br>
               Ref: <?=$itemsCarrito["codigo"][$key]?><br>              
@@ -75,7 +75,7 @@
       <div class="col-xs-12 col-md-3">
         <h2 class="mt-2">DETALLES <br>DE ENVÍO</h2>
       </div>
-      <div class="col-xs-12 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
+      <div class="col-xs-12 col-md-6" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>DIRECCIÓN DE ENVÍO</h6>
         <hr class="mt-0">
         <h5 style="line-height: 1.3rem;">
@@ -95,28 +95,23 @@
         <h6>TRANSPORTE</h6>
         <hr class="mt-0">
         <h5 style="line-height: 1.3rem;">
-          <b>COORDINADORA</b><br>
-          4 días hábiles
+          <b><?=Lenguajes::consultarFrase("TEXTO ENVIO 1", $_SESSION["lenguaje"])?></b><br>
+          <?=Lenguajes::consultarFrase("TEXTO ENVIO 2", $_SESSION["lenguaje"])?>
         </h5>
-      </div>
-      <div class="col-xs-6 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
-        <h6>COSTO ENVÍO</h6>
-        <hr class="mt-0">
-        <h5 style="line-height: 1.3rem;"><?=conversor_monedas("COP",$_SESSION["moneda"],20000)?></h5>
       </div>
     </div>
     <div class="row mt-1">
       <?php if ($_SESSION["login"]) { 
               if ($total>0) {             
         ?>
-        <a href="<?=URL_GENERAR_ORDEN?>?method=CONSIGNACION" class="btn btn-primary btn-lg pull-right ml-1">Pagar por Consignación</a>
-        <a href="<?=URL_GENERAR_ORDEN?>?method=IATAI" class="btn btn-primary btn-lg pull-right ml-1">Pagar con tarjeta de crédito</a>
+        <a href="<?=URL_GENERAR_ORDEN?>?method=CONSIGNACION" class="btn btn-primary btn-lg pull-right ml-1 mt-1">Pagar por Consignación</a>
+        <!--<a href="<?=URL_GENERAR_ORDEN?>?method=IATAI" class="btn btn-primary btn-lg mt-1 pull-right ml-1">Pagar con tarjeta de crédito</a>-->
       <?php } }else{ ?>      
-        <button class="btn btn-primary btn-lg pull-right ml-1 login-popup">Continuar Pago</button>
+        <button class="btn btn-primary btn-lg pull-right ml-1 mt-1 login-popup">Continuar Pago</button>
       <?php }?>      
     </div>  
     <div class="row mt-1">
-      <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success pull-right">Seguir Comprando</a>
+      <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success mt-1 pull-right">Seguir Comprando</a>
     </div>
 </div>
 <?php include "footer.php" ?>

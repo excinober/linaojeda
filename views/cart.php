@@ -25,10 +25,10 @@
           foreach ($itemsCarrito["id"] as $key => $iditem) {
         ?>
           <tr>
-            <td class="align-middle" style="border-right:0;">
+            <td class="align-middle" style="border-right:0;width:10px;">
               <a class="deletePdtCart" idpdt="<?=$iditem?>"><i class="fa fa-times" aria-hidden="true"></i></a>
             </td>
-            <td style="border-left:0;"><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid"></td>
+            <td style="border-left:0;"><img src="<?=$itemsCarrito["img_principal"][$key]?>" class="img-fluid" style="min-width:90px;"></td>
             <td>
               <?=$itemsCarrito["nombre"][$key]?><br>
               Ref: <?=$itemsCarrito["codigo"][$key]?><br>              
@@ -86,7 +86,7 @@
       <div class="col-xs-12 col-md-3">
         <h2 class="mt-2">DETALLES <br>DE ENVÍO</h2>
       </div>
-      <div class="col-xs-12 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
+      <div class="col-xs-12 col-md-6" style="border-left: 2px solid rgba(0,0,0,0.4);">
         <h6>DIRECCIÓN DE ENVÍO</h6>
         <hr class="mt-0">
         <h5 style="line-height: 1.3rem;">
@@ -96,7 +96,7 @@
             <?=$_SESSION["ciudad"]?><br>
             <?=$_SESSION["pais"]?><br>
             <?=$_SESSION["telefono_m"]." - ".$_SESSION["telefono"]?></p>
-            <button class="btn btn-sm btn-primary">Actualizar</button>
+            <a href="<?=URL_USUARIO."/".URL_USUARIO_CAMBIAR_DATOS."/".URL_CARRITO?>" class="btn btn-sm btn-primary"><?=Lenguajes::consultarFrase("UPDATE", $_SESSION["lenguaje"])?></a>
           <?php }else{ ?>          
           <a class="login-popup">Ingresar</a>
           <?php } ?>
@@ -106,25 +106,20 @@
         <h6>TRANSPORTE</h6>
         <hr class="mt-0">
         <h5 style="line-height: 1.3rem;">
-          <b>COORDINADORA</b><br>
-          4 días hábiles
+          <b><?=Lenguajes::consultarFrase("TEXTO ENVIO 1", $_SESSION["lenguaje"])?></b><br>
+          <?=Lenguajes::consultarFrase("TEXTO ENVIO 2", $_SESSION["lenguaje"])?>
         </h5>
-      </div>
-      <div class="col-xs-6 col-md-3" style="border-left: 2px solid rgba(0,0,0,0.4);">
-        <h6>COSTO ENVÍO</h6>
-        <hr class="mt-0">
-        <h5 style="line-height: 1.3rem;"><?=conversor_monedas("COP",$_SESSION["moneda"],20000)?></h5>
       </div>
     </div>
     <div class="row mt-1">
       <?php if ($_SESSION["login"]) { 
               if ($total>0) {
         ?>
-        <a href="<?=URL_RESUMEN_COMPRA?>" class="btn btn-primary btn-lg pull-right ml-1">Continuar Pago</a>
+        <a href="<?=URL_RESUMEN_COMPRA?>" class="btn btn-primary mt-1 btn-lg pull-right ml-1">Continuar Pago</a>
       <?php }}else{ ?>      
-        <button class="btn btn-primary btn-lg pull-right ml-1 login-popup">Continuar Pago</button>
+        <button class="btn btn-primary btn-lg pull-right ml-1 mt-1 login-popup">Continuar Pago</button>
       <?php }?>      
-      <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success pull-right">Seguir Comprando</a>
+      <a href="<?=URL_PRODUCTOS?>" class="btn btn-lg btn-success mt-1 pull-right">Seguir Comprando</a>
     </div>  
 </div>
 <?php include "footer.php" ?>

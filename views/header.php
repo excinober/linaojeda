@@ -56,9 +56,12 @@
                     ?>
                     </div>
                   </li>
+                  <?php if (CREATE_LO) { ?>
                   <li class="nav-item">
                     <a class="nav-link pt-1" href="<?=URL_PRODUCTOS_PERSONALIZAR?>"><?=Lenguajes::consultarFrase("CREATE YOUR LO", $_SESSION["lenguaje"])?></a>
-                  </li>
+                  </li>  
+                  <?php } ?>
+                  
                   <?php 
                   if (count($menu)>0) {
                     foreach ($menu as $key => $item) {
@@ -78,6 +81,18 @@
                   }
                   ?>                  
                 </ul>
+                <h5 class="pull-xs-right my-0 text-xs-center hidden-sm-up">
+                  <small>
+                    <a href="?lang=es" style="color:<?php ($_SESSION["lenguaje"]=="es")? print("#c8b496") : print("#000000")?>;">ESP</a> - 
+                    <a href="?lang=en" style="color:<?php ($_SESSION["lenguaje"]=="en")? print("#c8b496") : print("#000000")?>;">ENG</a>
+                  </small>
+                </h5>
+                <h5 class="pull-xs-right my-0 text-xs-center hidden-sm-up mb-2">
+                  <small>
+                    <a href="?currency=COP" style="color:<?php ($_SESSION["moneda"]=="COP")? print("#c8b496") : print("#000000")?>;">COP</a> - 
+                    <a href="?currency=USD" style="color:<?php ($_SESSION["moneda"]=="USD")? print("#c8b496") : print("#000000")?>;">USD</a>
+                  </small>
+                </h5>
               </div> 
             <?php
           }
@@ -93,9 +108,9 @@
                     </a>
                 </div>
                 <div class="col-xs-3 col-md-3 pl-0">
-                    <a href="#">
+                    <a href="<?=URL_SITIO.URL_DESEOS?>">
                       <img src="assets/img/icon-dream-box.png" class="img-fluid float-xs-left float-md-none" style="max-width: 20px;">
-                      <div class="rounded-circle text-xs-center float-xs-left  float-md-right badge-header" id="cantidad-carrito">0</div>
+                      <div class="rounded-circle text-xs-center float-xs-left  float-md-right badge-header" id="cantidad-deseos"><?=Carrito::productosDeseos()?></div>
                     </a>              
                 </div>              
                 <div class="col-xs-6 col-md-6 pl-0 text-xs-right text-md-center">
@@ -110,19 +125,18 @@
                       <a class="dropdown-item" href="<?=URL_SITIO.URL_SALIR?>"><?=Lenguajes::consultarFrase("SIGN OUT", $_SESSION["lenguaje"])?></a>                    
                     </div>
                   </div>
-                  <?php }else{ ?>                                    
-                    <!--<a href="<?=URL_SITIO.URL_REGISTRO?>" style="color:#9E962C;">
-                      <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    </a>-->
-                    <a href="<?=URL_SITIO.URL_INGRESAR?>" style="color:#9E962C;">
-                      <img src="assets/img/icon-your-lo.png" class="img-fluid" style="max-width: 20px;">
-                      <span style="color: #c8b496;font-size: 13px;"><?=Lenguajes::consultarFrase("YOUR LO", $_SESSION["lenguaje"])?></span>
-                    </a>      
+                  <?php }else{ ?>
+                    <div class="block-your-lo">
+                      <a href="<?=URL_SITIO.URL_INGRESAR?>" style="color:#9E962C;margin-top:-20px;">
+                        <img src="assets/img/icon-your-lo.png" class="img-fluid" style="max-width: 20px;">
+                        <span style="color: #c8b496;font-size: 13px;"><?=Lenguajes::consultarFrase("YOUR LO", $_SESSION["lenguaje"])?></span>
+                      </a>      
+                    </div>
                   <?php } ?>
                   </div>
                 </div>
               </div>
-              <div class="col-xs-12 col-md-3 text-xs-center px-0">
+              <div class="col-xs-12 col-md-3 text-xs-center px-0 hidden-xs-down">
                 <h5 class="pull-xs-right my-0 text-xs-center">
                   <small>
                     <a href="?lang=es" style="color:<?php ($_SESSION["lenguaje"]=="es")? print("#c8b496") : print("#000000")?>;">ESP</a> - 

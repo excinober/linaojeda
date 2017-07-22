@@ -45,9 +45,9 @@
 				<?php 
 				if (count($vistos)>0) {
 				?>
-					<hr>
-					<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("VISTO RECIENTEMENTE", $_SESSION["lenguaje"])?></h4>
-					<div class="row">						
+					<hr class="hidden-xs-down">
+					<h4 class="text-xs-center hidden-xs-down"><?=Lenguajes::consultarFrase("VISTO RECIENTEMENTE", $_SESSION["lenguaje"])?></h4>
+					<div class="row hidden-xs-down">						
 						<?php
 							foreach ($vistos as $key => $visto) {
 								product_view($visto);
@@ -70,7 +70,7 @@
 				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("QTY", $_SESSION["lenguaje"])?></h4>
 				<?php if($producto["cantidad"]>0) { ?>
 				<div class="row">
-					<div class="col-xs-4 offset-xs-4">
+					<div class="col-xs-6 offset-xs-2 col-md-5 offset-md-3">
 						<select name="cantidad" id="cantidad" max="<?=$producto["cantidad"]?>" class="form-control form-control-lg">
 							<?php
 							for ($i=1; $i<=$producto["cantidad"]; $i++) { 
@@ -100,9 +100,17 @@
 				<hr>
 				<h4 class="text-xs-center"><?=Lenguajes::consultarFrase("SHARE", $_SESSION["lenguaje"])?></h4>
 				<h3 class="text-xs-center">
-					<i class="fa fa-facebook-square" aria-hidden="true"></i>
-					<i class="fa fa-instagram" aria-hidden="true"></i>
+					<a style="text-decoration:none;color:#000;" target="_new" href="https://www.facebook.com/sharer.php?u=<?=URL_SITIO.URL_PRODUCTOS."/".$producto["url"]?>">
+						<i class="fa fa-facebook-square" aria-hidden="true"></i>
+					</a>
+					<a style="text-decoration:none;color:#000;" target="_new" href="https://twitter.com/intent/tweet?text=<?=$producto["nombre"]." ".URL_SITIO.URL_PRODUCTOS."/".$producto["url"]?>">
+						<i class="fa fa-twitter" aria-hidden="true"></i>
+					</a>
 				</h3>
+				<hr>
+				<center>
+					<button idpdt="<?=$producto["idproducto"]?>" class="btn btn-secondary addBox" style="background-image: url(assets/img/icon-dream-box.png);background-position:3% center;background-repeat:no-repeat;background-size: auto 80%;"><span class="ml-2">Agregar a Deseos<span></button>
+				</center>
 			</div>
 		</div>
 	</div>

@@ -45,10 +45,17 @@ require "include/functions.php";
 $configuracion = new Configuracion();
 $filtros_sidebar = $configuracion->getParameters("Filtros Sidebar");
 $colecciones_sidebar = $configuracion->getParameters("Colecciones Sidebar");
+$create_lo = $configuracion->getParameters("CREATE LO");
+$flete_local = $configuracion->getParameters("Flete Local");
+$flete_nacional = $configuracion->getParameters("Flete Nacional");
+$flete_internacional = $configuracion->getParameters("Flete Internacional");
 
 define("FILTER_SIDEBAR", $filtros_sidebar);
 define("COLECCIONES_SIDEBAR", $colecciones_sidebar);
-
+define("FLETE_LOCAL", $flete_local);
+define("FLETE_NACIONAL", $flete_nacional);
+define("FLETE_INTERNACIONAL", $flete_internacional);
+define("CREATE_LO", $create_lo);
 
 require "controllers/controller.php";
 require "controllers/controllerAdmin.php";
@@ -136,6 +143,10 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 							$controller->addPdtCart();
 							break;
 
+						case URL_CARRITO_AGREGAR_DESEOS:
+							$controller->addPdtDeseos();
+							break;												
+
 						case URL_CARRITO_ACTUALIZAR_CANTIDAD:
 							$controller->updateCantPdt();
 							break;
@@ -169,8 +180,12 @@ if (isset($_GET["url"]) && !empty($_GET["url"])) {
 				}				
 				break;
 
-			case URL_REGISTRO:
-				# code...
+			case URL_DESEOS:
+				$controller->pageListaDesos();
+				break;
+
+			case URL_DESEOS_ELIMINAR:
+				$controller->deleteProductDeseos($var2);
 				break;
 
 			case URL_RESTAURAR_CONTRASENA:
